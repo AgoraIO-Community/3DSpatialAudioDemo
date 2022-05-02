@@ -1,0 +1,21 @@
+# Uncomment the next line to define a global platform for your project
+platform :ios, '11.0'
+use_frameworks!
+
+target '3DSpatialAudioDemo' do
+  # Agora sdk 4.0.0 preview
+  pod 'AgoraRtcEngine_iOS_Preview', '4.0.0.preview.6'
+  
+  # AgoraChat
+  pod 'HyphenateChat'
+  
+  # Progress
+  pod 'MBProgressHUD'
+  
+  # PromiseKit
+  pod 'PromiseKit'
+  pod 'PromiseKit/Alamofire'
+
+  # DarkEggKit
+  pod 'DarkEggKit'
+end
