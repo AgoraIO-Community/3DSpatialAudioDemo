@@ -10,10 +10,10 @@ In Utility/AppConfig.swift
 Edit
 
 ```Swift
-DefaultAgoraAppName 		// Not used this time, can be empty string
-DefaultAgoraAppId			// Must
-DefaultAgoraAppCertificate	// Not used this time, can be empty string
-DefaultAgoraChatAppKey		// Not used this time, can be empty string
+DefaultAgoraAppName         // Not used this time, can be empty string
+DefaultAgoraAppId           // Must
+DefaultAgoraAppCertificate  // Not used this time, can be empty string
+DefaultAgoraChatAppKey      // Not used this time, can be empty string
 ```
 
 ## Edit info.plist
@@ -21,4 +21,4 @@ DefaultAgoraChatAppKey		// Not used this time, can be empty string
 Fill AppId and others in these
 **AgoraChatConfig** and **AgoraConfig**
 
-## Change Signing & Capabilities
+## Change Signing & Capabilit
