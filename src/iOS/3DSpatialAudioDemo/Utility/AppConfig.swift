@@ -21,9 +21,6 @@ private let DefaultAgoraAppCertificate: String  = <#Your Agora App Certificate (
 private let kAgoraChatConfig: String        = "AgoraChatConfig"
 private let kAgoraChatAppKey: String        = "AppKey"
 
-// default AgoraChat setting strings
-private let DefaultAgoraChatAppKey: String  = <#Your AgoraChat AppKey (not used this time)#>
-
 // default AgoraChat config
 
 /// struct for agora config
@@ -34,17 +31,11 @@ struct AgoraConfig: Codable {
     //var token: String
 }
 
-///struct for agora chat config
-struct AgoraChatConfig: Codable {
-    var appKey: String
-}
-
 class AppConfig {
     private let decoder = JSONDecoder() 
     private let encoder = JSONEncoder()
     
     let defaultAgoraConfig = AgoraConfig(appId: DefaultAgoraAppId, appCertificate: DefaultAgoraAppCertificate)
-    let defaultAgoraChatConfig = AgoraChatConfig(appKey: DefaultAgoraChatAppKey)
     
     static let shared: AppConfig = {AppConfig()}()
     
@@ -54,15 +45,6 @@ class AppConfig {
               let data = try? encoder.encode(dict),
               let config = try? decoder.decode(AgoraConfig.self, from: data) else {
             return self.defaultAgoraConfig
-        }
-        return config
-    }()
-    
-    lazy var agoraChat: AgoraChatConfig = {
-        guard let dict = Bundle.main.object(forInfoDictionaryKey: kAgoraChatConfig) as? [String: String],
-              let data = try? encoder.encode(dict),
-              let config = try? decoder.decode(AgoraChatConfig.self, from: data) else {
-            return self.defaultAgoraChatConfig
         }
         return config
     }()

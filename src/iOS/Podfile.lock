@@ -4,7 +4,6 @@ PODS:
   - DarkEggKit (1.0.0):
     - DarkEggKit/Common (= 1.0.0)
   - DarkEggKit/Common (1.0.0)
-  - HyphenateChat (3.9.1)
   - MBProgressHUD (1.2.0)
   - PromiseKit (6.17.0):
     - PromiseKit/CorePromise (= 6.17.0)
@@ -22,7 +21,6 @@ PODS:
 DEPENDENCIES:
   - AgoraRtcEngine_iOS_Preview (= 4.0.0.preview.6)
   - DarkEggKit
-  - HyphenateChat
   - MBProgressHUD
   - PromiseKit
   - PromiseKit/Alamofire
@@ -32,7 +30,6 @@ SPEC REPOS:
     - AgoraRtcEngine_iOS_Preview
     - Alamofire
     - DarkEggKit
-    - HyphenateChat
     - MBProgressHUD
     - PromiseKit
 
@@ -40,10 +37,9 @@ SPEC CHECKSUMS:
   AgoraRtcEngine_iOS_Preview: a790a04ded9aac522480658abdf21bc2e599b93c
   Alamofire: 85e8a02c69d6020a0d734f6054870d7ecb75cf18
   DarkEggKit: c69b40b9f13c8e15b3ffe9d12c6b911d6794be85
-  HyphenateChat: aec4ed8f5cb71094dae31301e0232cc38aa526e6
   MBProgressHUD: 3ee5efcc380f6a79a7cc9b363dd669c5e1ae7406
   PromiseKit: 996202d4cae72b7801b312abef4cd2f995b2978a
 
-PODFILE CHECKSUM: 3b0f21a5d008012a8e47c19ac8de96c9f178be3d
+PODFILE CHECKSUM: 9585b9e7e46d6d97c98b0427330be3abbedd4d69
 
-COCOAPODS: 1.11.2
+COCOAPODS: 1.11.3

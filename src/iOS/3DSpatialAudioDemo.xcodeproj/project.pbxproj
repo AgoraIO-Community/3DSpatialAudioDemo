@@ -57,7 +57,6 @@
 		B7D129E72730E8D4007C0A76 /* CrixCicadasLoopNig.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B7D129E42730E8D4007C0A76 /* CrixCicadasLoopNig.mp3 */; };
 		B7D129E82730E8D4007C0A76 /* DogsBarkingCUandDistInfuriated.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B7D129E52730E8D4007C0A76 /* DogsBarkingCUandDistInfuriated.mp3 */; };
 		B7D129E92730E8D4007C0A76 /* ManWhistlingLikeAS.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B7D129E62730E8D4007C0A76 /* ManWhistlingLikeAS.mp3 */; };
-		B7E75FBA27C8C79A009501A6 /* AgoraChatManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7E75FB927C8C79A009501A6 /* AgoraChatManager.swift */; };
 		B7E75FC427CDC6CD009501A6 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7E75FC327CDC6CD009501A6 /* Message.swift */; };
 		B7E75FC627CE17AB009501A6 /* Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7E75FC527CE17AB009501A6 /* Error.swift */; };
 /* End PBXBuildFile section */
@@ -130,7 +129,6 @@
 		B7D129E42730E8D4007C0A76 /* CrixCicadasLoopNig.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = CrixCicadasLoopNig.mp3; sourceTree = "<group>"; };
 		B7D129E52730E8D4007C0A76 /* DogsBarkingCUandDistInfuriated.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = DogsBarkingCUandDistInfuriated.mp3; sourceTree = "<group>"; };
 		B7D129E62730E8D4007C0A76 /* ManWhistlingLikeAS.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = ManWhistlingLikeAS.mp3; sourceTree = "<group>"; };
-		B7E75FB927C8C79A009501A6 /* AgoraChatManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgoraChatManager.swift; sourceTree = "<group>"; };
 		B7E75FC327CDC6CD009501A6 /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		B7E75FC527CE17AB009501A6 /* Error.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Error.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -273,7 +271,6 @@
 				B77B0D6F27B3723700ECBD6A /* SpatialAudioManager.swift */,
 				B7030DFB27BBBA310071F3B0 /* Protocols.swift */,
 				B7030DFD27BCADEB0071F3B0 /* Enumerations.swift */,
-				B7E75FB927C8C79A009501A6 /* AgoraChatManager.swift */,
 			);
 			path = Manager;
 			sourceTree = "<group>";
@@ -494,7 +491,6 @@
 				B77B0D7027B3723700ECBD6A /* SpatialAudioManager.swift in Sources */,
 				B7B9CABA271FFD570081EA38 /* Seat.swift in Sources */,
 				B72D487D281FBECA0035802D /* MultiPlayerViewController.swift in Sources */,
-				B7E75FBA27C8C79A009501A6 /* AgoraChatManager.swift in Sources */,
 				B7CA78F4273E4BA30079631C /* HeadMotionManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
