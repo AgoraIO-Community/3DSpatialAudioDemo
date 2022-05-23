@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Dcg-qF-hu9">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
+        <capability name="Image references" minToolsVersion="12.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Navigation Controller-->
+        <scene sceneID="CpH-Su-kFL">
+            <objects>
+                <navigationController id="Dcg-qF-hu9" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" largeTitles="YES" id="MXf-M6-uhg">
+                        <rect key="frame" x="0.0" y="44" width="414" height="96"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="DNo-g1-14i" kind="relationship" relationship="rootViewController" id="emB-fI-Ans"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="9yj-qa-Qnd" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-187" y="92"/>
+        </scene>
+        <!--3D Spatial Audio Demo-->
+        <scene sceneID="Cer-N9-DTG">
+            <objects>
+                <viewController title="3D Spatial Audio Demo" id="DNo-g1-14i" customClass="HomeViewController" customModule="Radio3DAudioSample" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="dK2-oW-OZn">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="OCo-Ix-Per">
+                                <rect key="frame" x="20" y="156" width="374" height="136"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="top" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3Sm-Ci-0nR">
+                                        <rect key="frame" x="0.0" y="0.0" width="374" height="60"/>
+                                        <color key="backgroundColor" systemColor="systemOrangeColor"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="60" id="sRn-8f-ctU"/>
+                                        </constraints>
+                                        <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <state key="normal" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="plain" title="Local Kit" subtitle="CloudSpatialAudioKit" imagePadding="14">
+                                            <imageReference key="image" image="location.fill.viewfinder" catalog="system" symbolScale="large"/>
+                                            <fontDescription key="titleFontDescription" type="boldSystem" pointSize="15"/>
+                                            <color key="baseForegroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </buttonConfiguration>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                <integer key="value" value="12"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                        <connections>
+                                            <action selector="onLocalKitButtonClicked:" destination="DNo-g1-14i" eventType="touchUpInside" id="mtt-hN-C5d"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="leading" contentVerticalAlignment="top" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dgM-Ys-zQl">
+                                        <rect key="frame" x="0.0" y="76" width="374" height="60"/>
+                                        <color key="backgroundColor" systemColor="systemTealColor"/>
+                                        <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <state key="normal" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="plain" title="Cloud Kit (TODO)" subtitle="LocalSpatialKit" imagePadding="14">
+                                            <imageReference key="image" image="cloud.fill" catalog="system" symbolScale="large"/>
+                                            <fontDescription key="titleFontDescription" type="boldSystem" pointSize="15"/>
+                                            <color key="baseForegroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </buttonConfiguration>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                <integer key="value" value="12"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                        <connections>
+                                            <action selector="onCloudKitButtonClicked:" destination="DNo-g1-14i" eventType="touchUpInside" id="vgN-tS-7lH"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="dgM-Ys-zQl" firstAttribute="centerX" secondItem="OCo-Ix-Per" secondAttribute="centerX" id="EZc-ru-gDP"/>
+                                    <constraint firstItem="3Sm-Ci-0nR" firstAttribute="centerX" secondItem="OCo-Ix-Per" secondAttribute="centerX" id="n5u-TA-BnL"/>
+                                    <constraint firstItem="dgM-Ys-zQl" firstAttribute="height" secondItem="3Sm-Ci-0nR" secondAttribute="height" id="v19-hF-NXn"/>
+                                </constraints>
+                            </stackView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="NeP-Fa-ToQ"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="OCo-Ix-Per" firstAttribute="centerX" secondItem="dK2-oW-OZn" secondAttribute="centerX" id="6dh-2R-NeJ"/>
+                            <constraint firstItem="OCo-Ix-Per" firstAttribute="leading" secondItem="NeP-Fa-ToQ" secondAttribute="leading" constant="20" id="I7I-jk-3ji"/>
+                            <constraint firstItem="OCo-Ix-Per" firstAttribute="top" secondItem="NeP-Fa-ToQ" secondAttribute="top" constant="16" id="eNJ-gD-jy7"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="3D Spatial Audio" largeTitleDisplayMode="always" id="iDO-hX-v3M"/>
+                    <connections>
+                        <outlet property="cloudKitButton" destination="dgM-Ys-zQl" id="1Vp-J0-QGm"/>
+                        <outlet property="localKitButton" destination="3Sm-Ci-0nR" id="PcZ-an-IPr"/>
+                        <segue destination="aP0-2H-wYE" kind="show" identifier="ShowLocalKitScene" id="cY9-nu-StN"/>
+                        <segue destination="Yic-D3-WKQ" kind="show" identifier="ShowCloudKitScene" id="ffo-uo-SM0"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="70M-eG-2h1" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="722" y="92"/>
+        </scene>
+        <!--LocalKit-->
+        <scene sceneID="Bzq-Ls-R5p">
+            <objects>
+                <viewControllerPlaceholder storyboardIdentifier="LocakKit" storyboardName="LocalKit" id="aP0-2H-wYE" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="kpt-te-yse"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="2FS-Uw-1Id" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1575" y="-181"/>
+        </scene>
+        <!--CloudKit-->
+        <scene sceneID="n7T-yJ-x6K">
+            <objects>
+                <viewControllerPlaceholder storyboardName="CloudKit" id="Yic-D3-WKQ" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="DQX-on-G4Q"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Mfx-Nf-ZT5" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1578" y="-49"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="cloud.fill" catalog="system" width="128" height="88"/>
+        <image name="location.fill.viewfinder" catalog="system" width="128" height="115"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemOrangeColor">
+            <color red="1" green="0.58431372549019611" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemTealColor">
+            <color red="0.18823529411764706" green="0.69019607843137254" blue="0.7803921568627451" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+    </resources>
+</document>
