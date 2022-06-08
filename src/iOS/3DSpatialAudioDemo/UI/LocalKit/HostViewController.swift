@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import DarkEggKit
 
 class HostViewController: UIViewController {
     // MARK: - Control
@@ -31,7 +32,7 @@ class HostViewController: UIViewController {
         if let cName = self.channelName {
             self.channelNameLabel.text = cName
             self.agoraMgr.join(channel: cName, asHost: true) { (success, uid) in
-                print("-----")
+                Logger.debug("-----")
                 if success {
                     self.uidLabel.text = "user id: \(uid)"
                     // reset self position
@@ -99,11 +100,11 @@ extension HostViewController: AgoraManagerDelegate {
     func agoraMgr(_ mgr: AgoraManager, userJoined uid: UInt) {
         // set to default seat
         // enable to hear other host
-        print("user \(uid) joined, add to remote user list")
+        Logger.debug("user \(uid) joined, add to remote user list")
         PositionManager.shared.changeSeat(ofUser: uid, to: 4)
     }
     
     func agoraMgr(_ mgr: AgoraManager, userLeaved uid: UInt) {
-        print("")
+        Logger.debug("")
     }
 }

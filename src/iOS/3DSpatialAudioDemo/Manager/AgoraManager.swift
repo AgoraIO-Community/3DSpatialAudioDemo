@@ -116,10 +116,10 @@ class AgoraManager: NSObject {
     func join(channel: String, asHost: Bool, completion: ((Bool, UInt) -> Void)?) {
         self.agoraKit.setClientRole(asHost ? .broadcaster : .audience)
         
-        agoraKit.setParameters("{\"rtc.audio.force_bluetooth_a2dp\": false}")
-//        self.agoraKit.joinChannel(byToken: nil, channelId: channel, uid: 0, mediaOptions: option)  { [weak self] channel, uid, elapsed in
+        //agoraKit.setParameters("{\"rtc.audio.force_bluetooth_a2dp\": false}")
+        //self.agoraKit.joinChannel(byToken: nil, channelId: channel, uid: 0, mediaOptions: option)  { [weak self] channel, uid, elapsed in
         self.agoraKit.joinChannel(byToken: nil, channelId: channel, info: nil, uid: 0) { [weak self] channel, uid, elapsed in
-            print("Join \(channel) with uid \(uid) elapsed \(elapsed)ms")
+            Logger.debug("Join \(channel) with uid \(uid) elapsed \(elapsed)ms")
             self?.selfUid = uid
             // set video preview view
             let videoCanvas = AgoraRtcVideoCanvas()
@@ -136,7 +136,7 @@ class AgoraManager: NSObject {
         
         return Promise { seal in
             let ret = self.agoraKit.joinChannel(byToken: nil, channelId: channel, info: nil, uid: 0) { [weak self] channel, uid, elapsed in
-                print("Join \(channel) with uid \(uid) elapsed \(elapsed)ms")
+                Logger.debug("Join \(channel) with uid \(uid) elapsed \(elapsed)ms")
                 self?.selfUid = uid
                 // set video preview view
                 let videoCanvas = AgoraRtcVideoCanvas()
@@ -223,9 +223,9 @@ extension AgoraManager: AgoraRtcMediaPlayerDelegate {
                 self.mediaPlayers[Int(playerId)] = p
             }
             completion?(Int(playerId))
-            //print(player?.getPlayoutVolume())
-            print("publish volume: \(player?.getPublishSignalVolume() ?? -1)")
-            print("players count: \(self.mediaPlayers.count)")
+            //Logger.debug(player?.getPlayoutVolume())
+            Logger.debug("publish volume: \(player?.getPublishSignalVolume() ?? -1)")
+            Logger.debug("players count: \(self.mediaPlayers.count)")
             //player?.play()
         }
     }
@@ -255,7 +255,7 @@ extension AgoraManager: AgoraRtcMediaPlayerDelegate {
             mediaOption.publishMediaPlayerId = AgoraRtcIntOptional.of(Int32(playerId))
             mediaOption.publishMediaPlayerAudioTrack = AgoraRtcBoolOptional.of(true)
             let a = self.agoraKit.updateChannel(with: mediaOption)
-            print("update media option: \(a)")
+            Logger.debug("update media option: \(a)")
         }
         else {
             mediaOption.publishMediaPlayerAudioTrack = AgoraRtcBoolOptional.of(false)
@@ -267,7 +267,7 @@ extension AgoraManager: AgoraRtcMediaPlayerDelegate {
     // Delegate functions
     func agoraRtcMediaPlayer(_ playerKit: AgoraRtcMediaPlayerProtocol, didChangedTo state: AgoraMediaPlayerState, error: AgoraMediaPlayerError) {
         //
-        print("state: \(state.rawValue), error: \(error.rawValue)")
+        Logger.debug("state: \(state.rawValue), error: \(error.rawValue)")
         if state == .openCompleted {
             // loading completed, start player
             playerKit.play()
@@ -301,7 +301,7 @@ extension AgoraManager {
 extension AgoraManager {
     /// Start audio mixing
     func startAudioMixing(soundType: String, completion: ((Bool) -> Void)?) {
-        print("Start audio mixing: \(soundType)")
+        Logger.debug("Start audio mixing: \(soundType)")
         agoraKit.adjustRecordingSignalVolume(0)
         agoraKit.adjustAudioMixingPublishVolume(100)
         agoraKit.stopAudioMixing()
@@ -314,7 +314,7 @@ extension AgoraManager {
     
     /// Stop audio mixing
     func stopAudioMixing() {
-        print("Stop audio mixing")
+        Logger.debug("Stop audio mixing")
         agoraKit.adjustRecordingSignalVolume(100)
         agoraKit.adjustAudioMixingPublishVolume(0)
         agoraKit.stopAudioMixing()
@@ -340,7 +340,7 @@ extension AgoraManager {
     ///   - position: [x, y, z]
     ///   - mode: Spatial Audio Mode (local or cloud)
     func updatePosition(of userId: UInt, position: [NSNumber], mode: SpatialAudioMode = .local) {
-        print("update user \(userId) position: \(position)")
+        Logger.debug("update user \(userId) position: \(position)")
         let posInfo = AgoraRemoteVoicePositionInfo()
         posInfo.position = position
         mode.spatialKit.updateRemotePosition(of: userId, positionInfo: posInfo)
@@ -358,35 +358,35 @@ extension AgoraManager {
 // MARK: - AgoraRtcEngineDelegate
 extension AgoraManager: AgoraRtcEngineDelegate {
     func setHostPosition(_ uid: UInt, position: [NSNumber]) {
-        print("setHostPosition")
+        Logger.debug("setHostPosition")
         self.updatePosition(of: uid, position: position)
     }
     
     func rtcEngine(_ engine: AgoraRtcEngineKit, didMicrophoneEnabled enabled: Bool) {
-        print("didMicrophoneEnabled: \(enabled)")
+        Logger.debug("didMicrophoneEnabled: \(enabled)")
     }
     
     func rtcEngine(_ engine: AgoraRtcEngineKit, didJoinedOfUid uid: UInt, elapsed: Int) {
-        print("user \(uid) join")
+        Logger.debug("user \(uid) join")
         let param = AgoraSpatialAudioParams()
         self.agoraKit.setRemoteUserSpatialAudioParams(uid, params: param)
         self.delegate?.agoraMgr(self, userJoined: uid)
     }
     
     func rtcEngine(_ engine: AgoraRtcEngineKit, didOfflineOfUid uid: UInt, reason: AgoraUserOfflineReason) {
-        print("user \(uid) leave")
+        Logger.debug("user \(uid) leave")
         self.delegate?.agoraMgr(self, userLeaved: uid)
     }
     
     func rtcEngine(_ engine: AgoraRtcEngineKit, didJoinChannel channel: String, withUid uid: UInt, elapsed: Int) {
-        print("Join \(channel) with uid \(uid) elapsed \(elapsed)ms")
+        Logger.debug("Join \(channel) with uid \(uid) elapsed \(elapsed)ms")
     }
     
     func rtcEngine(_ engine: AgoraRtcEngineKit, didOccurError errorCode: AgoraErrorCode) {
-        print("errorCode \(errorCode.rawValue)")
+        Logger.debug("errorCode \(errorCode.rawValue)")
     }
     
     func rtcEngine(_ engine: AgoraRtcEngineKit, didOccurWarning warningCode: AgoraWarningCode) {
-        print("warningCode \(warningCode.rawValue)")
+        Logger.debug("warningCode \(warningCode.rawValue)")
     }
 }

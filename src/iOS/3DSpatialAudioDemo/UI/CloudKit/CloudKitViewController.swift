@@ -114,7 +114,7 @@ extension CloudKitViewController {
     /// Check channel name
     private func checkChannelName() -> Bool{
         guard let channelName = channelNameField.text, !channelName.isEmpty else {
-            print("[Error]Please enter channel name.")
+            Logger.debug("[Error]Please enter channel name.")
             self.showAlert(title: "Cannot proceed", message: "Please enter the channel name.")
             return false
         }

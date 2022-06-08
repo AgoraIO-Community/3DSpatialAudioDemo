@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import DarkEggKit
 
 class NineSeatRoomViewController: UIViewController {
     // only for audience
@@ -52,13 +53,13 @@ class NineSeatRoomViewController: UIViewController {
             self.channelLabel.text = cName
             self.agoraMgr.join(channel: cName, asHost: self.isHost) { (success, uid) in
                 if success {
-                    print("join channel \(cName) success: \(success), uid is \(uid)")
+                    Logger.debug("join channel \(cName) success: \(success), uid is \(uid)")
                     // reset self position
                     PositionManager.shared.resetSelfPosition()
                     self.uidLabel.text = "user id: \(uid)"
                 }
                 else {
-                    print("join channel \(cName) failed.")
+                    Logger.debug("join channel \(cName) failed.")
                     // show alert
                 }
             }
@@ -71,7 +72,7 @@ class NineSeatRoomViewController: UIViewController {
     }
 
     deinit {
-        print("dddd")
+        Logger.debug()
     }
 }
 
@@ -83,7 +84,7 @@ extension NineSeatRoomViewController {
 //    }
     
     @IBAction func onSeatClicked(_ sender: Seat) {
-        print("\(sender.tag)")
+        Logger.debug("\(sender.tag)")
         setRemoteHostSeat(sender)
     }
     
@@ -121,7 +122,7 @@ extension NineSeatRoomViewController {
 
 extension NineSeatRoomViewController: AgoraManagerDelegate {
     func agoraMgr(_ mgr: AgoraManager, userJoined uid: UInt) {
-        print("user \(uid) joined, add to remote user list")
+        Logger.debug("user \(uid) joined, add to remote user list")
         guard self.remoteUsers.keys.contains(uid) else {
             // new user,
             self.remoteUsers[uid] = -1
@@ -131,7 +132,7 @@ extension NineSeatRoomViewController: AgoraManagerDelegate {
     }
     
     func agoraMgr(_ mgr: AgoraManager, userLeaved uid: UInt) {
-        print("user \(uid) leaved, remove from remote user list")
+        Logger.debug("user \(uid) leaved, remove from remote user list")
         if self.remoteUsers.keys.contains(uid) {
             self.remoteUsers.removeValue(forKey: uid)
         }

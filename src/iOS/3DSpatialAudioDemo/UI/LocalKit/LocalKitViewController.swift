@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import DarkEggKit
 
 enum SceneType: String {
     case host
@@ -122,7 +123,7 @@ class LocalKitViewController: UIViewController {
 extension LocalKitViewController {
     @IBAction private func onHostButtonClicked(_ sender: UIButton?) {
         // select seat
-        print("EnterRoomAsHost")
+        Logger.debug("EnterRoomAsHost")
         if checkChannelName() {
             self.performSegue(withIdentifier: "EnterRoomAsHost", sender: self)
         }
@@ -130,42 +131,42 @@ extension LocalKitViewController {
     
     ///
     @IBAction private func onEnterARRoomClicked(_ sender: UIButton?) {
-        print("onEnterARRoomClicked")
+        Logger.debug("onEnterARRoomClicked")
         if checkChannelName() {
             self.performSegue(withIdentifier: "EnterARRoom", sender: self)
         }
     }
     
     @IBAction private func onAudienceButtonClicked(_ sender: UIButton?) {
-        print("EnterRoomAsAudience")
+        Logger.debug("EnterRoomAsAudience")
         if checkChannelName() {
             self.performSegue(withIdentifier: "EnterRoomAsAudience", sender: self)
         }
     }
     
     @IBAction private func onImageRoomButtonClicked(_ sender: UIButton?) {
-        print("EnterImageRoomAsAudience")
+        Logger.debug("EnterImageRoomAsAudience")
         if checkChannelName() {
             self.performSegue(withIdentifier: "EnterRoomImage", sender: self)
         }
     }
     
     @IBAction private func onRealityRoomButtonClicked(_ sender: UIButton) {
-        print("onRealityRoomButtonClicked")
+        Logger.debug("onRealityRoomButtonClicked")
         if checkChannelName() {
             self.performSegue(withIdentifier: "EnterRealityRoom", sender: self)
         }
     }
     
     @IBAction private func onMultiPlayerRoomButtonClicked(_ sender: UIButton) {
-        print("onMultiPlayerRoomButtonClicked")
+        Logger.debug("onMultiPlayerRoomButtonClicked")
         if checkChannelName() {
             self.performSegue(withIdentifier: "EnterMultiPlayerRoom", sender: self)
         }
     }
     
     @IBAction private func onNineSeatsARButtonClicked(_ sender: UIButton) {
-        print("onNineSeatsARButtonClicked")
+        Logger.debug("onNineSeatsARButtonClicked")
         if checkChannelName() {
             self.performSegue(withIdentifier: "Enter9SeatsARRoom", sender: self)
         }
@@ -211,12 +212,18 @@ extension LocalKitViewController {
                 destinationVC.isHost = true
             }
         }
+        else if segue.identifier == "Enter9SeatsARRoom" {
+            if let destinationVC = segue.destination as? NineSeatsARViewController {
+                destinationVC.channelName = channelNameField.text
+                destinationVC.isHost = true
+            }
+        }
     }
     
     /// Check channel name
     private func checkChannelName() -> Bool{
         guard let channelName = channelNameField.text, !channelName.isEmpty else {
-            print("Please enter channel name.")
+            Logger.debug("Please enter channel name.")
             self.showAlert(title: "Cannot proceed", message: "Please enter the channel name.")
             return false
         }
