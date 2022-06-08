@@ -146,14 +146,53 @@ extension PositionManager {
     func getPositionOfScreen(_ index: Int) -> [NSNumber] {
         let column = index % 3
         let row = index / 3
-        Logger.debug("set screen \(row) - \(column)")
-        // (1,-1,-1) (0,-1,-1) (-1,-1,-1)
-        // (1,0,-1) (0,0,-1) (-1,0,-1)
-        // (1,1,-1) (0,1,-1) (-1,1,-1)
+        //Logger.debug("set screen \(row) - \(column)")
+        // (-1,-1,-1) (0,-1,-1) (1,-1,-1)
+        // (-1,0,-1) (0,0,-1) (1,0,-1)
+        // (-1,1,-1) (0,1,-1) (1,1,-1)
         var pos: [NSNumber] = []
         
-        pos = [NSNumber(value: 1-column), NSNumber(value: row-1), NSNumber(value: -1.0)]
-        Logger.debug("set screen \(row) - \(column) at \(pos)")
+        pos = [NSNumber(value: column-1), NSNumber(value: 1-row), NSNumber(value: -1.0)]
+        //Logger.debug("set screen \(row) - \(column) at \(pos)")
+        return pos
+    }
+    
+    func getVoicePosition(ofScreen index: Int) -> [NSNumber] {
+        var pos: [NSNumber] = []
+        switch index {
+        case 0:
+            pos = [slantMinus, slant, slant]
+            break
+        case 1:
+            pos = [0, 0, axial]
+            break
+        case 2:
+            pos = [slant, slant, slant]
+            break
+        case 3:
+            pos = [-1, 1, 0]
+            break
+        case 4:
+            pos = [0, 1, -1]
+            break
+        case 5:
+            pos = [1, 1, -1]
+            break
+
+        case 6:
+            pos = [slantMinus, slant, slantMinus]
+            break
+        case 7:
+            pos = [0, 0, axialMinus]
+            break
+        case 8:
+            pos = [slant, slant, slantMinus]
+            break
+        default: // default, not on stage, from back
+            pos = [0, axialMinus, 0]
+            break
+        }
+        Logger.debug("set screen \(index) at \(pos)")
         return pos
     }
 }

@@ -7,6 +7,7 @@
 
 import UIKit
 import CoreMotion
+import DarkEggKit
 
 class RoomImageViewController: UIViewController {
     @IBOutlet weak var Seat01: UIButton!
@@ -47,7 +48,7 @@ class RoomImageViewController: UIViewController {
             self.agoraMgr.join(channel: cName, asHost: self.isHost) { (success, uid) in
                 //
                 if success {
-                    print("join \(cName) as \(uid) success: \(success)")
+                    Logger.debug("join \(cName) as \(uid) success: \(success)")
                     self.agoraMgr.updateSelfPosition(
                         position: [
                             NSNumber(value: 0),
@@ -252,7 +253,7 @@ extension RoomImageViewController: HeadMotionManagerDelegate {
     @IBAction private func onHeadMotionSwitchChanged(_ sender: UISwitch) {
         if sender.isOn {
             HeadMotionManager.shared.startHeadMotion { result in
-                print("startHeadMotion: \(result)")
+                Logger.debug("startHeadMotion: \(result)")
             }
         }
         else {
@@ -283,8 +284,8 @@ extension RoomImageViewController: HeadMotionManagerDelegate {
     }
     
     func headMotionMgr(_ mgr: HeadMotionManager, motion: CMDeviceMotion?) {
-        //print("\(motion?.rotationRate)")
-        print("\(motion?.attitude.quaternion)")
+        //Logger.debug("\(motion?.rotationRate)")
+        Logger.debug("\(motion?.attitude.quaternion)")
         let x = motion?.attitude.quaternion.x ?? 0
         let y = motion?.attitude.quaternion.y ?? 0
         let z = motion?.attitude.quaternion.z ?? 0
@@ -321,17 +322,17 @@ extension RoomImageViewController: HeadMotionManagerDelegate {
 //        let forwordX = -(2*x*y+2*z*w)
 //        let forwordY = (1-2*x*x-2*z*z)
 //        let forwordZ = (2*y*z-2*x*w)
-//        print("forword: [\(String (format:  "%.2f" ,forwordX)),\(String (format:  "%.2f" ,forwordY)),\(String (format:  "%.2f" ,forwordZ))]")
+//        Logger.debug("forword: [\(String (format:  "%.2f" ,forwordX)),\(String (format:  "%.2f" ,forwordY)),\(String (format:  "%.2f" ,forwordZ))]")
 //
 //        let rightX = (1-2*y*y-2*z*z)
 //        let rightY = -(2*x*y-2*z*w)
 //        let rightZ = (2*x*z+2*y*w)
-//        print("right: [\(String (format:  "%.2f" ,rightX)),\(String (format:  "%.2f" , rightY)),\(String (format:  "%.2f" ,rightZ))]")
+//        Logger.debug("right: [\(String (format:  "%.2f" ,rightX)),\(String (format:  "%.2f" , rightY)),\(String (format:  "%.2f" ,rightZ))]")
 //
 //        let upX = (2*x*z-2*y*w)
 //        let upY = (2*y*z+2*x*w)
 //        let upZ = (1-2*x*x-2*y*y)
-//        print("up: [\(String (format:  "%.2f" ,upX)),\(String (format:  "%.2f" ,upY)),\(String (format:  "%.2f" ,upZ))]")
+//        Logger.debug("up: [\(String (format:  "%.2f" ,upX)),\(String (format:  "%.2f" ,upY)),\(String (format:  "%.2f" ,upZ))]")
         
         let debugMsg = """
         forword: [\(String (format:  "%.2f" ,forwordX)),\(String (format:  "%.2f" ,forwordY)),\(String (format:  "%.2f" ,forwordZ))]
@@ -363,7 +364,7 @@ extension RoomImageViewController: HeadMotionManagerDelegate {
 
 extension RoomImageViewController: AgoraManagerDelegate {
     func agoraMgr(_ mgr: AgoraManager, userJoined uid: UInt) {
-        print("user \(uid) joined, add to remote user list")
+        Logger.debug("user \(uid) joined, add to remote user list")
         guard self.remoteUsers.keys.contains(uid) else {
             // new user,
             self.remoteUsers[uid] = -1
@@ -373,7 +374,7 @@ extension RoomImageViewController: AgoraManagerDelegate {
     }
     
     func agoraMgr(_ mgr: AgoraManager, userLeaved uid: UInt) {
-        print("user \(uid) leaved, remove from remote user list")
+        Logger.debug("user \(uid) leaved, remove from remote user list")
         if self.remoteUsers.keys.contains(uid) {
             self.remoteUsers.removeValue(forKey: uid)
         }

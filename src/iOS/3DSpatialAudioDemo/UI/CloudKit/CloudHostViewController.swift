@@ -7,6 +7,7 @@
 
 import UIKit
 import GameKit
+import DarkEggKit
 
 class CloudHostViewController: UIViewController {
     enum MoveTo: Int {
@@ -65,7 +66,7 @@ extension CloudHostViewController {
         }
         
         // move
-        print("\(direction.rawValue)")
+        Logger.debug("\(direction.rawValue)")
     }
     
     @IBAction func onDircetionButtonUntouched(_ sender: UIButton) {
