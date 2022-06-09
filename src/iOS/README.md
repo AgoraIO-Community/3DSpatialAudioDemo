@@ -1,24 +1,29 @@
-# iOS
+# Agora 3D Spatial Audio Demo - iOS (**Use NG SDK**)
 
-## Run pod install
+## How to start
 
-## Open 3DSpatialAudioDemo.xcworkspace
+### Run pod install
 
-## Edit source code
-
-In Utility/AppConfig.swift
-Edit
-
-```Swift
-DefaultAgoraAppName         // Not used this time, can be empty string
-DefaultAgoraAppId           // Must
-DefaultAgoraAppCertificate  // Not used this time, can be empty string
-DefaultAgoraChatAppKey      // Not used this time, can be empty string
+```shell
+pod install
 ```
 
-## Edit info.plist
+### Open 3DSpatialAudioDemo.xcworkspace in Xcode
 
-Fill AppId and others in these
-**AgoraChatConfig** and **AgoraConfig**
+### Edit these 3 value in AppConfig
 
-## Change Signing & Capabilit
+```Swift
+private let DefaultAgoraAppName: String         = ""    // Agora app name. Not used now, you can keep it empty
+private let DefaultAgoraAppId: String           = ""    // default App Id. Replace with your own AppId
+private let DefaultAgoraAppCertificate: String  = ""    // default App Certificate. Not used now, you can keep it empty
+```
+
+### *(Optional) Edit AgoraConfig key-value in the info.plist*
+
+### Change Signing & Capabilities
+
+### Run on your device
+
+---
+
+## TODO
