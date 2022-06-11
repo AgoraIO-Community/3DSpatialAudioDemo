@@ -1,0 +1,16 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "AgoraRtmKit",
+        "repositoryURL": "https://github.com/AgoraIO/AgoraRtm_iOS",
+        "state": {
+          "branch": null,
+          "revision": "3aa3e3df92f48bd98e82f1acc3fdd9f534831ac6",
+          "version": "1.4.9"
+        }
+      }
+    ]
+  },
+  "version": 1
+}
