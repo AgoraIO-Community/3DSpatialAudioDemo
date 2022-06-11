@@ -7,6 +7,7 @@
 
 import Foundation
 import CoreMotion
+import DarkEggKit
 
 @available(iOS 14.0, *)
 protocol HeadMotionManagerDelegate: AnyObject {
@@ -20,11 +21,11 @@ class HeadMotionManager: NSObject {
     
     lazy var available: Bool = {
         guard self.motionMgr.isDeviceMotionAvailable else {
-            print("isDeviceMotion Available: false")
+            Logger.debug("isDeviceMotion Available: false")
             return false
         }
         guard self.motionMgr.isDeviceMotionActive else {
-            print("isDeviceMotion Active: false")
+            Logger.debug("isDeviceMotion Active: false")
             return false
         }
         return true
@@ -41,14 +42,14 @@ class HeadMotionManager: NSObject {
         var result = false
         switch CMHeadphoneMotionManager.authorizationStatus() {
         case .authorized:
-            print("User previously allowed motion tracking")
+            Logger.debug("User previously allowed motion tracking")
             result = true
         case .restricted:
-            print("User access to motion updates is restricted")
+            Logger.debug("User access to motion updates is restricted")
         case .denied:
-            print("User denied access to motion updates; will not start motion tracking")
+            Logger.debug("User denied access to motion updates; will not start motion tracking")
         case .notDetermined:
-            print("Permission for device motion tracking unknown; will prompt for access")
+            Logger.debug("Permission for device motion tracking unknown; will prompt for access")
         default:
             break
         }
@@ -69,7 +70,7 @@ extension HeadMotionManager {
         self.motionMgr.delegate = self
         self.motionMgr.startDeviceMotionUpdates(to: .main) { [weak self] motion, error in
             if let err = error {
-                print("Error: \(err.localizedDescription)")
+                Logger.debug("Error: \(err.localizedDescription)")
                 return
             }
             // update

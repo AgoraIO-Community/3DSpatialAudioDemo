@@ -7,6 +7,7 @@
 
 import UIKit
 import CoreMotion
+import DarkEggKit
 
 class MultiPlayerViewController: UIViewController {
     // MARK: - UI
@@ -60,13 +61,13 @@ class MultiPlayerViewController: UIViewController {
             self.channelLabel.text = cName
             self.agoraMgr.join(channel: cName, asHost: self.isHost) { (success, uid) in
                 if success {
-                    print("join channel \(cName) success: \(success), uid is \(uid)")
+                    Logger.debug("join channel \(cName) success: \(success), uid is \(uid)")
                     // reset self position
                     PositionManager.shared.resetSelfPosition()
                     self.uidLabel.text = "user id: \(uid)"
                 }
                 else {
-                    print("join channel \(cName) failed.")
+                    Logger.debug("join channel \(cName) failed.")
                     // show alert
                 }
             }
@@ -93,12 +94,12 @@ extension MultiPlayerViewController {
     
     @IBAction private func onTapped(_ sender: UITapGestureRecognizer) {
         let point = sender.location(in: self.view)
-        print(self.userLabel.center)
-        print(point)
+        Logger.debug(self.userLabel.center)
+        Logger.debug(point)
         let distanceX = point.x.distance(to: self.userLabel.center.x)/100 * -1
         let distanceY = point.y.distance(to: self.userLabel.center.y)/100
         
-        print("distanceX: \(distanceX), distanceY: \(distanceY)")
+        Logger.debug("distanceX: \(distanceX), distanceY: \(distanceY)")
         let soundSelectView = UIAlertController(title: "Select Sound", message: nil, preferredStyle: .actionSheet)
         
 //        guard
@@ -189,7 +190,7 @@ extension MultiPlayerViewController: HeadMotionManagerDelegate {
     @IBAction private func onHeadMotionSwitchChanged(_ sender: UISwitch) {
         if sender.isOn {
             HeadMotionManager.shared.startHeadMotion { result in
-                print("startHeadMotion: \(result)")
+                Logger.debug("startHeadMotion: \(result)")
             }
         }
         else {
@@ -304,8 +305,8 @@ extension MultiPlayerViewController: HeadMotionManagerDelegate {
     }
     
     func headMotionMgr(_ mgr: HeadMotionManager, motion: CMDeviceMotion?) {
-        //print("\(motion?.rotationRate)")
-        print("\(motion?.attitude.quaternion)")
+        //Logger.debug("\(motion?.rotationRate)")
+        Logger.debug("\(motion?.attitude.quaternion)")
         let x = motion?.attitude.quaternion.x ?? 0
         let y = motion?.attitude.quaternion.y ?? 0
         let z = motion?.attitude.quaternion.z ?? 0
@@ -363,12 +364,12 @@ extension MultiPlayerViewController {
 
 extension MultiPlayerViewController: AgoraManagerDelegate {
     func agoraMgr(_ mgr: AgoraManager, userJoined uid: UInt) {
-        print("user \(uid) joined, add to remote user list")
+        Logger.debug("user \(uid) joined, add to remote user list")
         PositionManager.shared.changeSeat(ofUser: uid, to: 4)
         return
     }
     
     func agoraMgr(_ mgr: AgoraManager, userLeaved uid: UInt) {
-        print("user \(uid) leaved, remove from remote user list")
+        Logger.debug("user \(uid) leaved, remove from remote user list")
     }
 }

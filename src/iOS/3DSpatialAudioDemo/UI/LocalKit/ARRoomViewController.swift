@@ -8,7 +8,8 @@
 import Foundation
 import UIKit
 import ARKit
-//import RealityKit
+import DarkEggKit
+import Accelerate
 
 class ARRoomViewController: UIViewController {
     
@@ -31,6 +32,8 @@ class ARRoomViewController: UIViewController {
     
     var positionUpdateTimer: Int = 0
     
+    let defaultScreenPos: simd_float4 = simd_float4(0, 0, -1, 1)
+    
     private var isPlanarDetected: Bool = false{
         didSet {
             if ( isPlanarDetected ) {
@@ -49,7 +52,7 @@ class ARRoomViewController: UIViewController {
             //self.channelLabel.text = cName
             self.agoraMgr.join(channel: cName, asHost: true) { (success, uid) in
                 if success {
-                    print("join channel \(cName) success: \(success), uid is \(uid)")
+                    Logger.debug("join channel \(cName) success: \(success), uid is \(uid)")
                     // set self position
                     PositionManager.shared.resetSelfPosition()
                     //self.uidLabel.text = "\(uid)"
@@ -105,36 +108,36 @@ extension ARRoomViewController {
     
     //
     @IBAction private func onSceneTapped(_ recognizer: UITapGestureRecognizer) {
-        print("onSceneTapped")
+        Logger.debug("onSceneTapped")
 //        guard self.isPlanarDetected else {
 //            return
 //        }
         
         let location = recognizer.location(in: self.arView)
-        print("\(location)")
+        Logger.debug("\(location)")
         
         // if hit screen
         // remove it
         if let node = self.arView.hitTest(location, options: nil).first?.node {
-            print("removeNode")
+            Logger.debug("removeNode")
             self.removeNode(node)
         }
         // if hit nothing, add a screen
-//        print("location: \(location)")
-//        print("arView.center: \(arView.center)")
+//        Logger.debug("location: \(location)")
+//        Logger.debug("arView.center: \(arView.center)")
 //        let query = self.arView.raycastQuery(from: arView.center, allowing: .estimatedPlane, alignment: .any)
-//        print("query?.direction: \(query?.direction)")
-//        print("query?.origin: \(query?.origin)")
+//        Logger.debug("query?.direction: \(query?.direction)")
+//        Logger.debug("query?.origin: \(query?.origin)")
 //        let results = arView.session.raycast(query!)
 //        if let a: ARRaycastResult = results.first {
-//            print("first point from ray cast query: \(a.worldTransform)")
+//            Logger.debug("first point from ray cast query: \(a.worldTransform)")
 //        }
         if let result = self.arView.hitTest(location, types: .featurePoint).first {
             let userSelectView = UIAlertController(title: "Select User", message: nil, preferredStyle: .actionSheet)
             for uid in self.undisplayedUsers {
                 let action = UIAlertAction(title: "\(uid)", style: .default) { [weak self] action in
                     //
-                    print("addNode for user: \(uid) at \(result.worldTransform)")
+                    Logger.debug("addNode for user: \(uid) at \(result.worldTransform)")
                     self?.addNode(withTransform: result.worldTransform, ofUser: uid)
                 }
                 userSelectView.addAction(action)
@@ -154,10 +157,10 @@ extension ARRoomViewController {
 //            let action = UIAlertAction(title: "\(uid)", style: .default) { [weak self] action in
 //                //
 //                if let node = self?.arView.hitTest(location, options: nil).first?.node {
-//                    print("removeNode")
+//                    Logger.debug("removeNode")
 //                    self?.removeNode(node)
 //                } else if let result = self?.arView.hitTest(location, types: .featurePoint).first {
-//                    print("addNode")
+//                    Logger.debug("addNode")
 //                    self?.addNode(withTransform: result.worldTransform, ofUser: uid)
 //                }
 //            }
@@ -175,20 +178,80 @@ extension ARRoomViewController {
         return
     }
     
-    @IBAction private func onCloseButtonClicked(_ sender: UIButton?) {
-        self.dismiss(animated: true) {
-            self.agoraMgr.delegate = nil
-            self.agoraMgr.leave()
-            self.stopARSession()
+    @IBAction private func onScreenButtonClicked(_ sender: UIButton) {
+        let userSelectView = UIAlertController(title: "Select User", message: nil, preferredStyle: .actionSheet)
+        for uid in self.undisplayedUsers {
+            let action = UIAlertAction(title: "\(uid)", style: .default) { [weak self] action in
+                self?.addUserNodeToFront(forUser: uid)
+            }
+            userSelectView.addAction(action)
+        }
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { action in
+            //.dismiss(animated: true, completion: nil)
+        }
+        userSelectView.addAction(cancelAction)
+        self.present(userSelectView, animated: true) {
+            // todo
         }
     }
     
     private func randomSetUser(uid: UInt) {
-        print("random set position of \(uid)")
+        Logger.debug("random set position of \(uid)")
     }
 }
 
 extension ARRoomViewController {
+    private func addUserNodeToFront(forUser uid: UInt) {
+        let scene = SCNScene(named: "AR.scnassets/displayer.scn")!
+        let rootNode = scene.rootNode
+        
+        let camera: ARCamera = arView.session.currentFrame!.camera
+        let transform: simd_float4x4 = camera.transform
+        let rotationY = camera.eulerAngles.y
+        let targetPos = transform * defaultScreenPos
+        Logger.debug("addNode for user: \(uid) at \(targetPos)")
+        
+        rootNode.position = SCNVector3(targetPos.x, targetPos.y, targetPos.z)
+        rootNode.rotation = SCNVector4(0, 1, 0, rotationY) //* (1,0,0, camera.eulerAngles.x)
+        
+        self.updateNodeUserLabel(uid: 0, node: rootNode)
+        
+        arView.scene.rootNode.addChildNode(rootNode)
+        
+        //userNodes[uid] = rootNode
+//        let pos = [
+//            NSNumber(value: targetPos.x),
+//            NSNumber(value: targetPos.y),
+//            NSNumber(value: targetPos.z),
+//        ]
+//        userPositions[uid] = pos
+        
+//        self.agoraMgr.updatePosition(of: 0, position: pos)
+        
+        self.updateDebugLabel()
+        
+        if let idx = self.undisplayedUsers.firstIndex(of: 0) {
+            self.undisplayedUsers.remove(at: idx)
+            Logger.debug(self.undisplayedUsers)
+        }
+        
+    }
+    
+    private func addPlayerNodeToFront() -> Int {
+        return 0
+    }
+    
+    private func getPositionAndRotation() -> (SCNVector3, SCNVector4) {
+        let camera: ARCamera = arView.session.currentFrame!.camera
+        let transform: simd_float4x4 = camera.transform
+        let rotationY = camera.eulerAngles.y
+        let targetPos = transform * defaultScreenPos
+        
+        let pos = SCNVector3(targetPos.x, targetPos.y, targetPos.z)
+        let rotation = SCNVector4(0, 1, 0, rotationY) //* (1,0,0, camera.eulerAngles.x)
+        return (pos, rotation)
+    }
+    
     private func addNode(withTransform transform: matrix_float4x4, ofUser uid: UInt) {
         let scene = SCNScene(named: "AR.scnassets/displayer.scn")!
         let rootNode = scene.rootNode
@@ -219,7 +282,7 @@ extension ARRoomViewController {
         
         if let idx = self.undisplayedUsers.firstIndex(of: uid) {
             self.undisplayedUsers.remove(at: idx)
-            print(self.undisplayedUsers)
+            Logger.debug(self.undisplayedUsers)
         }
     }
     
@@ -242,10 +305,10 @@ extension ARRoomViewController {
         
         for k in userNodes.keys {
             if userNodes[k] == rootNode {
-                print("removeNode \(k)")
+                Logger.debug("removeNode \(k)")
                 userNodes.removeValue(forKey: k)
                 self.undisplayedUsers.append(k)
-                print(self.undisplayedUsers)
+                Logger.debug(self.undisplayedUsers)
             }
         }
     }
@@ -389,10 +452,10 @@ extension ARRoomViewController: ARSessionDelegate {
         self.positionUpdateTimer = 0
         let transform: simd_float4x4 = frame.camera.transform
         
-        //print("eulerAngles: \(frame.camera.eulerAngles)")
-        print("transform0: \(transform.columns.0)")
-        print("transform1: \(transform.columns.1)")
-        print("transform2: \(transform.columns.2)")
+        //Logger.debug("eulerAngles: \(frame.camera.eulerAngles)")
+        //Logger.debug("transform0: \(transform.columns.0)")
+        //Logger.debug("transform1: \(transform.columns.1)")
+        //Logger.debug("transform2: \(transform.columns.2)")
         
         let pos = [
             NSNumber(value: transform.columns.3.x),
@@ -414,7 +477,7 @@ extension ARRoomViewController: ARSessionDelegate {
             NSNumber(value: transform.columns.2.y),
             NSNumber(value: transform.columns.2.z),
         ]
-        //print("pos: \(pos)")
+        //Logger.debug("pos: \(pos)")
         updateSelfPositionLabel(pos, angle: frame.camera.eulerAngles, transform: transform)
         self.agoraMgr.updateSelfPosition(
             position: pos,

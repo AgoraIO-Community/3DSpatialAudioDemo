@@ -16,13 +16,16 @@ class NineSeatsARViewController: BaseViewController {
     @IBOutlet weak var uidListLabel: UILabel!
     @IBOutlet weak var selfPositionLabel: UILabel!
     
-    @IBOutlet weak var setSeatsButton: UIButton!
+    @IBOutlet weak var setScreensButton: UIButton!
     
-    var userSeat: [UInt: Int] = [:]
-    var userNodes: [UInt: SCNNode] = [:]
-    var userPositions: [UInt: [NSNumber]] = [:]
+    var screens: [Int:Screen] = [:]
+    var userScreenIndex: [UInt: Int] = [:]
+    var userScreen: [UInt: Screen] = [:]
     var undisplayedUsers: [UInt] = []
     var positionUpdateTimer: Int = 0
+    
+    private var isARSessionPrepared: Bool = false
+        private var isScreenSet: Bool = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,7 +36,7 @@ class NineSeatsARViewController: BaseViewController {
             //self.channelLabel.text = cName
             self.agoraMgr.join(channel: cName, asHost: true) { (success, uid) in
                 if success {
-                    print("join channel \(cName) success: \(success), uid is \(uid)")
+                    Logger.debug("join channel \(cName) success: \(success), uid is \(uid)")
                     // set self position
                     PositionManager.shared.resetSelfPosition()
                     //self.uidLabel.text = "\(uid)"
@@ -48,10 +51,15 @@ class NineSeatsARViewController: BaseViewController {
         arView.delegate = self
         arView.session.delegate = self
         arView.showsStatistics = true
-        arView.debugOptions = [.showFeaturePoints]
+        // arView.debugOptions = [.showFeaturePoints]
         
         // start AR Session
         startARSession()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        self.agoraMgr.delegate = nil
+        self.agoraMgr.leave()
     }
 }
 
@@ -59,6 +67,82 @@ extension NineSeatsARViewController {
     @IBAction private func onSetSeatsButtonClicked(_ sender: UIButton) {
         //self.removeAllScreen()
         self.setScreens()
+        self.isScreenSet = true
+        sender.isEnabled = false
+    }
+    
+    @IBAction private func onSceneTapped(_ recognizer: UITapGestureRecognizer) {
+        print("onSceneTapped")
+        let location = recognizer.location(in: self.arView)
+        Logger.debug("\(location)")
+        
+        // if hit screen, show user select alert
+        if let node = self.arView.hitTest(location, options: nil).first?.node {
+            guard let screen = getScreen(of: node) else {
+                Logger.debug("No screen is tapped")
+                return
+            }
+            Logger.debug("Screen \(screen.index) is tapped.")
+            
+            let userSelectView = UIAlertController(title: "Select User", message: nil, preferredStyle: .actionSheet)
+            for uid in self.undisplayedUsers {
+                let action = UIAlertAction(title: "\(uid)", style: .default) { [weak self] action in
+                    
+                    //let pos = PositionManager.shared.getVoicePosition(ofScreen: index)
+                    let pos = PositionManager.shared.getPositionOfSeat(screen.index)
+                    Logger.debug("set user \(uid) to position \(pos)")
+                    self?.agoraMgr.updatePosition(of: uid, position: pos)
+                    if let oldScreen = self?.userScreen[uid] {
+                        oldScreen.uid = 0
+                    }
+                    self?.userScreen[uid] = screen
+                    screen.uid = uid
+                    
+                    self?.updateDebugLabel()
+                    //if let idx = self?.undisplayedUsers.firstIndex(of: uid) {
+                    //    self?.undisplayedUsers.remove(at: idx)
+                    //    // print(self.undisplayedUsers)
+                    //}
+                }
+                userSelectView.addAction(action)
+            }
+            let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { action in
+                //.dismiss(animated: true, completion: nil)
+            }
+            userSelectView.addAction(cancelAction)
+            self.present(userSelectView, animated: true) {
+                // todo
+            }
+        }
+        return
+    }
+    
+    private func getScreen(of node: SCNNode) -> Screen? {
+        let rootNode: SCNNode
+        if node.name == "screen", let parent = node.parent?.parent {
+            rootNode = parent
+            //screen = node
+        } else if node.name == "displayer", let parent = node.parent {
+            rootNode = parent
+            //screen = parent.childNode(withName: "screen", recursively: false)!
+        } else {
+            rootNode = node
+        }
+        
+        if let tag = rootNode.tag, tag > 0 {
+            return screens[tag]
+        }
+        else {
+            return nil
+        }
+    }
+    
+    private func updateDebugLabel() {
+        var uidList = ""
+        for uid in self.undisplayedUsers {
+            uidList.append("\(uid):\r\n -> \(self.userScreen[uid]?.index ?? -1)\r\n")
+        }
+        self.uidListLabel.text = uidList
     }
     
     private func removeAllScreen() {
@@ -82,34 +166,83 @@ extension NineSeatsARViewController {
     
     // set 9 screen
     private func setScreens() {
+        let camera = arView.session.currentFrame!.camera
+        let rotation = camera.eulerAngles.y
+        let rotation4x4 = camera.transform
+        Logger.debug("\(rotation), \(rotation4x4)")
+        let posOffset = camera.transform.columns.3
         for index in 0..<9 {
-            self.addNode(ofScreen: index)
+            self.addScreen(of: index, positionOffset: posOffset, rotation: rotation)
         }
     }
     
-    /// Add node
+    /// Add screen
     /// - Parameters:
-    ///   - transform: matrix_float4x4
-    private func addNode(ofScreen index: Int) {
-        let scene = SCNScene(named: "AR.scnassets/displayer.scn")!
-        let rootNode = scene.rootNode
-        let pos = self.getPosition(ofSeat: index)
-        rootNode.position = pos
-        rootNode.rotation = SCNVector4(0, 1, 0, arView.session.currentFrame!.camera.eulerAngles.y)
-        arView.scene.rootNode.addChildNode(rootNode)
-        updateNodeUserLabel(uid: UInt(index), node: rootNode)
+    ///   - index: index (0 ~ 8)
+    private func addScreen(of index: Int, positionOffset: simd_float4, rotation: Float) {
+        let screen = Screen(index: index)
+        
+        let pos = self.getPosition(ofScreen: index, positionOffset: positionOffset)
+        screen.setPosition(pos)
+        screen.setRotation(SCNVector4(0, 1, 0, rotation))
+        
+        screens[index] = screen
+        
+        arView.scene.rootNode.addChildNode(screen.rootNode)
     }
     
-    private func getPosition(ofSeat index: Int) -> SCNVector3 {
+    private func getPosition(ofScreen index: Int) -> SCNVector3 {
         let seatPos = PositionManager.shared.getPositionOfScreen(index)
-//        let seatPos = PositionManager.shared.getPositionOfSeat(index)
         let pos = SCNVector3(
             seatPos[0].intValue,
             seatPos[1].intValue,
             seatPos[2].intValue
         )
-        
         return pos
+    }
+    
+    /// Add node
+    /// - Parameters:
+    ///   - transform: matrix_float4x4
+//    private func addNode(ofScreen index: Int) {
+//        let scene = SCNScene(named: "AR.scnassets/displayer.scn")!
+//        let rootNode = scene.rootNode
+//        let pos = self.getPosition(ofSeat: index)
+//        rootNode.position = pos
+//        rootNode.rotation = SCNVector4(0, 1, 0, arView.session.currentFrame!.camera.eulerAngles.y)
+//        arView.scene.rootNode.addChildNode(rootNode)
+//        updateNodeUserLabel(uid: UInt(index), node: rootNode)
+//    }
+    
+    private func getPosition(ofScreen index: Int, positionOffset: simd_float4) -> SCNVector3 {
+        let seatPos = PositionManager.shared.getPositionOfScreen(index)
+//        let seatPos = PositionManager.shared.getPositionOfSeat(index)
+        let x = seatPos[0].floatValue + positionOffset.x
+        let y = seatPos[1].floatValue + positionOffset.y
+        let z = seatPos[2].floatValue + positionOffset.z
+        Logger.debug("(\(x), \(y),\(z))")
+        let pos = SCNVector3(x, y, z)
+        return pos
+    }
+    
+    func QuaternionMultVector(rotation: SCNQuaternion, point: SCNVector3) -> SCNVector3 {
+        let num: Float = rotation.x * 2;
+        let num2: Float = rotation.y * 2;
+        let num3: Float = rotation.z * 2;
+        let num4: Float = rotation.x * num;
+        let num5: Float = rotation.y * num2;
+        let num6: Float = rotation.z * num3;
+        let num7: Float = rotation.x * num2;
+        let num8: Float = rotation.x * num3;
+        let num9: Float = rotation.y * num3;
+        let num10: Float = rotation.w * num;
+        let num11: Float = rotation.w * num2;
+        let num12: Float = rotation.w * num3;
+        var result: SCNVector3 = point
+        result.x = (1 - (num5 + num6)) * point.x + (num7 - num12) * point.y + (num8 + num11) * point.z;
+        result.y = (num7 + num12) * point.x + (1 - (num4 + num6)) * point.y + (num9 - num10) * point.z;
+        result.z = (num8 - num11) * point.x + (num9 + num10) * point.y + (1 - (num4 + num5)) * point.z;
+        return result;
     }
     
     private func getTransform(ofSeat index: Int) -> matrix_float4x4 {
@@ -211,26 +344,7 @@ extension NineSeatsARViewController {
     }
 }
 
-extension NineSeatsARViewController {
-    @IBAction private func onSceneTapped(_ recognizer: UITapGestureRecognizer) {
-        print("onSceneTapped")
-//        guard self.isPlanarDetected else {
-//            return
-//        }
-        
-        let location = recognizer.location(in: self.arView)
-        Logger.debug("\(location)")
-        
-        // if hit screen
-        // remove it
-        if let node = self.arView.hitTest(location, options: nil).first?.node {
-            Logger.debug("node tapped \(node)")
-        }
-        return
-    }
-}
-
-// MARK: -
+// MARK: - AgoraManagerDelegate
 extension NineSeatsARViewController: AgoraManagerDelegate {
     func agoraMgr(_ mgr: AgoraManager, seat: UInt, selectedBy uid: UInt) {
         // not used here
@@ -251,6 +365,7 @@ extension NineSeatsARViewController: AgoraManagerDelegate {
     }
 }
 
+// MARK: - ARSCNViewDelegate
 extension NineSeatsARViewController: ARSCNViewDelegate {
     func renderer(_ renderer: SCNSceneRenderer, didAdd node: SCNNode, for anchor: ARAnchor) {
         guard let planeAnchor = anchor as? ARPlaneAnchor else {
@@ -282,7 +397,7 @@ extension NineSeatsARViewController: ARSCNViewDelegate {
 extension NineSeatsARViewController: ARSessionDelegate {
     
     func session(_ session: ARSession, didUpdate frame: ARFrame) {
-        Logger.debug( frame.camera.trackingState )
+        //Logger.debug( frame.camera.trackingState )
         self.positionUpdateTimer += 1
         guard self.positionUpdateTimer >= 2 else {
             return
@@ -291,10 +406,10 @@ extension NineSeatsARViewController: ARSessionDelegate {
         self.positionUpdateTimer = 0
         let transform: simd_float4x4 = frame.camera.transform
 
-        //print("eulerAngles: \(frame.camera.eulerAngles)")
-//        print("transform0: \(transform.columns.0)")
-//        print("transform1: \(transform.columns.1)")
-//        print("transform2: \(transform.columns.2)")
+        //Logger.debug("eulerAngles: \(frame.camera.eulerAngles)")
+//        Logger.debug("transform0: \(transform.columns.0)")
+//        Logger.debug("transform1: \(transform.columns.1)")
+//        Logger.debug("transform2: \(transform.columns.2)")
 
         let pos = [
             NSNumber(value: transform.columns.3.x),
@@ -316,7 +431,7 @@ extension NineSeatsARViewController: ARSessionDelegate {
             NSNumber(value: transform.columns.2.y),
             NSNumber(value: transform.columns.2.z),
         ]
-        // print("pos: \(pos)")
+        // Logger.debug("pos: \(pos)")
         updateSelfPositionLabel(pos, angle: frame.camera.eulerAngles, transform: transform)
         self.agoraMgr.updateSelfPosition(
             position: pos,

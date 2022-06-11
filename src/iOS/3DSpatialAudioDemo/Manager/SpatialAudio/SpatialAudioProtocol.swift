@@ -47,9 +47,9 @@ extension SpatialAudioProtocol {
     func updateSelfPosition(_ position: [NSNumber], forward: [NSNumber]?, right: [NSNumber]?, up: [NSNumber]?) {
         //Logger.debug("updateSelfPosition: \(position)")
         self.spatialAudioKit?.updateSelfPosition(position,
-                                                axisForward: forward ?? [0, 1, 0],
-                                                axisRight: right ?? [1, 0, 0],
-                                                axisUp: up ?? [0, 0, 1]);
+                                                 axisForward: forward ?? [0, 1, 0],
+                                                 axisRight: right ?? [1, 0, 0],
+                                                 axisUp: up ?? [0, 0, 1]);
     }
     
     func updatePlayerPositionInfo(_ playerId: Int, positionInfo: AgoraRemoteVoicePositionInfo) {

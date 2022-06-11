@@ -8,6 +8,7 @@
 import UIKit
 import RealityKit
 import ARKit
+import DarkEggKit
 
 class RealityKitViewController: UIViewController {
     @IBOutlet weak var arView: ARView!
@@ -30,7 +31,7 @@ class RealityKitViewController: UIViewController {
             //self.channelLabel.text = cName
             self.agoraMgr.join(channel: cName, asHost: true) { (success, uid) in
                 if success {
-                    print("success: \(success)")
+                    Logger.debug("success: \(success)")
                     // set self position
                     self.agoraMgr.updateSelfPosition(
                         position: [
@@ -79,7 +80,7 @@ class RealityKitViewController: UIViewController {
         arView.debugOptions = [.showFeaturePoints, .showAnchorOrigins, .showAnchorGeometry]
         
         if let screen = try? Entity.loadModel(named: "displayer", in: nil) {
-            print(screen)
+            Logger.debug(screen)
         }
     }
 }
@@ -107,18 +108,18 @@ extension RealityKitViewController {
 // MARK: -
 extension RealityKitViewController: ARSessionDelegate {
     @IBAction private func onSceneTapped(_ recognizer: UITapGestureRecognizer) {
-        print("onSceneTapped")
+        Logger.debug("onSceneTapped")
 //        guard self.isPlanarDetected else {
 //            return
 //        }
         
         let location = recognizer.location(in: self.arView)
-        print("\(location)")
+        Logger.debug("\(location)")
         
         // if hit screen
         // remove it
 //        if let node = self.arView.hitTest(location, options: .featurePoint).first?.anchor {
-//            print("removeNode")
+//            Logger.debug("removeNode")
 //        }
         
         if let query = self.arView.makeRaycastQuery(from: location, allowing: .estimatedPlane, alignment: .any) {
@@ -128,21 +129,21 @@ extension RealityKitViewController: ARSessionDelegate {
 //        let results = self.arView.raycast(from: location, allowing: .estimatedPlane, alignment: .any)
         
         // if hit nothing, add a screen
-//        print("location: \(location)")
-//        print("arView.center: \(arView.center)")
+//        Logger.debug("location: \(location)")
+//        Logger.debug("arView.center: \(arView.center)")
 //        let query = self.arView.raycastQuery(from: arView.center, allowing: .estimatedPlane, alignment: .any)
-//        print("query?.direction: \(query?.direction)")
-//        print("query?.origin: \(query?.origin)")
+//        Logger.debug("query?.direction: \(query?.direction)")
+//        Logger.debug("query?.origin: \(query?.origin)")
 //        let results = arView.session.raycast(query!)
 //        if let a: ARRaycastResult = results.first {
-//            print("first point from ray cast query: \(a.worldTransform)")
+//            Logger.debug("first point from ray cast query: \(a.worldTransform)")
 //        }
 //        if let result = self.arView.hitTest(location, types: .featurePoint).first {
 //            let userSelectView = UIAlertController(title: "Select User", message: nil, preferredStyle: .actionSheet)
 //            for uid in self.undisplayedUsers {
 //                let action = UIAlertAction(title: "\(uid)", style: .default) { [weak self] action in
 //                    //
-//                    print("addNode for user: \(uid) at \(result.worldTransform)")
+//                    Logger.debug("addNode for user: \(uid) at \(result.worldTransform)")
 //                    self?.addNode(withTransform: result.worldTransform, ofUser: uid)
 //                }
 //                userSelectView.addAction(action)
@@ -162,10 +163,10 @@ extension RealityKitViewController: ARSessionDelegate {
 //            let action = UIAlertAction(title: "\(uid)", style: .default) { [weak self] action in
 //                //
 //                if let node = self?.arView.hitTest(location, options: nil).first?.node {
-//                    print("removeNode")
+//                    Logger.debug("removeNode")
 //                    self?.removeNode(node)
 //                } else if let result = self?.arView.hitTest(location, types: .featurePoint).first {
-//                    print("addNode")
+//                    Logger.debug("addNode")
 //                    self?.addNode(withTransform: result.worldTransform, ofUser: uid)
 //                }
 //            }
@@ -184,7 +185,7 @@ extension RealityKitViewController: ARSessionDelegate {
     }
     private func addNode(withTransform transform: matrix_float4x4, ofUser uid: UInt) {
         if let screen = try? Entity.loadModel(named: "displayer", in: nil) {
-            print(screen)
+            Logger.debug(screen)
         }
 //        let scene = SCNScene(named: "AR.scnassets/displayer.scn")!
 //        let rootNode = scene.rootNode
@@ -215,7 +216,7 @@ extension RealityKitViewController: ARSessionDelegate {
 //
 //        if let idx = self.undisplayedUsers.firstIndex(of: uid) {
 //            self.undisplayedUsers.remove(at: idx)
-//            print(self.undisplayedUsers)
+//            Logger.debug(self.undisplayedUsers)
 //        }
     }
 }
@@ -231,7 +232,7 @@ extension RealityKitViewController: AgoraManagerDelegate {
     
     func agoraMgr(_ mgr: AgoraManager, userJoined uid: UInt) {
         //
-        print("User \(uid) joined.")
+        Logger.debug("User \(uid) joined.")
     }
     
     func agoraMgr(_ mgr: AgoraManager, userLeaved uid: UInt) {

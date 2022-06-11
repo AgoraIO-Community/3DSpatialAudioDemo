@@ -2,17 +2,12 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>AgoraChatConfig</key>
-	<dict>
-		<key>AppKey</key>
-		<string>&lt;# You agora chat AppKey#&gt;</string>
-	</dict>
 	<key>AgoraConfig</key>
 	<dict>
-		<key>AppCertificate</key>
-		<string>&lt;# AppCertificate #&gt;</string>
-		<key>AppId</key>
-		<string>&lt;# Your Agora AppId #&gt;</string>
+		<key>appCertificate</key>
+		<string></string>
+		<key>appId</key>
+		<string></string>
 	</dict>
 	<key>UIApplicationSceneManifest</key>
 	<dict>

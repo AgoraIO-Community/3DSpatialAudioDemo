@@ -34,6 +34,7 @@
 		B77B0D7327B39BFE00ECBD6A /* AppInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = B77B0D7227B39BFE00ECBD6A /* AppInfo.swift */; };
 		B77BD90627A10CE20080ED95 /* song01_vocal.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B77BD90427A10CE20080ED95 /* song01_vocal.mp3 */; };
 		B77BD90727A10CE20080ED95 /* song01_instrumental.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B77BD90527A10CE20080ED95 /* song01_instrumental.mp3 */; };
+		B77D6F2B283BF7960095ACE9 /* Screen.swift in Sources */ = {isa = PBXBuildFile; fileRef = B77D6F2A283BF7960095ACE9 /* Screen.swift */; };
 		B794B3F6278BE2CF0078E3F9 /* PositionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B794B3F5278BE2CF0078E3F9 /* PositionManager.swift */; };
 		B794B3FE278BFE870078E3F9 /* Seat.xib in Resources */ = {isa = PBXBuildFile; fileRef = B794B3FD278BFE870078E3F9 /* Seat.xib */; };
 		B7956F3327902C4D00CCDB5D /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7956F3227902C4D00CCDB5D /* Theme.swift */; };
@@ -106,6 +107,7 @@
 		B77B0D7227B39BFE00ECBD6A /* AppInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppInfo.swift; sourceTree = "<group>"; };
 		B77BD90427A10CE20080ED95 /* song01_vocal.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = song01_vocal.mp3; sourceTree = "<group>"; };
 		B77BD90527A10CE20080ED95 /* song01_instrumental.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = song01_instrumental.mp3; sourceTree = "<group>"; };
+		B77D6F2A283BF7960095ACE9 /* Screen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Screen.swift; sourceTree = "<group>"; };
 		B794B3F5278BE2CF0078E3F9 /* PositionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PositionManager.swift; sourceTree = "<group>"; };
 		B794B3FD278BFE870078E3F9 /* Seat.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Seat.xib; sourceTree = "<group>"; };
 		B7956F3227902C4D00CCDB5D /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
@@ -280,6 +282,7 @@
 			children = (
 				B7B9CAB9271FFD570081EA38 /* Seat.swift */,
 				B794B3FD278BFE870078E3F9 /* Seat.xib */,
+				B77D6F2A283BF7960095ACE9 /* Screen.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -490,6 +493,7 @@
 				B7AC072927B68F0F00FA3831 /* CloudKitViewController.swift in Sources */,
 				B77B0D7027B3723700ECBD6A /* SpatialAudioManager.swift in Sources */,
 				B7B9CABA271FFD570081EA38 /* Seat.swift in Sources */,
+				B77D6F2B283BF7960095ACE9 /* Screen.swift in Sources */,
 				B72D487D281FBECA0035802D /* MultiPlayerViewController.swift in Sources */,
 				B7CA78F4273E4BA30079631C /* HeadMotionManager.swift in Sources */,
 			);
@@ -665,7 +669,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 0.4.2;
-				PRODUCT_BUNDLE_IDENTIFIER = io.agoro.explore.3DSpatialAudioDemo;
+				PRODUCT_BUNDLE_IDENTIFIER = cn.darkzero.Radio3DAudioSample;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -707,7 +711,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 0.4.2;
-				PRODUCT_BUNDLE_IDENTIFIER = io.agoro.explore.3DSpatialAudioDemo;
+				PRODUCT_BUNDLE_IDENTIFIER = cn.darkzero.Radio3DAudioSample;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;

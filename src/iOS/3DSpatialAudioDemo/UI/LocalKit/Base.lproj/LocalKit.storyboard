@@ -13,7 +13,7 @@
         <!--Local Spatial Kit-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="LocalKitViewController" customModule="Radio3DAudioSample" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="LocalKitViewController" customModule="_DSpatialAudioDemo" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -173,7 +173,7 @@
                                             <action selector="onMultiPlayerRoomButtonClicked:" destination="BYZ-38-t0r" eventType="touchUpInside" id="l3A-C5-F7P"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="fill" contentVerticalAlignment="top" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pbd-7R-8JD">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="fill" contentVerticalAlignment="top" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pbd-7R-8JD">
                                         <rect key="frame" x="195" y="0.0" width="179" height="60"/>
                                         <color key="backgroundColor" systemColor="systemTealColor"/>
                                         <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -270,7 +270,7 @@
         <!--AR(RealityKit) - Local Kit-->
         <scene sceneID="jWJ-KI-CJv">
             <objects>
-                <viewController modalPresentationStyle="fullScreen" id="Qgj-tK-3my" customClass="RealityKitViewController" customModule="Radio3DAudioSample" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController modalPresentationStyle="fullScreen" id="Qgj-tK-3my" customClass="RealityKitViewController" customModule="_DSpatialAudioDemo" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="vfS-Gm-SCf">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -295,12 +295,12 @@
         <!--Nine Seats - Local Kit-->
         <scene sceneID="iew-1a-6fV">
             <objects>
-                <viewController modalPresentationStyle="fullScreen" id="HLB-03-od2" customClass="NineSeatRoomViewController" customModule="Radio3DAudioSample" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController modalPresentationStyle="fullScreen" id="HLB-03-od2" customClass="NineSeatRoomViewController" customModule="_DSpatialAudioDemo" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="2RZ-ck-KVQ">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="694-lJ-zjH" customClass="Seat" customModule="Radio3DAudioSample" customModuleProvider="target">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="694-lJ-zjH" customClass="Seat" customModule="_DSpatialAudioDemo" customModuleProvider="target">
                                 <rect key="frame" x="162" y="363.5" width="90" height="120"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="694-lJ-zjH" secondAttribute="height" multiplier="3:4" id="W3h-8h-7Ga"/>
@@ -310,7 +310,7 @@
                                     <action selector="onSeatClicked:" destination="HLB-03-od2" eventType="touchUpInside" id="0Bp-2p-Skh"/>
                                 </connections>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hxN-H8-mIE" customClass="Seat" customModule="Radio3DAudioSample" customModuleProvider="target">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hxN-H8-mIE" customClass="Seat" customModule="_DSpatialAudioDemo" customModuleProvider="target">
                                 <rect key="frame" x="163" y="226.5" width="88" height="117"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="88" id="rcM-pJ-Mqj"/>
@@ -319,7 +319,7 @@
                                     <action selector="onSeatClicked:" destination="HLB-03-od2" eventType="touchUpInside" id="100-cE-coS"/>
                                 </connections>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yqe-eN-AlX" customClass="Seat" customModule="Radio3DAudioSample" customModuleProvider="target">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yqe-eN-AlX" customClass="Seat" customModule="_DSpatialAudioDemo" customModuleProvider="target">
                                 <rect key="frame" x="163" y="503.5" width="88" height="117.5"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="88" id="1iy-01-ahK"/>
@@ -328,7 +328,7 @@
                                     <action selector="onSeatClicked:" destination="HLB-03-od2" eventType="touchUpInside" id="Jcu-qr-ByL"/>
                                 </connections>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zyG-gD-NMD" customClass="Seat" customModule="Radio3DAudioSample" customModuleProvider="target">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zyG-gD-NMD" customClass="Seat" customModule="_DSpatialAudioDemo" customModuleProvider="target">
                                 <rect key="frame" x="54" y="365" width="88" height="117.5"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="88" id="NQk-ii-iUP"/>
@@ -337,7 +337,7 @@
                                     <action selector="onSeatClicked:" destination="HLB-03-od2" eventType="touchUpInside" id="WeB-4e-R3Y"/>
                                 </connections>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="n4O-AT-FsR" customClass="Seat" customModule="Radio3DAudioSample" customModuleProvider="target">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="n4O-AT-FsR" customClass="Seat" customModule="_DSpatialAudioDemo" customModuleProvider="target">
                                 <rect key="frame" x="272" y="365" width="88" height="117.5"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="88" id="2wQ-hS-PsY"/>
@@ -346,7 +346,7 @@
                                     <action selector="onSeatClicked:" destination="HLB-03-od2" eventType="touchUpInside" id="yEu-9X-u73"/>
                                 </connections>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Wer-jw-Xt8" customClass="Seat" customModule="Radio3DAudioSample" customModuleProvider="target">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Wer-jw-Xt8" customClass="Seat" customModule="_DSpatialAudioDemo" customModuleProvider="target">
                                 <rect key="frame" x="54" y="226.5" width="88" height="117"/>
                                 <gestureRecognizers/>
                                 <constraints>
@@ -361,7 +361,7 @@
                                     <action selector="onSeatClicked:" destination="HLB-03-od2" eventType="touchUpInside" id="v65-lS-Uyz"/>
                                 </connections>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LTJ-iJ-fJL" customClass="Seat" customModule="Radio3DAudioSample" customModuleProvider="target">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LTJ-iJ-fJL" customClass="Seat" customModule="_DSpatialAudioDemo" customModuleProvider="target">
                                 <rect key="frame" x="272" y="226.5" width="88" height="117"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="88" id="bbg-cM-hSK"/>
@@ -370,7 +370,7 @@
                                     <action selector="onSeatClicked:" destination="HLB-03-od2" eventType="touchUpInside" id="5C3-Nq-K5R"/>
                                 </connections>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ofy-Ca-4lQ" customClass="Seat" customModule="Radio3DAudioSample" customModuleProvider="target">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ofy-Ca-4lQ" customClass="Seat" customModule="_DSpatialAudioDemo" customModuleProvider="target">
                                 <rect key="frame" x="54" y="503.5" width="88" height="117.5"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="88" id="oSd-y6-rgS"/>
@@ -379,7 +379,7 @@
                                     <action selector="onSeatClicked:" destination="HLB-03-od2" eventType="touchUpInside" id="Nra-uo-z40"/>
                                 </connections>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QEw-kL-01D" customClass="Seat" customModule="Radio3DAudioSample" customModuleProvider="target">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QEw-kL-01D" customClass="Seat" customModule="_DSpatialAudioDemo" customModuleProvider="target">
                                 <rect key="frame" x="272" y="503.5" width="88" height="117.5"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="88" id="AEw-Jw-p8B"/>
@@ -500,7 +500,7 @@
         <!--Host - Local Kit-->
         <scene sceneID="ITV-Gc-pNo">
             <objects>
-                <viewController modalPresentationStyle="fullScreen" id="r9F-Sy-bEu" customClass="HostViewController" customModule="Radio3DAudioSample" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController modalPresentationStyle="fullScreen" id="r9F-Sy-bEu" customClass="HostViewController" customModule="_DSpatialAudioDemo" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="YKO-VK-pax">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -705,7 +705,7 @@
         <!--Media Player - Loacl Kit-->
         <scene sceneID="IF7-4F-2sM">
             <objects>
-                <viewController modalPresentationStyle="fullScreen" id="MHc-Mi-FaR" customClass="MultiPlayerViewController" customModule="Radio3DAudioSample" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController modalPresentationStyle="fullScreen" id="MHc-Mi-FaR" customClass="MultiPlayerViewController" customModule="_DSpatialAudioDemo" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="j1r-do-1hB">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -910,7 +910,7 @@ User</string>
         <!--Room Image - Loacl Kit-->
         <scene sceneID="mbt-hx-9qT">
             <objects>
-                <viewController modalPresentationStyle="fullScreen" id="m1K-ao-1I8" customClass="RoomImageViewController" customModule="Radio3DAudioSample" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController modalPresentationStyle="fullScreen" id="m1K-ao-1I8" customClass="RoomImageViewController" customModule="_DSpatialAudioDemo" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Kha-vq-Dql">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1109,7 +1109,7 @@ User</string>
         <!--AR Room-->
         <scene sceneID="NqR-bH-0vO">
             <objects>
-                <viewController storyboardIdentifier="ARRoomViewController" modalPresentationStyle="fullScreen" id="kYC-dH-nz1" userLabel="AR Room" customClass="ARRoomViewController" customModule="Radio3DAudioSample" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ARRoomViewController" modalPresentationStyle="fullScreen" id="kYC-dH-nz1" userLabel="AR Room" customClass="ARRoomViewController" customModule="_DSpatialAudioDemo" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="jLF-cp-FS0">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1142,16 +1142,38 @@ User</string>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="y6S-Na-f56">
+                                <rect key="frame" x="346" y="108" width="48" height="48"/>
+                                <color key="backgroundColor" systemColor="systemOrangeColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="48" id="ww7-J8-Ssw"/>
+                                </constraints>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                <state key="normal" image="square" catalog="system"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="8"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="onScreenButtonClicked:" destination="kYC-dH-nz1" eventType="touchUpInside" id="Jxo-7B-Q31"/>
+                                    <action selector="onSetSeatsButtonClicked:" destination="U1d-m2-UNG" eventType="touchUpInside" id="gs8-3d-HsX"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="Rdx-Vu-nIs"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="o9J-VY-iaf" firstAttribute="leading" secondItem="Rdx-Vu-nIs" secondAttribute="leading" constant="20" id="2bK-8C-3Gg"/>
                             <constraint firstItem="Qtx-9i-VXw" firstAttribute="leading" secondItem="o9J-VY-iaf" secondAttribute="leading" id="6lW-er-WlK"/>
+                            <constraint firstItem="Rdx-Vu-nIs" firstAttribute="trailing" secondItem="y6S-Na-f56" secondAttribute="trailing" constant="20" id="9I1-XA-Fcv"/>
                             <constraint firstItem="o9J-VY-iaf" firstAttribute="top" secondItem="Rdx-Vu-nIs" secondAttribute="top" constant="48" id="Ext-ES-ua9"/>
                             <constraint firstItem="Rdx-Vu-nIs" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="Qtx-9i-VXw" secondAttribute="trailing" constant="100" id="G8b-b1-8JA"/>
+                            <constraint firstItem="y6S-Na-f56" firstAttribute="top" secondItem="Rdx-Vu-nIs" secondAttribute="top" constant="20" id="Iv2-GX-g7U"/>
                             <constraint firstItem="dKT-Ms-EhX" firstAttribute="leading" secondItem="Rdx-Vu-nIs" secondAttribute="leading" id="MBw-2Q-Xkj"/>
                             <constraint firstItem="Rdx-Vu-nIs" firstAttribute="bottom" secondItem="r3x-Xc-uH3" secondAttribute="bottom" constant="32" id="RLN-lX-JTR"/>
+                            <constraint firstItem="y6S-Na-f56" firstAttribute="width" secondItem="y6S-Na-f56" secondAttribute="height" id="ZeQ-9f-qQM"/>
                             <constraint firstAttribute="bottom" secondItem="dKT-Ms-EhX" secondAttribute="bottom" id="aeb-lt-MA8"/>
                             <constraint firstItem="Qtx-9i-VXw" firstAttribute="centerY" secondItem="jLF-cp-FS0" secondAttribute="centerY" id="ftJ-Av-FGR"/>
                             <constraint firstItem="dKT-Ms-EhX" firstAttribute="trailing" secondItem="Rdx-Vu-nIs" secondAttribute="trailing" id="gvM-lQ-TaD"/>
@@ -1180,7 +1202,7 @@ User</string>
         <!--9 Seats AR Room-->
         <scene sceneID="a2c-RV-gY9">
             <objects>
-                <viewController storyboardIdentifier="NineSeatsARViewController" modalPresentationStyle="fullScreen" id="U1d-m2-UNG" userLabel="9 Seats AR Room" customClass="NineSeatsARViewController" customModule="Radio3DAudioSample" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="NineSeatsARViewController" modalPresentationStyle="fullScreen" id="U1d-m2-UNG" userLabel="9 Seats AR Room" customClass="NineSeatsARViewController" customModule="_DSpatialAudioDemo" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="uFs-wl-z6d">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1257,7 +1279,7 @@ User</string>
                         <outlet property="arView" destination="QaB-MU-dFr" id="V9a-yP-vSf"/>
                         <outlet property="msgLabel" destination="4xJ-Jg-GDq" id="V1Q-HQ-d68"/>
                         <outlet property="selfPositionLabel" destination="MJ1-Co-285" id="pGI-RU-Peh"/>
-                        <outlet property="setSeatsButton" destination="Cx3-aO-ygz" id="cTG-bC-efI"/>
+                        <outlet property="setScreensButton" destination="Cx3-aO-ygz" id="aSL-Wq-Yfy"/>
                         <outlet property="uidListLabel" destination="CMC-mc-tTK" id="Il0-UJ-Gq7"/>
                     </connections>
                 </viewController>
@@ -1278,6 +1300,7 @@ User</string>
         <image name="photo.fill.on.rectangle.fill" catalog="system" width="128" height="97"/>
         <image name="play.rectangle.fill" catalog="system" width="128" height="93"/>
         <image name="room_pic.png" width="1200" height="1200"/>
+        <image name="square" catalog="system" width="128" height="114"/>
         <image name="square.grid.3x3.fill" catalog="system" width="128" height="112"/>
         <image name="xmark" catalog="system" width="128" height="113"/>
         <systemColor name="secondarySystemFillColor">
