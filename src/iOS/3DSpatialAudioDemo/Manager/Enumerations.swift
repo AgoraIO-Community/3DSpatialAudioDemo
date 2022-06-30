@@ -48,6 +48,8 @@ enum Sound : String, CaseIterable {
             return "song01_vocal" //
         case .song01Instrumental:
             return "song01_instrumental"
+        default:
+            return self.rawValue
         }
     }
     

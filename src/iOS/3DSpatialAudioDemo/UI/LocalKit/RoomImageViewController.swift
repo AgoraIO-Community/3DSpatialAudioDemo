@@ -136,115 +136,101 @@ extension RoomImageViewController {
         }
     }
     
-    @IBAction func onCloseButtonClicked(_ sender: UIButton) {
-        self.dismiss(animated: true) {
-            self.agoraMgr.leave()
-        }
-    }
-    
     @IBAction private func onDirectionChanged(_ sender: UISegmentedControl) {
+        var forwardX = 0.0
+        var forwardY = 1.0
+        var forwardZ = 0.0
+
+        var rightX = 1.0
+        var rightY = 0.0
+        var rightZ = 0.0
+
+        var upX = 0.0
+        var upY = 0.0
+        var upZ = 1.0
+        
         switch sender.selectedSegmentIndex {
         case 0: //forward
-            self.agoraMgr.updateSelfPosition(
-                position: [
-                    NSNumber(value: 0),
-                    NSNumber(value: 0),
-                    NSNumber(value: 0)
-                ], forward: [
-                    NSNumber(value: 0),
-                    NSNumber(value: 1),
-                    NSNumber(value: 0)
-                ], right: [
-                    NSNumber(value: 1),
-                    NSNumber(value: 0),
-                    NSNumber(value: 0)
-                ], up: [
-                    NSNumber(value: 0),
-                    NSNumber(value: 0),
-                    NSNumber(value: 1)
-            ])
+            forwardX = 0.0
+            forwardY = 1.0
+            forwardZ = 0.0
+
+            rightX = 1.0
+            rightY = 0.0
+            rightZ = 0.0
+
+            upX = 0.0
+            upY = 0.0
+            upZ = 1.0
             break
         case 1: // left
-            self.agoraMgr.updateSelfPosition(
-                position: [
-                    NSNumber(value: 0),
-                    NSNumber(value: 0),
-                    NSNumber(value: 0)
-                ], forward: [
-                    NSNumber(value: 1),
-                    NSNumber(value: 0),
-                    NSNumber(value: 0)
-                ], right: [
-                    NSNumber(value: 0),
-                    NSNumber(value: -1),
-                    NSNumber(value: 0)
-                ], up: [
-                    NSNumber(value: 0),
-                    NSNumber(value: 0),
-                    NSNumber(value: 1)
-            ])
+            forwardX = -1.0
+            forwardY = 0.0
+            forwardZ = 0.0
+
+            rightX = 0.0
+            rightY = 1.0
+            rightZ = 0.0
+
+            upX = 0.0
+            upY = 0.0
+            upZ = 1.0
             break
         case 2: // back
-            self.agoraMgr.updateSelfPosition(
-                position: [
-                    NSNumber(value: 0),
-                    NSNumber(value: 0),
-                    NSNumber(value: 0)
-                ], forward: [
-                    NSNumber(value: 0),
-                    NSNumber(value: -1),
-                    NSNumber(value: 0)
-                ], right: [
-                    NSNumber(value: -1),
-                    NSNumber(value: 0),
-                    NSNumber(value: 0)
-                ], up: [
-                    NSNumber(value: 0),
-                    NSNumber(value: 0),
-                    NSNumber(value: 1)
-            ])
+            forwardX = -1.0
+            forwardY = 0.0
+            forwardZ = 0.0
+
+            rightX = 0.0
+            rightY = -1.0
+            rightZ = 0.0
+
+            upX = 0.0
+            upY = 0.0
+            upZ = 1.0
             break
         case 3: // right
-            self.agoraMgr.updateSelfPosition(
-                position: [
-                    NSNumber(value: 0),
-                    NSNumber(value: 0),
-                    NSNumber(value: 0)
-                ], forward: [
-                    NSNumber(value: 1),
-                    NSNumber(value: 0),
-                    NSNumber(value: 0)
-                ], right: [
-                    NSNumber(value: 0),
-                    NSNumber(value: -1),
-                    NSNumber(value: 0)
-                ], up: [
-                    NSNumber(value: 0),
-                    NSNumber(value: 0),
-                    NSNumber(value: 1)
-            ])
+            forwardX = 1.0
+            forwardY = 0.0
+            forwardZ = 0.0
+
+            rightX = 0.0
+            rightY = -1.0
+            rightZ = 0.0
+
+            upX = 0.0
+            upY = 0.0
+            upZ = 1.0
             break
         default: // forward
-            self.agoraMgr.updateSelfPosition(
-                position: [
-                    NSNumber(value: 0),
-                    NSNumber(value: 0),
-                    NSNumber(value: 0)
-                ], forward: [
-                    NSNumber(value: 0),
-                    NSNumber(value: 1),
-                    NSNumber(value: 0)
-                ], right: [
-                    NSNumber(value: 1),
-                    NSNumber(value: 0),
-                    NSNumber(value: 0)
-                ], up: [
-                    NSNumber(value: 0),
-                    NSNumber(value: 0),
-                    NSNumber(value: 1)
-            ])
             break
         }
+        
+        self.agoraMgr.updateSelfPosition(
+            position: [
+                NSNumber(value: 0),
+                NSNumber(value: 0),
+                NSNumber(value: 0)
+            ], forward: [
+                NSNumber(value: forwardX),
+                NSNumber(value: forwardY),
+                NSNumber(value: forwardZ)
+            ], right: [
+                NSNumber(value: rightX),
+                NSNumber(value: rightY),
+                NSNumber(value: rightZ)
+            ], up: [
+                NSNumber(value: upX),
+                NSNumber(value: upY),
+                NSNumber(value: upZ)
+        ])
+        
+        let debugMsg = """
+        forword: [\(String (format:  "%+.2f" ,forwardX)),\(String (format:  "%+.2f" ,forwardY)),\(String (format:  "%+.2f" ,forwardZ))]
+        right: [\(String (format:  "%+.2f" ,rightX)),\(String (format:  "%+.2f" , rightY)),\(String (format:  "%+.2f" ,rightZ))]
+        up: [\(String (format:  "%+.2f" ,upX)),\(String (format:  "%+.2f" ,upY)),\(String (format:  "%+.2f" ,upZ))]
+        """
+        self.debugLabel.text = debugMsg
     }
 }
 
@@ -292,7 +278,7 @@ extension RoomImageViewController: HeadMotionManagerDelegate {
         let w = motion?.attitude.quaternion.w ?? 0
         
         if let uid = self.userButtons.keys.first {
-            self.agoraMgr.setHostPosition(UInt(uid), position: [-1.5, 0.0, 0.0])
+            //self.agoraMgr.setHostPosition(UInt(uid), position: [-1.5, 0.0, 0.0])
         }
         
 //        let forwordX = (1-2*y*y-2*z*z)
@@ -368,7 +354,7 @@ extension RoomImageViewController: AgoraManagerDelegate {
         guard self.remoteUsers.keys.contains(uid) else {
             // new user,
             self.remoteUsers[uid] = -1
-            PositionManager.shared.changeSeat(ofUser: uid, to: -1)
+            //PositionManager.shared.changeSeat(ofUser: uid, to: -1)
             return
         }
     }

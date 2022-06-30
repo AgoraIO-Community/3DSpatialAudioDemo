@@ -81,15 +81,14 @@ class MultiPlayerViewController: UIViewController {
 }
 
 extension MultiPlayerViewController {
-    @IBAction private func onCloseButtonClicked(_ sender: UIButton) {
-        self.dismiss(animated: true) {
-            self.agoraMgr.leave()
-        }
-    }
-    
     @IBAction private func onSendToRemoteSwitchChanged(_ sender: UISwitch) {
-        //
-        agoraMgr.publishMediaPlayer(sender.isOn, playerId: 1)
+        Logger.debug()
+        if sender.isOn {
+            for playerId in self.playerViews.keys {
+//                self.agoraMgr.publishMediaPlayer(sender.isOn, playerId: playerId)
+                self.agoraMgr.startSendMediaPlayer(playerId, name: "Player\(playerId)", ToChannel: self.channelName!)
+            }
+        }
     }
     
     @IBAction private func onTapped(_ sender: UITapGestureRecognizer) {
@@ -349,6 +348,12 @@ extension MultiPlayerViewController: HeadMotionManagerDelegate {
                 NSNumber(value: upY),
                 NSNumber(value: upZ)
         ])
+    }
+}
+
+extension MultiPlayerViewController {
+    private func sendPlayer(plyerId: Int) {
+        // 
     }
 }
 

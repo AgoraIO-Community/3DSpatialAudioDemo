@@ -16,7 +16,6 @@ class HostViewController: UIViewController {
     @IBOutlet weak var audioMixingSwitch: UISwitch!
     @IBOutlet weak var audioMixingSegment: UISegmentedControl!
     @IBOutlet weak var loaclVideoView: UIView!
-    @IBOutlet weak var closeButton: UIButton!
     
     // MARK: - Properties
     var channelName: String?
@@ -86,12 +85,6 @@ extension HostViewController {
             self.agoraMgr.startAudioMixing(soundType: soundName, completion: { ret in
                 //
             })
-        }
-    }
-    
-    @IBAction private func onCloseButtonClicked(_ sender: UIButton) {
-        self.dismiss(animated: true) {
-            self.agoraMgr.leave()
         }
     }
 }

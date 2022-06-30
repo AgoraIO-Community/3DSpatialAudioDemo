@@ -16,6 +16,9 @@ enum SceneType: String {
     case multiPlayerRoom
     case nineSeatsARRoom
     
+    case multiPlayerHostRoom
+    case multiPlayerAudienceRoom
+    
     var segueName: String {
         switch self {
         case .host:
@@ -30,6 +33,10 @@ enum SceneType: String {
             return "EnterMultiPlayerRoom"
         case .nineSeatsARRoom:
             return "Enter9SeatsARRoom"
+        case .multiPlayerHostRoom:
+            return "EnterMultiPlayerHostRoom"
+        case .multiPlayerAudienceRoom:
+            return "EnterMultiPlayerAudienceRoom"
         }
     }
     
@@ -47,6 +54,10 @@ enum SceneType: String {
             return "Audience - MultiPlayerRoom"
         case .nineSeatsARRoom:
             return "Audience - Nine seat AR room"
+        case .multiPlayerHostRoom:
+            return "Multi Player - Host"
+        case .multiPlayerAudienceRoom:
+            return "Multi Player - Audience"
         }
     }
 }
@@ -54,6 +65,7 @@ enum SceneType: String {
 class LocalKitViewController: UIViewController {
     @IBOutlet weak var channelNameField: UITextField!
     @IBOutlet weak var HostButton: UIButton!
+    @IBOutlet weak var MultiPlayerHostButton: UIButton!
     @IBOutlet weak var AudienceButton: UIButton!
     @IBOutlet weak var arRoomButton: UIButton!
     @IBOutlet weak var imageRoomButton: UIButton!
@@ -126,6 +138,14 @@ extension LocalKitViewController {
         Logger.debug("EnterRoomAsHost")
         if checkChannelName() {
             self.performSegue(withIdentifier: "EnterRoomAsHost", sender: self)
+        }
+    }
+    
+    @IBAction private func onMultiPlayerHostButtonClicked(_ sender: UIButton?) {
+        // select seat
+        Logger.debug("EnterMultiPlayerHostRoom")
+        if checkChannelName() {
+            self.performSegue(withIdentifier: "EnterMultiPlayerHostRoom", sender: self)
         }
     }
     
@@ -216,6 +236,12 @@ extension LocalKitViewController {
             if let destinationVC = segue.destination as? NineSeatsARViewController {
                 destinationVC.channelName = channelNameField.text
                 destinationVC.isHost = true
+            }
+        }
+        else if segue.identifier == "EnterMultiPlayerHostRoom" {
+            if let destinationVC = segue.destination as? MultiMediaHostViewController {
+                destinationVC.channelName = channelNameField.text
+                //destinationVC.isHost = true
             }
         }
     }

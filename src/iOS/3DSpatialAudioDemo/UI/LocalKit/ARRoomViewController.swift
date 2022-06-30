@@ -32,7 +32,7 @@ class ARRoomViewController: UIViewController {
     
     var positionUpdateTimer: Int = 0
     
-    let defaultScreenPos: simd_float4 = simd_float4(0, 0, -1, 1)
+    let defaultScreenPos: simd_float4 = simd_float4(0, 0, -1.5, 1)
     
     private var isPlanarDetected: Bool = false{
         didSet {
@@ -50,20 +50,22 @@ class ARRoomViewController: UIViewController {
         self.agoraMgr.delegate = self
         if let cName = self.channelName {
             //self.channelLabel.text = cName
-            self.agoraMgr.join(channel: cName, asHost: true) { (success, uid) in
+            self.agoraMgr.join(channel: cName, asHost: false) { (success, uid) in
                 if success {
                     Logger.debug("join channel \(cName) success: \(success), uid is \(uid)")
+                    self.agoraMgr.enableSpatialAudio()
                     // set self position
-                    PositionManager.shared.resetSelfPosition()
+                    //PositionManager.shared.resetSelfPosition()
                     //self.uidLabel.text = "\(uid)"
+                    PositionManager.shared.updateSelfPosition([0,0,0], forward: [0,0,-1], right: [1,0,0], up: [0,1,0])
                 }
                 else {
-                    
+                    Logger.error("Join channel \(cName) failed.")
                 }
             }
         }
         
-        //set AR Scene delegate
+        // set AR Scene delegate
         arView.delegate = self
         arView.session.delegate = self
         arView.showsStatistics = true
@@ -181,8 +183,12 @@ extension ARRoomViewController {
     @IBAction private func onScreenButtonClicked(_ sender: UIButton) {
         let userSelectView = UIAlertController(title: "Select User", message: nil, preferredStyle: .actionSheet)
         for uid in self.undisplayedUsers {
-            let action = UIAlertAction(title: "\(uid)", style: .default) { [weak self] action in
+            let mediaName = MediaType.TypeOf(uid: Int(uid))?.rawValue ?? "\(uid)"
+            let action = UIAlertAction(title: "\(mediaName)", style: .default) { [weak self] action in
                 self?.addUserNodeToFront(forUser: uid)
+                if let idx = self?.undisplayedUsers.firstIndex(of: uid) {
+                    self?.undisplayedUsers.remove(at: idx)
+                }
             }
             userSelectView.addAction(action)
         }
@@ -209,24 +215,24 @@ extension ARRoomViewController {
         let transform: simd_float4x4 = camera.transform
         let rotationY = camera.eulerAngles.y
         let targetPos = transform * defaultScreenPos
-        Logger.debug("addNode for user: \(uid) at \(targetPos)")
+        Logger.debug("[!!!]Add screen for user: \(uid) at \(targetPos)")
         
         rootNode.position = SCNVector3(targetPos.x, targetPos.y, targetPos.z)
         rootNode.rotation = SCNVector4(0, 1, 0, rotationY) //* (1,0,0, camera.eulerAngles.x)
         
-        self.updateNodeUserLabel(uid: 0, node: rootNode)
+        self.updateNodeUserLabel(uid: uid, node: rootNode)
         
         arView.scene.rootNode.addChildNode(rootNode)
         
-        //userNodes[uid] = rootNode
-//        let pos = [
-//            NSNumber(value: targetPos.x),
-//            NSNumber(value: targetPos.y),
-//            NSNumber(value: targetPos.z),
-//        ]
-//        userPositions[uid] = pos
+        userNodes[uid] = rootNode
+        let pos = [
+            NSNumber(value: targetPos.x),
+            NSNumber(value: targetPos.y),
+            NSNumber(value: targetPos.z),
+        ]
         
-//        self.agoraMgr.updatePosition(of: 0, position: pos)
+        userPositions[uid] = pos
+        self.agoraMgr.updatePosition(of: uid, position: pos)
         
         self.updateDebugLabel()
         
@@ -276,7 +282,7 @@ extension ARRoomViewController {
         ]
         userPositions[uid] = pos
         
-        self.agoraMgr.updatePosition(of: uid, position: pos)
+//        self.agoraMgr.updatePosition(of: uid, position: pos)
         
         self.updateDebugLabel()
         
@@ -372,10 +378,10 @@ extension ARRoomViewController {
         )
         
         let result = transform //* transB // * trans * transR
-        
+        //Logger.debug("pos: \(pos)")
         self.selfPositionLabel.font = UIFont.monospacedSystemFont(ofSize: 12.0, weight: .medium)
         self.selfPositionLabel.text = """
-        Position: \(String(format:  "%.2f" ,pos[0])), \(String (format:  "%.2f" ,pos[1])),\(String (format:  "%.2f" ,pos[2]))
+        Position: \(String(format:  "%.4f", pos[0].floatValue)), \(String (format:  "%.4f", pos[1].floatValue)),\(String (format:  "%.4f", pos[2].floatValue))
         angle: \(String(format:  "%.2f" ,angle[0])),\(String(format:  "%.2f",angle[1])),\(String(format:  "%.2f",angle[2]))
         4x4 matrix column
             X     Y     Z     T
@@ -406,6 +412,7 @@ extension ARRoomViewController: AgoraManagerDelegate {
     func agoraMgr(_ mgr: AgoraManager, userJoined uid: UInt) {
         //
         self.undisplayedUsers.append(uid)
+        //PositionManager.shared.changeSeat(ofUser: uid, to: -1)
         self.updateDebugLabel()
     }
     
@@ -444,8 +451,9 @@ extension ARRoomViewController: ARSCNViewDelegate {
 
 extension ARRoomViewController: ARSessionDelegate {
     func session(_ session: ARSession, didUpdate frame: ARFrame) {
+//        Logger.debug( frame.timestamp )
         self.positionUpdateTimer += 1
-        guard self.positionUpdateTimer >= 2 else {
+        guard self.positionUpdateTimer >= 60 else {
             return
         }
         
@@ -462,10 +470,19 @@ extension ARRoomViewController: ARSessionDelegate {
             NSNumber(value: transform.columns.3.y),
             NSNumber(value: transform.columns.3.z),
         ]
+//        let forward = transform * simd_float4(0, 0, -1, 0)
+//        let right = transform * simd_float4(1, 0, 0, 0)
+//        let up = transform * simd_float4(0, 1, 0, 0)
+//        updateSelfPositionLabel(pos, angle: frame.camera.eulerAngles, transform: transform)
+//        self.agoraMgr.updateSelfPosition(
+//            position: pos,
+//            forward: [NSNumber(value: forward.x), NSNumber(value: forward.y), NSNumber(value: forward.z)],
+//            right: [NSNumber(value: right.x), NSNumber(value: right.y), NSNumber(value: right.z)],
+//            up: [NSNumber(value: up.x), NSNumber(value: up.y), NSNumber(value: up.z)])
         let forward = [
-            NSNumber(value: transform.columns.0.x),
-            NSNumber(value: transform.columns.0.y),
-            NSNumber(value: transform.columns.0.z),
+            NSNumber(value: transform.columns.2.x * -1),
+            NSNumber(value: transform.columns.2.y * -1),
+            NSNumber(value: transform.columns.2.z * -1),
         ]
         let right = [
             NSNumber(value: transform.columns.1.x),
@@ -473,16 +490,115 @@ extension ARRoomViewController: ARSessionDelegate {
             NSNumber(value: transform.columns.1.z),
         ]
         let up = [
-            NSNumber(value: transform.columns.2.x),
-            NSNumber(value: transform.columns.2.y),
-            NSNumber(value: transform.columns.2.z),
+            NSNumber(value: transform.columns.0.x * -1),
+            NSNumber(value: transform.columns.0.y * -1),
+            NSNumber(value: transform.columns.0.z * -1),
         ]
-        //Logger.debug("pos: \(pos)")
+        Logger.debug("pos: \(pos), \nforward: \(forward), \nright: \(right), \nup: \(up)")
         updateSelfPositionLabel(pos, angle: frame.camera.eulerAngles, transform: transform)
-        self.agoraMgr.updateSelfPosition(
-            position: pos,
-            forward: forward,
-            right: right,
-            up: up)
+        self.agoraMgr.updateSelfPosition(position: pos, forward: forward, right: right, up: up)
     }
+}
+
+extension ARRoomViewController {
+    /// On direction segment value changed handle
+    /// - Parameter sender: UISegmentedControl
+    @IBAction private func onDirectionChanged(_ sender: UISegmentedControl) {
+        var forwardX = 0.0
+        var forwardY = 1.0
+        var forwardZ = 0.0
+
+        var rightX = 1.0
+        var rightY = 0.0
+        var rightZ = 0.0
+
+        var upX = 0.0
+        var upY = 0.0
+        var upZ = 1.0
+        
+        switch sender.selectedSegmentIndex {
+        case 0: //forward
+            forwardX = 0.0
+            forwardY = 0.0
+            forwardZ = -1.0
+
+            rightX = 1.0
+            rightY = 0.0
+            rightZ = 0.0
+
+            upX = 0.0
+            upY = 1.0
+            upZ = 0.0
+            break
+        case 1: // left
+            forwardX = -1.0
+            forwardY = 0.0
+            forwardZ = 0.0
+
+            rightX = 0.0
+            rightY = 0.0
+            rightZ = -1.0
+
+            upX = 0.0
+            upY = 1.0
+            upZ = 0.0
+            break
+        case 2: // back
+            forwardX = 0.0
+            forwardY = 0.0
+            forwardZ = 1.0
+
+            rightX = -1.0
+            rightY = 0.0
+            rightZ = 0.0
+
+            upX = 0.0
+            upY = 1.0
+            upZ = 0.0
+            break
+        case 3: // right
+            forwardX = 1.0
+            forwardY = 0.0
+            forwardZ = 0.0
+
+            rightX = 0.0
+            rightY = 0.0
+            rightZ = 1.0
+
+            upX = 0.0
+            upY = 1.0
+            upZ = 0.0
+            break
+        default: // forward
+            break
+        }
+        
+        self.agoraMgr.updateSelfPosition(
+            position: [
+                NSNumber(value: 0),
+                NSNumber(value: 0),
+                NSNumber(value: 0)
+            ], forward: [
+                NSNumber(value: forwardX),
+                NSNumber(value: forwardY),
+                NSNumber(value: forwardZ)
+            ], right: [
+                NSNumber(value: rightX),
+                NSNumber(value: rightY),
+                NSNumber(value: rightZ)
+            ], up: [
+                NSNumber(value: upX),
+                NSNumber(value: upY),
+                NSNumber(value: upZ)
+        ])
+        
+        let debugMsg = """
+        \n
+        forword: [\(String (format:  "%+.2f" ,forwardX)),\(String (format:  "%+.2f" ,forwardY)),\(String (format:  "%+.2f" ,forwardZ))]
+        right: [\(String (format:  "%+.2f" ,rightX)),\(String (format:  "%+.2f" , rightY)),\(String (format:  "%+.2f" ,rightZ))]
+        up: [\(String (format:  "%+.2f" ,upX)),\(String (format:  "%+.2f" ,upY)),\(String (format:  "%+.2f" ,upZ))]
+        """
+        Logger.debug(debugMsg)
+    }
+    
 }
