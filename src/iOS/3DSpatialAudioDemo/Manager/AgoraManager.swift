@@ -379,7 +379,6 @@ extension AgoraManager {
     ///   - up: [ux, uy, uz]
     ///   - mode: Spatial Audio Mode (local or cloud), default is local
     func updateSelfPosition(position: [NSNumber], forward: [NSNumber], right: [NSNumber], up: [NSNumber], mode: SpatialAudioMode = .local) {
-        //Logger.debug()
         mode.spatialKit.updateSelfPosition(position, forward: forward, right: right, up: up)
     }
     
@@ -438,15 +437,15 @@ extension AgoraManager: AgoraRtcEngineDelegate {
     }
     
     func rtcEngine(_ engine: AgoraRtcEngineKit, didOccurError errorCode: AgoraErrorCode) {
-        Logger.debug("errorCode \(errorCode.rawValue)")
+        Logger.debug("ErrorCode \(errorCode.rawValue)")
     }
     
     func rtcEngine(_ engine: AgoraRtcEngineKit, didOccurWarning warningCode: AgoraWarningCode) {
-        Logger.debug("warningCode \(warningCode.rawValue)")
+        Logger.debug("WarningCode \(warningCode.rawValue)")
     }
     
     func rtcEngine(_ engine: AgoraRtcEngineKit, didUserInfoUpdatedWithUserId uid: UInt, userInfo: AgoraUserInfo) {
-        Logger.debug("didUserInfoUpdatedWithUserId:\(uid), userInfo: \(userInfo)")
+        Logger.debug("UserId:\(uid), userInfo: \(userInfo)")
     }
     
     func rtcEngine(_ engine: AgoraRtcEngineKit, receiveStreamMessageFromUid uid: UInt, streamId: Int, data: Data) {

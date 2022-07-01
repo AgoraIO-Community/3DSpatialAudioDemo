@@ -111,9 +111,6 @@ extension ARRoomViewController {
     //
     @IBAction private func onSceneTapped(_ recognizer: UITapGestureRecognizer) {
         Logger.debug("onSceneTapped")
-//        guard self.isPlanarDetected else {
-//            return
-//        }
         
         let location = recognizer.location(in: self.arView)
         Logger.debug("\(location)")
@@ -124,16 +121,8 @@ extension ARRoomViewController {
             Logger.debug("removeNode")
             self.removeNode(node)
         }
+        
         // if hit nothing, add a screen
-//        Logger.debug("location: \(location)")
-//        Logger.debug("arView.center: \(arView.center)")
-//        let query = self.arView.raycastQuery(from: arView.center, allowing: .estimatedPlane, alignment: .any)
-//        Logger.debug("query?.direction: \(query?.direction)")
-//        Logger.debug("query?.origin: \(query?.origin)")
-//        let results = arView.session.raycast(query!)
-//        if let a: ARRaycastResult = results.first {
-//            Logger.debug("first point from ray cast query: \(a.worldTransform)")
-//        }
         if let result = self.arView.hitTest(location, types: .featurePoint).first {
             let userSelectView = UIAlertController(title: "Select User", message: nil, preferredStyle: .actionSheet)
             for uid in self.undisplayedUsers {
@@ -149,34 +138,9 @@ extension ARRoomViewController {
             }
             userSelectView.addAction(cancelAction)
             self.present(userSelectView, animated: true) {
-                // todo
+                // TODO:
             }
         }
-        
-//        let userSelectView = UIAlertController(title: "Select User", message: nil, preferredStyle: .actionSheet)
-//
-//        for uid in self.undisplayedUsers {
-//            let action = UIAlertAction(title: "\(uid)", style: .default) { [weak self] action in
-//                //
-//                if let node = self?.arView.hitTest(location, options: nil).first?.node {
-//                    Logger.debug("removeNode")
-//                    self?.removeNode(node)
-//                } else if let result = self?.arView.hitTest(location, types: .featurePoint).first {
-//                    Logger.debug("addNode")
-//                    self?.addNode(withTransform: result.worldTransform, ofUser: uid)
-//                }
-//            }
-//            userSelectView.addAction(action)
-//        }
-//
-//        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { action in
-//            //.dismiss(animated: true, completion: nil)
-//        }
-//        userSelectView.addAction(cancelAction)
-//
-//        self.present(userSelectView, animated: true) {
-//            // todo
-//        }
         return
     }
     
@@ -390,13 +354,6 @@ extension ARRoomViewController {
         z | \(String (format:  "%+.2f" ,result.columns.0.z)) \(String (format:  "%+.2f" ,result.columns.1.z)) \(String (format:  "%+.2f" ,result.columns.2.z)) \(String (format:  "%+.2f" ,result.columns.3.z)) |
         w | \(String (format:  "%+.2f" ,result.columns.0.w)) \(String (format:  "%+.2f" ,result.columns.1.w)) \(String (format:  "%+.2f" ,result.columns.2.w)) \(String (format:  "%+.2f" ,result.columns.3.w)) |
         """
-        /*
-         transform 0: \(String (format:  "%.2f" ,transform.columns.0.x)), \(String (format:  "%.2f" ,transform.columns.0.y)),\(String (format:  "%.2f" ,transform.columns.0.z)),\(String (format:  "%.2f" ,transform.columns.0.w))
-         transform 1: \(String (format:  "%.2f" ,transform.columns.1.x)), \(String (format:  "%.2f" ,transform.columns.1.y)),\(String (format:  "%.2f" ,transform.columns.1.z)),\(String (format:  "%.2f" ,transform.columns.1.w))
-         transform 2: \(String (format:  "%.2f" ,transform.columns.2.x)), \(String (format:  "%.2f" ,transform.columns.2.y)),\(String (format:  "%.2f" ,transform.columns.2.z)),\(String (format:  "%.2f" ,transform.columns.2.w))
-         transform 2: \(String (format:  "%.2f" ,transform.columns.3.x)), \(String (format:  "%.2f" ,transform.columns.3.y)),\(String (format:  "%.2f" ,transform.columns.3.z)),\(String (format:  "%.2f" ,transform.columns.3.w))
-         */
-        //transform.inverse.columns.
     }
 }
 
@@ -451,34 +408,20 @@ extension ARRoomViewController: ARSCNViewDelegate {
 
 extension ARRoomViewController: ARSessionDelegate {
     func session(_ session: ARSession, didUpdate frame: ARFrame) {
-//        Logger.debug( frame.timestamp )
         self.positionUpdateTimer += 1
         guard self.positionUpdateTimer >= 60 else {
+            // 60fps, update once per sec
             return
         }
         
         self.positionUpdateTimer = 0
         let transform: simd_float4x4 = frame.camera.transform
         
-        //Logger.debug("eulerAngles: \(frame.camera.eulerAngles)")
-        //Logger.debug("transform0: \(transform.columns.0)")
-        //Logger.debug("transform1: \(transform.columns.1)")
-        //Logger.debug("transform2: \(transform.columns.2)")
-        
         let pos = [
             NSNumber(value: transform.columns.3.x),
             NSNumber(value: transform.columns.3.y),
             NSNumber(value: transform.columns.3.z),
         ]
-//        let forward = transform * simd_float4(0, 0, -1, 0)
-//        let right = transform * simd_float4(1, 0, 0, 0)
-//        let up = transform * simd_float4(0, 1, 0, 0)
-//        updateSelfPositionLabel(pos, angle: frame.camera.eulerAngles, transform: transform)
-//        self.agoraMgr.updateSelfPosition(
-//            position: pos,
-//            forward: [NSNumber(value: forward.x), NSNumber(value: forward.y), NSNumber(value: forward.z)],
-//            right: [NSNumber(value: right.x), NSNumber(value: right.y), NSNumber(value: right.z)],
-//            up: [NSNumber(value: up.x), NSNumber(value: up.y), NSNumber(value: up.z)])
         let forward = [
             NSNumber(value: transform.columns.2.x * -1),
             NSNumber(value: transform.columns.2.y * -1),
@@ -502,6 +445,7 @@ extension ARRoomViewController: ARSessionDelegate {
 
 extension ARRoomViewController {
     /// On direction segment value changed handle
+    /// for debug
     /// - Parameter sender: UISegmentedControl
     @IBAction private func onDirectionChanged(_ sender: UISegmentedControl) {
         var forwardX = 0.0

@@ -126,7 +126,7 @@ extension RoomImageViewController {
             }
             userSelectView.addAction(action)
         }
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { [weak self] action in
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { action in
             //.dismiss(animated: true, completion: nil)
         }
         userSelectView.addAction(cancelAction)
@@ -271,27 +271,15 @@ extension RoomImageViewController: HeadMotionManagerDelegate {
     
     func headMotionMgr(_ mgr: HeadMotionManager, motion: CMDeviceMotion?) {
         //Logger.debug("\(motion?.rotationRate)")
-        Logger.debug("\(motion?.attitude.quaternion)")
+        Logger.debug("\(String(describing: motion?.attitude.quaternion))")
         let x = motion?.attitude.quaternion.x ?? 0
         let y = motion?.attitude.quaternion.y ?? 0
         let z = motion?.attitude.quaternion.z ?? 0
         let w = motion?.attitude.quaternion.w ?? 0
         
-        if let uid = self.userButtons.keys.first {
-            //self.agoraMgr.setHostPosition(UInt(uid), position: [-1.5, 0.0, 0.0])
-        }
-        
-//        let forwordX = (1-2*y*y-2*z*z)
-//        let forwordY = (2*x*y+2*z*w)
-//        let forwordZ = (2*x*z-2*y*w)
-//
-//        let rightX = (2*x*y-2*z*w)
-//        let rightY = (1-2*x*x-2*z*z)
-//        let rightZ = (2*y*z+2*x*w)
-//
-//        let upX = (2*x*z+2*y*w)
-//        let upY = (2*y*z-2*x*w)
-//        let upZ = (1-2*x*x-2*y*y)
+//        if let uid = self.userButtons.keys.first {
+//            self.agoraMgr.setHostPosition(UInt(uid), position: [-1.5, 0.0, 0.0])
+//        }
         
         let forwordX = (2*x*y-2*z*w)
         let forwordY = (1-2*x*x-2*z*z)
@@ -304,21 +292,6 @@ extension RoomImageViewController: HeadMotionManagerDelegate {
         let upX = (2*x*z+2*y*w)
         let upY = (2*y*z-2*x*w)
         let upZ = (1-2*x*x-2*y*y)
-        
-//        let forwordX = -(2*x*y+2*z*w)
-//        let forwordY = (1-2*x*x-2*z*z)
-//        let forwordZ = (2*y*z-2*x*w)
-//        Logger.debug("forword: [\(String (format:  "%.2f" ,forwordX)),\(String (format:  "%.2f" ,forwordY)),\(String (format:  "%.2f" ,forwordZ))]")
-//
-//        let rightX = (1-2*y*y-2*z*z)
-//        let rightY = -(2*x*y-2*z*w)
-//        let rightZ = (2*x*z+2*y*w)
-//        Logger.debug("right: [\(String (format:  "%.2f" ,rightX)),\(String (format:  "%.2f" , rightY)),\(String (format:  "%.2f" ,rightZ))]")
-//
-//        let upX = (2*x*z-2*y*w)
-//        let upY = (2*y*z+2*x*w)
-//        let upZ = (1-2*x*x-2*y*y)
-//        Logger.debug("up: [\(String (format:  "%.2f" ,upX)),\(String (format:  "%.2f" ,upY)),\(String (format:  "%.2f" ,upZ))]")
         
         let debugMsg = """
         forword: [\(String (format:  "%.2f" ,forwordX)),\(String (format:  "%.2f" ,forwordY)),\(String (format:  "%.2f" ,forwordZ))]

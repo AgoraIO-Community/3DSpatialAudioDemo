@@ -305,7 +305,7 @@ extension MultiPlayerViewController: HeadMotionManagerDelegate {
     
     func headMotionMgr(_ mgr: HeadMotionManager, motion: CMDeviceMotion?) {
         //Logger.debug("\(motion?.rotationRate)")
-        Logger.debug("\(motion?.attitude.quaternion)")
+        Logger.debug("\(String(describing: motion?.attitude.quaternion))")
         let x = motion?.attitude.quaternion.x ?? 0
         let y = motion?.attitude.quaternion.y ?? 0
         let z = motion?.attitude.quaternion.z ?? 0

@@ -65,8 +65,6 @@ enum MediaType: String, CaseIterable {
             return 100013
         case .Violin_2:
             return 100014
-        default:
-            return 0
         }
     }
     
