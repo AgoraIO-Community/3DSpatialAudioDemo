@@ -16,7 +16,6 @@ class HostViewController: UIViewController {
     @IBOutlet weak var audioMixingSwitch: UISwitch!
     @IBOutlet weak var audioMixingSegment: UISegmentedControl!
     @IBOutlet weak var loaclVideoView: UIView!
-    @IBOutlet weak var closeButton: UIButton!
     
     // MARK: - Properties
     var channelName: String?
@@ -32,11 +31,14 @@ class HostViewController: UIViewController {
         if let cName = self.channelName {
             self.channelNameLabel.text = cName
             self.agoraMgr.join(channel: cName, asHost: true) { (success, uid) in
-                Logger.debug("-----")
                 if success {
+                    Logger.debug("Join channel \(cName) success: \(success), uid is \(uid).")
                     self.uidLabel.text = "user id: \(uid)"
                     // reset self position
                     PositionManager.shared.resetSelfPosition()
+                }
+                else {
+                    Logger.debug("Join channel \(cName) failed.")
                 }
             }
         }
@@ -65,19 +67,20 @@ extension HostViewController {
         }
     }
     
+    /// AudioMixingSwitch value changed event handle
+    /// - Parameter sender: UISwitch
     @IBAction private func onAudioMixingSwitchChanged(_ sender: UISwitch) {
         if sender.isOn {
             self.agoraMgr.startAudioMixing(soundType: audioMixingSegment.titleForSegment(at: audioMixingSegment.selectedSegmentIndex) ?? "", completion: { ret in
-                //
+                // completion function
             })
         } else {
             self.agoraMgr.stopAudioMixing()
-//            self.agoraMgr.startAudioMixing(soundType: audioMixingSegment.titleForSegment(at: audioMixingSegment.selectedSegmentIndex) ?? "", completion: { ret in
-//                //
-//            })
         }
     }
     
+    /// AudioMixingSegment value changed event handle
+    /// - Parameter sender: UISegmentedControl
     @IBAction private func onAudioMixingSegmentChanged(_ sender: UISegmentedControl) {
         guard self.audioMixingSwitch.isOn else {
             return
@@ -88,23 +91,17 @@ extension HostViewController {
             })
         }
     }
-    
-    @IBAction private func onCloseButtonClicked(_ sender: UIButton) {
-        self.dismiss(animated: true) {
-            self.agoraMgr.leave()
-        }
-    }
 }
 
 extension HostViewController: AgoraManagerDelegate {
     func agoraMgr(_ mgr: AgoraManager, userJoined uid: UInt) {
         // set to default seat
         // enable to hear other host
-        Logger.debug("user \(uid) joined, add to remote user list")
+        Logger.debug("User \(uid) joined, add to remote user list")
         PositionManager.shared.changeSeat(ofUser: uid, to: 4)
     }
     
     func agoraMgr(_ mgr: AgoraManager, userLeaved uid: UInt) {
-        Logger.debug("")
+        Logger.debug("User \(uid) leaved.")
     }
 }

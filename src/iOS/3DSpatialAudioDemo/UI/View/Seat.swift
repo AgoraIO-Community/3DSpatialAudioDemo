@@ -13,14 +13,10 @@ class Seat: UIControl {
     @IBOutlet weak var avatarView: UIView!
     var contentView: UIView!
     
-    var uid: UInt? {
+    var uid: UInt?
+    var name: String? {
         didSet {
-            if let id = uid {
-                self.userNameLabel.text = "\(id)"
-            }
-            else {
-                self.userNameLabel.text = "-"
-            }
+            self.userNameLabel.text = "\(name ?? "-")"
         }
     }
     

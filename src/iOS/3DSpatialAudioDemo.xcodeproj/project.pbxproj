@@ -12,7 +12,6 @@
 		B7030DF627BBA8D50071F3B0 /* SpriteKitScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7030DF527BBA8D50071F3B0 /* SpriteKitScene.swift */; };
 		B7030DF827BBB9C20071F3B0 /* LocalSpatialKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7030DF727BBB9C20071F3B0 /* LocalSpatialKit.swift */; };
 		B7030DFA27BBB9E10071F3B0 /* CloudSpatialKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7030DF927BBB9E10071F3B0 /* CloudSpatialKit.swift */; };
-		B7030DFC27BBBA310071F3B0 /* Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7030DFB27BBBA310071F3B0 /* Protocols.swift */; };
 		B7030DFE27BCADEB0071F3B0 /* Enumerations.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7030DFD27BCADEB0071F3B0 /* Enumerations.swift */; };
 		B7030E0027BCB42E0071F3B0 /* SpatialAudioProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7030DFF27BCB42E0071F3B0 /* SpatialAudioProtocol.swift */; };
 		B7154F0F271821D1005A96C8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7154F0E271821D1005A96C8 /* AppDelegate.swift */; };
@@ -23,6 +22,23 @@
 		B7154F2D27182699005A96C8 /* ARRoomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7154F2C27182698005A96C8 /* ARRoomViewController.swift */; };
 		B7154F2F271826A8005A96C8 /* NineSeatRoomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7154F2E271826A8005A96C8 /* NineSeatRoomViewController.swift */; };
 		B723263627C879A100EC13EC /* AppConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = B723263527C879A100EC13EC /* AppConfig.swift */; };
+		B72458B6286017620039C674 /* Horn.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B72458A8286017620039C674 /* Horn.mp3 */; };
+		B72458B7286017620039C674 /* Timpani.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B72458A9286017620039C674 /* Timpani.mp3 */; };
+		B72458B8286017620039C674 /* Choir.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B72458AA286017620039C674 /* Choir.mp3 */; };
+		B72458B9286017620039C674 /* Harp.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B72458AB286017620039C674 /* Harp.mp3 */; };
+		B72458BA286017620039C674 /* Trumpet.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B72458AC286017620039C674 /* Trumpet.mp3 */; };
+		B72458BB286017620039C674 /* Trombone.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B72458AD286017620039C674 /* Trombone.mp3 */; };
+		B72458BC286017620039C674 /* Flutes.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B72458AE286017620039C674 /* Flutes.mp3 */; };
+		B72458BD286017620039C674 /* Viola.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B72458AF286017620039C674 /* Viola.mp3 */; };
+		B72458BE286017620039C674 /* Piano.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B72458B0286017620039C674 /* Piano.mp3 */; };
+		B72458BF286017620039C674 /* Violin_2.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B72458B1286017620039C674 /* Violin_2.mp3 */; };
+		B72458C0286017620039C674 /* Cello.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B72458B2286017620039C674 /* Cello.mp3 */; };
+		B72458C1286017620039C674 /* Violin_1.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B72458B3286017620039C674 /* Violin_1.mp3 */; };
+		B72458C2286017620039C674 /* Clarinets.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B72458B4286017620039C674 /* Clarinets.mp3 */; };
+		B72458C3286017620039C674 /* Basses.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B72458B5286017620039C674 /* Basses.mp3 */; };
+		B72458C52862B3270039C674 /* MediaData.swift in Sources */ = {isa = PBXBuildFile; fileRef = B72458C42862B3270039C674 /* MediaData.swift */; };
+		B72458C72862B6230039C674 /* MultiMediaHostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B72458C62862B6230039C674 /* MultiMediaHostViewController.swift */; };
+		B72458CA2862C04F0039C674 /* MediaDataCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B72458C92862C04F0039C674 /* MediaDataCell.swift */; };
 		B72D487C281FBECA0035802D /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B72D487A281FBECA0035802D /* HomeViewController.swift */; };
 		B72D487D281FBECA0035802D /* MultiPlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B72D487B281FBECA0035802D /* MultiPlayerViewController.swift */; };
 		B739892A27182BE00013875F /* AgoraManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B739892927182BE00013875F /* AgoraManager.swift */; };
@@ -30,7 +46,6 @@
 		B75437892760664F0094309C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B75437882760664F0094309C /* Assets.xcassets */; };
 		B76D0320273A7764000BFE26 /* HostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B76D031F273A7764000BFE26 /* HostViewController.swift */; };
 		B77B0D6E27B359D800ECBD6A /* Position.swift in Sources */ = {isa = PBXBuildFile; fileRef = B77B0D6D27B359D800ECBD6A /* Position.swift */; };
-		B77B0D7027B3723700ECBD6A /* SpatialAudioManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B77B0D6F27B3723700ECBD6A /* SpatialAudioManager.swift */; };
 		B77B0D7327B39BFE00ECBD6A /* AppInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = B77B0D7227B39BFE00ECBD6A /* AppInfo.swift */; };
 		B77BD90627A10CE20080ED95 /* song01_vocal.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B77BD90427A10CE20080ED95 /* song01_vocal.mp3 */; };
 		B77BD90727A10CE20080ED95 /* song01_instrumental.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B77BD90527A10CE20080ED95 /* song01_instrumental.mp3 */; };
@@ -83,7 +98,6 @@
 		B7030DF527BBA8D50071F3B0 /* SpriteKitScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpriteKitScene.swift; sourceTree = "<group>"; };
 		B7030DF727BBB9C20071F3B0 /* LocalSpatialKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalSpatialKit.swift; sourceTree = "<group>"; };
 		B7030DF927BBB9E10071F3B0 /* CloudSpatialKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudSpatialKit.swift; sourceTree = "<group>"; };
-		B7030DFB27BBBA310071F3B0 /* Protocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Protocols.swift; sourceTree = "<group>"; };
 		B7030DFD27BCADEB0071F3B0 /* Enumerations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Enumerations.swift; sourceTree = "<group>"; };
 		B7030DFF27BCB42E0071F3B0 /* SpatialAudioProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpatialAudioProtocol.swift; sourceTree = "<group>"; };
 		B7154F0B271821D1005A96C8 /* 3DSpatialAudioDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = 3DSpatialAudioDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -96,6 +110,23 @@
 		B7154F2C27182698005A96C8 /* ARRoomViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARRoomViewController.swift; sourceTree = "<group>"; };
 		B7154F2E271826A8005A96C8 /* NineSeatRoomViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NineSeatRoomViewController.swift; sourceTree = "<group>"; };
 		B723263527C879A100EC13EC /* AppConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConfig.swift; sourceTree = "<group>"; };
+		B72458A8286017620039C674 /* Horn.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Horn.mp3; sourceTree = "<group>"; };
+		B72458A9286017620039C674 /* Timpani.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Timpani.mp3; sourceTree = "<group>"; };
+		B72458AA286017620039C674 /* Choir.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Choir.mp3; sourceTree = "<group>"; };
+		B72458AB286017620039C674 /* Harp.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Harp.mp3; sourceTree = "<group>"; };
+		B72458AC286017620039C674 /* Trumpet.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Trumpet.mp3; sourceTree = "<group>"; };
+		B72458AD286017620039C674 /* Trombone.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Trombone.mp3; sourceTree = "<group>"; };
+		B72458AE286017620039C674 /* Flutes.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Flutes.mp3; sourceTree = "<group>"; };
+		B72458AF286017620039C674 /* Viola.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Viola.mp3; sourceTree = "<group>"; };
+		B72458B0286017620039C674 /* Piano.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Piano.mp3; sourceTree = "<group>"; };
+		B72458B1286017620039C674 /* Violin_2.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Violin_2.mp3; sourceTree = "<group>"; };
+		B72458B2286017620039C674 /* Cello.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Cello.mp3; sourceTree = "<group>"; };
+		B72458B3286017620039C674 /* Violin_1.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Violin_1.mp3; sourceTree = "<group>"; };
+		B72458B4286017620039C674 /* Clarinets.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Clarinets.mp3; sourceTree = "<group>"; };
+		B72458B5286017620039C674 /* Basses.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Basses.mp3; sourceTree = "<group>"; };
+		B72458C42862B3270039C674 /* MediaData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaData.swift; sourceTree = "<group>"; };
+		B72458C62862B6230039C674 /* MultiMediaHostViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiMediaHostViewController.swift; sourceTree = "<group>"; };
+		B72458C92862C04F0039C674 /* MediaDataCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaDataCell.swift; sourceTree = "<group>"; };
 		B72D487A281FBECA0035802D /* HomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		B72D487B281FBECA0035802D /* MultiPlayerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MultiPlayerViewController.swift; sourceTree = "<group>"; };
 		B739892927182BE00013875F /* AgoraManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgoraManager.swift; sourceTree = "<group>"; };
@@ -103,7 +134,6 @@
 		B75437882760664F0094309C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B76D031F273A7764000BFE26 /* HostViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HostViewController.swift; sourceTree = "<group>"; };
 		B77B0D6D27B359D800ECBD6A /* Position.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Position.swift; sourceTree = "<group>"; };
-		B77B0D6F27B3723700ECBD6A /* SpatialAudioManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpatialAudioManager.swift; sourceTree = "<group>"; };
 		B77B0D7227B39BFE00ECBD6A /* AppInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppInfo.swift; sourceTree = "<group>"; };
 		B77BD90427A10CE20080ED95 /* song01_vocal.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = song01_vocal.mp3; sourceTree = "<group>"; };
 		B77BD90527A10CE20080ED95 /* song01_instrumental.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = song01_instrumental.mp3; sourceTree = "<group>"; };
@@ -166,8 +196,10 @@
 				B7CD4A0D27EC40DA00091479 /* NineSeatsARViewController.swift */,
 				B7154F2E271826A8005A96C8 /* NineSeatRoomViewController.swift */,
 				B7CA78ED273CE1FC0079631C /* RoomImageViewController.swift */,
+				B72D487B281FBECA0035802D /* MultiPlayerViewController.swift */,
 				B7CA78F1273E46C20079631C /* HeadphoneMotionVC.swift */,
 				B7CA78F72745134F0079631C /* RealityKitViewController.swift */,
+				B72458C62862B6230039C674 /* MultiMediaHostViewController.swift */,
 			);
 			path = LocalKit;
 			sourceTree = "<group>";
@@ -240,8 +272,8 @@
 		B7154F2B271824BE005A96C8 /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				B72458C82862BFF70039C674 /* Views */,
 				B72D487A281FBECA0035802D /* HomeViewController.swift */,
-				B72D487B281FBECA0035802D /* MultiPlayerViewController.swift */,
 				B7CD4A0F27EC466C00091479 /* BaseViewController.swift */,
 				B7030DF227BB50590071F3B0 /* CloudKit */,
 				B7030DF127BB50410071F3B0 /* LocalKit */,
@@ -254,12 +286,42 @@
 			path = UI;
 			sourceTree = "<group>";
 		};
+		B72458A72860171B0039C674 /* MediaFiles */ = {
+			isa = PBXGroup;
+			children = (
+				B72458B5286017620039C674 /* Basses.mp3 */,
+				B72458B2286017620039C674 /* Cello.mp3 */,
+				B72458AA286017620039C674 /* Choir.mp3 */,
+				B72458B4286017620039C674 /* Clarinets.mp3 */,
+				B72458AE286017620039C674 /* Flutes.mp3 */,
+				B72458AB286017620039C674 /* Harp.mp3 */,
+				B72458A8286017620039C674 /* Horn.mp3 */,
+				B72458B0286017620039C674 /* Piano.mp3 */,
+				B72458A9286017620039C674 /* Timpani.mp3 */,
+				B72458AD286017620039C674 /* Trombone.mp3 */,
+				B72458AC286017620039C674 /* Trumpet.mp3 */,
+				B72458AF286017620039C674 /* Viola.mp3 */,
+				B72458B3286017620039C674 /* Violin_1.mp3 */,
+				B72458B1286017620039C674 /* Violin_2.mp3 */,
+			);
+			path = MediaFiles;
+			sourceTree = "<group>";
+		};
+		B72458C82862BFF70039C674 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				B72458C92862C04F0039C674 /* MediaDataCell.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		B72BDDA62719579300F559EC /* Model */ = {
 			isa = PBXGroup;
 			children = (
 				B77B0D6D27B359D800ECBD6A /* Position.swift */,
 				B7E75FC327CDC6CD009501A6 /* Message.swift */,
 				B7E75FC527CE17AB009501A6 /* Error.swift */,
+				B72458C42862B3270039C674 /* MediaData.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -270,8 +332,6 @@
 				B7030E0127BCB4340071F3B0 /* SpatialAudio */,
 				B739892927182BE00013875F /* AgoraManager.swift */,
 				B7CA78F3273E4BA30079631C /* HeadMotionManager.swift */,
-				B77B0D6F27B3723700ECBD6A /* SpatialAudioManager.swift */,
-				B7030DFB27BBBA310071F3B0 /* Protocols.swift */,
 				B7030DFD27BCADEB0071F3B0 /* Enumerations.swift */,
 			);
 			path = Manager;
@@ -315,6 +375,7 @@
 		B7D129D7272F9153007C0A76 /* Resource */ = {
 			isa = PBXGroup;
 			children = (
+				B72458A72860171B0039C674 /* MediaFiles */,
 				B77BD90527A10CE20080ED95 /* song01_instrumental.mp3 */,
 				B77BD90427A10CE20080ED95 /* song01_vocal.mp3 */,
 				B7CA78F527435A560079631C /* room_pic.png */,
@@ -392,23 +453,37 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B72458BD286017620039C674 /* Viola.mp3 in Resources */,
+				B72458BB286017620039C674 /* Trombone.mp3 in Resources */,
 				B7D129E72730E8D4007C0A76 /* CrixCicadasLoopNig.mp3 in Resources */,
+				B72458B9286017620039C674 /* Harp.mp3 in Resources */,
 				B7154F1B271821D3005A96C8 /* LaunchScreen.storyboard in Resources */,
+				B72458C1286017620039C674 /* Violin_1.mp3 in Resources */,
 				B77BD90727A10CE20080ED95 /* song01_instrumental.mp3 in Resources */,
+				B72458C0286017620039C674 /* Cello.mp3 in Resources */,
 				B7D129E92730E8D4007C0A76 /* ManWhistlingLikeAS.mp3 in Resources */,
+				B72458C3286017620039C674 /* Basses.mp3 in Resources */,
 				B7AC072527B4D41D00FA3831 /* Home.storyboard in Resources */,
 				B7AC072727B4D46800FA3831 /* CloudKit.storyboard in Resources */,
 				B75437872760663A0094309C /* AR.scnassets in Resources */,
 				B7CA78EA273BE5BE0079631C /* sound02.mp3 in Resources */,
 				B7CA78EC273BE5BE0079631C /* sound03.mp3 in Resources */,
+				B72458BE286017620039C674 /* Piano.mp3 in Resources */,
 				B75437892760664F0094309C /* Assets.xcassets in Resources */,
 				B7CA78EB273BE5BE0079631C /* sound01.mp3 in Resources */,
 				B7154F16271821D1005A96C8 /* LocalKit.storyboard in Resources */,
 				B7D129E32730D792007C0A76 /* With-You-in-My-Arms-SSJ011001.mp3 in Resources */,
 				B794B3FE278BFE870078E3F9 /* Seat.xib in Resources */,
+				B72458BC286017620039C674 /* Flutes.mp3 in Resources */,
 				B77BD90627A10CE20080ED95 /* song01_vocal.mp3 in Resources */,
+				B72458B7286017620039C674 /* Timpani.mp3 in Resources */,
+				B72458B8286017620039C674 /* Choir.mp3 in Resources */,
+				B72458B6286017620039C674 /* Horn.mp3 in Resources */,
 				B7D129E82730E8D4007C0A76 /* DogsBarkingCUandDistInfuriated.mp3 in Resources */,
+				B72458C2286017620039C674 /* Clarinets.mp3 in Resources */,
+				B72458BF286017620039C674 /* Violin_2.mp3 in Resources */,
 				B7D129D9272F9153007C0A76 /* output.raw in Resources */,
+				B72458BA286017620039C674 /* Trumpet.mp3 in Resources */,
 				B7CA78F627435A560079631C /* room_pic.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -463,12 +538,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				B7C7776527969CBE0040583C /* UIViewController+Alert.swift in Sources */,
+				B72458C72862B6230039C674 /* MultiMediaHostViewController.swift in Sources */,
 				B723263627C879A100EC13EC /* AppConfig.swift in Sources */,
 				B7CD4A1027EC466C00091479 /* BaseViewController.swift in Sources */,
 				B794B3F6278BE2CF0078E3F9 /* PositionManager.swift in Sources */,
 				B72D487C281FBECA0035802D /* HomeViewController.swift in Sources */,
 				B7E75FC427CDC6CD009501A6 /* Message.swift in Sources */,
 				B7154F13271821D1005A96C8 /* LocalKitViewController.swift in Sources */,
+				B72458CA2862C04F0039C674 /* MediaDataCell.swift in Sources */,
 				B7154F0F271821D1005A96C8 /* AppDelegate.swift in Sources */,
 				B7956F3327902C4D00CCDB5D /* Theme.swift in Sources */,
 				B739892A27182BE00013875F /* AgoraManager.swift in Sources */,
@@ -478,20 +555,19 @@
 				B7030DF427BB507A0071F3B0 /* CloudHostViewController.swift in Sources */,
 				B7030DFE27BCADEB0071F3B0 /* Enumerations.swift in Sources */,
 				B7154F2F271826A8005A96C8 /* NineSeatRoomViewController.swift in Sources */,
+				B72458C52862B3270039C674 /* MediaData.swift in Sources */,
 				B7CA78F82745134F0079631C /* RealityKitViewController.swift in Sources */,
 				B7030DF827BBB9C20071F3B0 /* LocalSpatialKit.swift in Sources */,
 				B76D0320273A7764000BFE26 /* HostViewController.swift in Sources */,
 				B77B0D7327B39BFE00ECBD6A /* AppInfo.swift in Sources */,
 				B7030DF627BBA8D50071F3B0 /* SpriteKitScene.swift in Sources */,
 				B7030E0027BCB42E0071F3B0 /* SpatialAudioProtocol.swift in Sources */,
-				B7030DFC27BBBA310071F3B0 /* Protocols.swift in Sources */,
 				B7CD4A0E27EC40DA00091479 /* NineSeatsARViewController.swift in Sources */,
 				B7CA78F2273E46C20079631C /* HeadphoneMotionVC.swift in Sources */,
 				B7030DFA27BBB9E10071F3B0 /* CloudSpatialKit.swift in Sources */,
 				B7E75FC627CE17AB009501A6 /* Error.swift in Sources */,
 				B7154F2D27182699005A96C8 /* ARRoomViewController.swift in Sources */,
 				B7AC072927B68F0F00FA3831 /* CloudKitViewController.swift in Sources */,
-				B77B0D7027B3723700ECBD6A /* SpatialAudioManager.swift in Sources */,
 				B7B9CABA271FFD570081EA38 /* Seat.swift in Sources */,
 				B77D6F2B283BF7960095ACE9 /* Screen.swift in Sources */,
 				B72D487D281FBECA0035802D /* MultiPlayerViewController.swift in Sources */,
@@ -579,6 +655,7 @@
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				VALIDATE_WORKSPACE = NO;
 			};
 			name = Debug;
 		};
@@ -634,6 +711,7 @@
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				VALIDATE_PRODUCT = YES;
+				VALIDATE_WORKSPACE = NO;
 			};
 			name = Release;
 		};
@@ -645,7 +723,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 20220126001;
+				CURRENT_PROJECT_VERSION = 20220630002;
 				DEVELOPMENT_TEAM = XA393XM8GG;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -668,7 +746,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.4.2;
+				MARKETING_VERSION = 0.4.5;
 				PRODUCT_BUNDLE_IDENTIFIER = cn.darkzero.Radio3DAudioSample;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -687,7 +765,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 20220126001;
+				CURRENT_PROJECT_VERSION = 20220630002;
 				DEVELOPMENT_TEAM = XA393XM8GG;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -710,7 +788,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.4.2;
+				MARKETING_VERSION = 0.4.5;
 				PRODUCT_BUNDLE_IDENTIFIER = cn.darkzero.Radio3DAudioSample;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;

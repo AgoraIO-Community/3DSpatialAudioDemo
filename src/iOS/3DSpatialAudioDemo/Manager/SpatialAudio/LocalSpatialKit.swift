@@ -22,7 +22,5 @@ class LocalSpatialKit: SpatialAudioProtocol {
         let config = AgoraLocalSpatialAudioConfig()
         config.rtcEngine = AgoraManager.shared.agoraKit
         _spatialKit = AgoraLocalSpatialAudioKit.sharedLocalSpatialAudio(with: config)
-        //_spatialKit.enableMic(true)
-        //_spatialKit.e
     }
 }
