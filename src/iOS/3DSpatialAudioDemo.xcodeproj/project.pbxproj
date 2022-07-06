@@ -39,8 +39,10 @@
 		B72458C52862B3270039C674 /* MediaData.swift in Sources */ = {isa = PBXBuildFile; fileRef = B72458C42862B3270039C674 /* MediaData.swift */; };
 		B72458C72862B6230039C674 /* MultiMediaHostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B72458C62862B6230039C674 /* MultiMediaHostViewController.swift */; };
 		B72458CA2862C04F0039C674 /* MediaDataCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B72458C92862C04F0039C674 /* MediaDataCell.swift */; };
+		B724BC8B28755EC7004561C4 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = B724BC8D28755EC7004561C4 /* Localizable.strings */; };
+		B724BC9328757A1F004561C4 /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B724BC9228757A1F004561C4 /* SettingViewController.swift */; };
 		B72D487C281FBECA0035802D /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B72D487A281FBECA0035802D /* HomeViewController.swift */; };
-		B72D487D281FBECA0035802D /* MultiPlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B72D487B281FBECA0035802D /* MultiPlayerViewController.swift */; };
+		B72D487D281FBECA0035802D /* LocalMultiPlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B72D487B281FBECA0035802D /* LocalMultiPlayerViewController.swift */; };
 		B739892A27182BE00013875F /* AgoraManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B739892927182BE00013875F /* AgoraManager.swift */; };
 		B75437872760663A0094309C /* AR.scnassets in Resources */ = {isa = PBXBuildFile; fileRef = B75437862760663A0094309C /* AR.scnassets */; };
 		B75437892760664F0094309C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B75437882760664F0094309C /* Assets.xcassets */; };
@@ -61,12 +63,9 @@
 		B7CA78EA273BE5BE0079631C /* sound02.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B7CA78E7273BE5BE0079631C /* sound02.mp3 */; };
 		B7CA78EB273BE5BE0079631C /* sound01.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B7CA78E8273BE5BE0079631C /* sound01.mp3 */; };
 		B7CA78EC273BE5BE0079631C /* sound03.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B7CA78E9273BE5BE0079631C /* sound03.mp3 */; };
-		B7CA78EE273CE1FC0079631C /* RoomImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7CA78ED273CE1FC0079631C /* RoomImageViewController.swift */; };
-		B7CA78F2273E46C20079631C /* HeadphoneMotionVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7CA78F1273E46C20079631C /* HeadphoneMotionVC.swift */; };
 		B7CA78F4273E4BA30079631C /* HeadMotionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7CA78F3273E4BA30079631C /* HeadMotionManager.swift */; };
 		B7CA78F627435A560079631C /* room_pic.png in Resources */ = {isa = PBXBuildFile; fileRef = B7CA78F527435A560079631C /* room_pic.png */; };
 		B7CA78F82745134F0079631C /* RealityKitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7CA78F72745134F0079631C /* RealityKitViewController.swift */; };
-		B7CD4A0E27EC40DA00091479 /* NineSeatsARViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7CD4A0D27EC40DA00091479 /* NineSeatsARViewController.swift */; };
 		B7CD4A1027EC466C00091479 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7CD4A0F27EC466C00091479 /* BaseViewController.swift */; };
 		B7D129D9272F9153007C0A76 /* output.raw in Resources */ = {isa = PBXBuildFile; fileRef = B7D129D8272F9153007C0A76 /* output.raw */; };
 		B7D129E32730D792007C0A76 /* With-You-in-My-Arms-SSJ011001.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B7D129DF2730D792007C0A76 /* With-You-in-My-Arms-SSJ011001.mp3 */; };
@@ -127,8 +126,12 @@
 		B72458C42862B3270039C674 /* MediaData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaData.swift; sourceTree = "<group>"; };
 		B72458C62862B6230039C674 /* MultiMediaHostViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiMediaHostViewController.swift; sourceTree = "<group>"; };
 		B72458C92862C04F0039C674 /* MediaDataCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaDataCell.swift; sourceTree = "<group>"; };
+		B724BC8C28755EC7004561C4 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		B724BC8E28755EF0004561C4 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		B724BC8F28755F06004561C4 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Localizable.strings; sourceTree = "<group>"; };
+		B724BC9228757A1F004561C4 /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
 		B72D487A281FBECA0035802D /* HomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
-		B72D487B281FBECA0035802D /* MultiPlayerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MultiPlayerViewController.swift; sourceTree = "<group>"; };
+		B72D487B281FBECA0035802D /* LocalMultiPlayerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalMultiPlayerViewController.swift; sourceTree = "<group>"; };
 		B739892927182BE00013875F /* AgoraManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgoraManager.swift; sourceTree = "<group>"; };
 		B75437862760663A0094309C /* AR.scnassets */ = {isa = PBXFileReference; lastKnownFileType = wrapper.scnassets; path = AR.scnassets; sourceTree = "<group>"; };
 		B75437882760664F0094309C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -149,12 +152,9 @@
 		B7CA78E7273BE5BE0079631C /* sound02.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = sound02.mp3; sourceTree = "<group>"; };
 		B7CA78E8273BE5BE0079631C /* sound01.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = sound01.mp3; sourceTree = "<group>"; };
 		B7CA78E9273BE5BE0079631C /* sound03.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = sound03.mp3; sourceTree = "<group>"; };
-		B7CA78ED273CE1FC0079631C /* RoomImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomImageViewController.swift; sourceTree = "<group>"; };
-		B7CA78F1273E46C20079631C /* HeadphoneMotionVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeadphoneMotionVC.swift; sourceTree = "<group>"; };
 		B7CA78F3273E4BA30079631C /* HeadMotionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeadMotionManager.swift; sourceTree = "<group>"; };
 		B7CA78F527435A560079631C /* room_pic.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = room_pic.png; sourceTree = "<group>"; };
 		B7CA78F72745134F0079631C /* RealityKitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealityKitViewController.swift; sourceTree = "<group>"; };
-		B7CD4A0D27EC40DA00091479 /* NineSeatsARViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NineSeatsARViewController.swift; sourceTree = "<group>"; };
 		B7CD4A0F27EC466C00091479 /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		B7D129D8272F9153007C0A76 /* output.raw */ = {isa = PBXFileReference; lastKnownFileType = file; path = output.raw; sourceTree = "<group>"; };
 		B7D129DF2730D792007C0A76 /* With-You-in-My-Arms-SSJ011001.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "With-You-in-My-Arms-SSJ011001.mp3"; sourceTree = "<group>"; };
@@ -192,14 +192,11 @@
 				B7154F14271821D1005A96C8 /* LocalKit.storyboard */,
 				B7154F12271821D1005A96C8 /* LocalKitViewController.swift */,
 				B76D031F273A7764000BFE26 /* HostViewController.swift */,
-				B7154F2C27182698005A96C8 /* ARRoomViewController.swift */,
-				B7CD4A0D27EC40DA00091479 /* NineSeatsARViewController.swift */,
-				B7154F2E271826A8005A96C8 /* NineSeatRoomViewController.swift */,
-				B7CA78ED273CE1FC0079631C /* RoomImageViewController.swift */,
-				B72D487B281FBECA0035802D /* MultiPlayerViewController.swift */,
-				B7CA78F1273E46C20079631C /* HeadphoneMotionVC.swift */,
-				B7CA78F72745134F0079631C /* RealityKitViewController.swift */,
 				B72458C62862B6230039C674 /* MultiMediaHostViewController.swift */,
+				B7154F2E271826A8005A96C8 /* NineSeatRoomViewController.swift */,
+				B7154F2C27182698005A96C8 /* ARRoomViewController.swift */,
+				B72D487B281FBECA0035802D /* LocalMultiPlayerViewController.swift */,
+				B7CA78F72745134F0079631C /* RealityKitViewController.swift */,
 			);
 			path = LocalKit;
 			sourceTree = "<group>";
@@ -229,6 +226,7 @@
 		B7154F02271821D0005A96C8 = {
 			isa = PBXGroup;
 			children = (
+				B724BC8D28755EC7004561C4 /* Localizable.strings */,
 				B7154F2227182409005A96C8 /* Frameworks */,
 				B7154F0D271821D1005A96C8 /* 3DSpatialAudioDemo */,
 				B7154F0C271821D1005A96C8 /* Products */,
@@ -282,6 +280,7 @@
 				B7C7776627969ED70040583C /* Extension */,
 				B73FF591276C7BA300DE1E5C /* View */,
 				B7154F19271821D3005A96C8 /* LaunchScreen.storyboard */,
+				B724BC9228757A1F004561C4 /* SettingViewController.swift */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -437,6 +436,8 @@
 			knownRegions = (
 				en,
 				Base,
+				"zh-Hans",
+				ja,
 			);
 			mainGroup = B7154F02271821D0005A96C8;
 			productRefGroup = B7154F0C271821D1005A96C8 /* Products */;
@@ -466,6 +467,7 @@
 				B7AC072527B4D41D00FA3831 /* Home.storyboard in Resources */,
 				B7AC072727B4D46800FA3831 /* CloudKit.storyboard in Resources */,
 				B75437872760663A0094309C /* AR.scnassets in Resources */,
+				B724BC8B28755EC7004561C4 /* Localizable.strings in Resources */,
 				B7CA78EA273BE5BE0079631C /* sound02.mp3 in Resources */,
 				B7CA78EC273BE5BE0079631C /* sound03.mp3 in Resources */,
 				B72458BE286017620039C674 /* Piano.mp3 in Resources */,
@@ -551,7 +553,6 @@
 				B739892A27182BE00013875F /* AgoraManager.swift in Sources */,
 				B77B0D6E27B359D800ECBD6A /* Position.swift in Sources */,
 				B7154F11271821D1005A96C8 /* SceneDelegate.swift in Sources */,
-				B7CA78EE273CE1FC0079631C /* RoomImageViewController.swift in Sources */,
 				B7030DF427BB507A0071F3B0 /* CloudHostViewController.swift in Sources */,
 				B7030DFE27BCADEB0071F3B0 /* Enumerations.swift in Sources */,
 				B7154F2F271826A8005A96C8 /* NineSeatRoomViewController.swift in Sources */,
@@ -561,16 +562,15 @@
 				B76D0320273A7764000BFE26 /* HostViewController.swift in Sources */,
 				B77B0D7327B39BFE00ECBD6A /* AppInfo.swift in Sources */,
 				B7030DF627BBA8D50071F3B0 /* SpriteKitScene.swift in Sources */,
+				B724BC9328757A1F004561C4 /* SettingViewController.swift in Sources */,
 				B7030E0027BCB42E0071F3B0 /* SpatialAudioProtocol.swift in Sources */,
-				B7CD4A0E27EC40DA00091479 /* NineSeatsARViewController.swift in Sources */,
-				B7CA78F2273E46C20079631C /* HeadphoneMotionVC.swift in Sources */,
 				B7030DFA27BBB9E10071F3B0 /* CloudSpatialKit.swift in Sources */,
 				B7E75FC627CE17AB009501A6 /* Error.swift in Sources */,
 				B7154F2D27182699005A96C8 /* ARRoomViewController.swift in Sources */,
 				B7AC072927B68F0F00FA3831 /* CloudKitViewController.swift in Sources */,
 				B7B9CABA271FFD570081EA38 /* Seat.swift in Sources */,
 				B77D6F2B283BF7960095ACE9 /* Screen.swift in Sources */,
-				B72D487D281FBECA0035802D /* MultiPlayerViewController.swift in Sources */,
+				B72D487D281FBECA0035802D /* LocalMultiPlayerViewController.swift in Sources */,
 				B7CA78F4273E4BA30079631C /* HeadMotionManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -594,6 +594,16 @@
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
 		};
+		B724BC8D28755EC7004561C4 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				B724BC8C28755EC7004561C4 /* en */,
+				B724BC8E28755EF0004561C4 /* zh-Hans */,
+				B724BC8F28755F06004561C4 /* ja */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
@@ -601,6 +611,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
@@ -663,6 +674,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";

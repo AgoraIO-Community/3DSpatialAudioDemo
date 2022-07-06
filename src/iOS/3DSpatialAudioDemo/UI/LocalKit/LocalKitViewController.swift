@@ -9,69 +9,56 @@ import UIKit
 import DarkEggKit
 
 enum SceneType: String {
-    case host
+    case hostRoom
+    case multiPlayerHostRoom
+    
     case nineSeat
     case arRoom
-    case imageRoom
-    case multiPlayerRoom
-    case nineSeatsARRoom
-    
-    case multiPlayerHostRoom
-    case multiPlayerAudienceRoom
+    case localMultiPlayerRoom
     
     var segueName: String {
         switch self {
-        case .host:
-            return "Host"
-        case .nineSeat:
-            return "EnterRoomAsAudience"
-        case .arRoom:
-            return "EnterARRoom"
-        case .imageRoom:
-            return "EnterRoomImage"
-        case .multiPlayerRoom:
-            return "EnterMultiPlayerRoom"
-        case .nineSeatsARRoom:
-            return "Enter9SeatsARRoom"
+        case .hostRoom:
+            return "EnterRoomAsHost"
         case .multiPlayerHostRoom:
             return "EnterMultiPlayerHostRoom"
-        case .multiPlayerAudienceRoom:
-            return "EnterMultiPlayerAudienceRoom"
+            
+        case .nineSeat:
+            return "EnterNineSeatsRoom"
+        case .arRoom:
+            return "EnterARRoom"
+        case .localMultiPlayerRoom:
+            return "EnterLocalMultiPlayerRoom"
         }
     }
     
     var menuName: String {
         switch self {
-        case .host:
+        case .hostRoom:
             return "Host"
+        case .multiPlayerHostRoom:
+            return "Multi Player - Host"
+            
         case .nineSeat:
             return "Audience - Nine seat room"
         case .arRoom:
             return "Audience - AR room(ARKit)"
-        case .imageRoom:
-            return "Audience - Image room"
-        case .multiPlayerRoom:
+        case .localMultiPlayerRoom:
             return "Audience - MultiPlayerRoom"
-        case .nineSeatsARRoom:
-            return "Audience - Nine seat AR room"
-        case .multiPlayerHostRoom:
-            return "Multi Player - Host"
-        case .multiPlayerAudienceRoom:
-            return "Multi Player - Audience"
         }
     }
 }
 
 class LocalKitViewController: UIViewController {
     @IBOutlet weak var channelNameField: UITextField!
+    
     @IBOutlet weak var HostButton: UIButton!
     @IBOutlet weak var MultiPlayerHostButton: UIButton!
+    
     @IBOutlet weak var AudienceButton: UIButton!
     @IBOutlet weak var arRoomButton: UIButton!
-    @IBOutlet weak var imageRoomButton: UIButton!
-    @IBOutlet weak var realityRoomButton: UIButton!
     @IBOutlet weak var mediaPlayerRoomButton: UIButton!
-    @IBOutlet weak var nineSeatsARButton: UIButton!
+    @IBOutlet weak var realityRoomButton: UIButton!
     
     @IBOutlet weak var versionLabel: UILabel!
     
@@ -83,7 +70,7 @@ class LocalKitViewController: UIViewController {
             self.HostButton.configuration?.baseBackgroundColor = ThemeDefault.primaryColor
             self.HostButton.configurationUpdateHandler = buttonHandler
             
-            [AudienceButton, imageRoomButton, arRoomButton, realityRoomButton, mediaPlayerRoomButton, nineSeatsARButton].forEach { btn in
+            [AudienceButton, arRoomButton, realityRoomButton, mediaPlayerRoomButton].forEach { btn in
                 btn?.configuration?.baseBackgroundColor = ThemeDefault.secondaryColor
                 btn?.configurationUpdateHandler = buttonHandler
             }
@@ -91,11 +78,9 @@ class LocalKitViewController: UIViewController {
             // Fallback on earlier versions
             self.HostButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 15)
             self.AudienceButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 15)
-            self.imageRoomButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 15)
             self.arRoomButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 15)
             self.realityRoomButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 15)
             self.mediaPlayerRoomButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 15)
-            self.nineSeatsARButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 15)
         }
         
         self.versionLabel.text = AppInfo.fullVersionString
@@ -160,14 +145,7 @@ extension LocalKitViewController {
     @IBAction private func onAudienceButtonClicked(_ sender: UIButton?) {
         Logger.debug("EnterRoomAsAudience")
         if checkChannelName() {
-            self.performSegue(withIdentifier: "EnterRoomAsAudience", sender: self)
-        }
-    }
-    
-    @IBAction private func onImageRoomButtonClicked(_ sender: UIButton?) {
-        Logger.debug("EnterImageRoomAsAudience")
-        if checkChannelName() {
-            self.performSegue(withIdentifier: "EnterRoomImage", sender: self)
+            self.performSegue(withIdentifier: "EnterNineSeatsRoom", sender: self)
         }
     }
     
@@ -181,14 +159,7 @@ extension LocalKitViewController {
     @IBAction private func onMultiPlayerRoomButtonClicked(_ sender: UIButton) {
         Logger.debug("onMultiPlayerRoomButtonClicked")
         if checkChannelName() {
-            self.performSegue(withIdentifier: "EnterMultiPlayerRoom", sender: self)
-        }
-    }
-    
-    @IBAction private func onNineSeatsARButtonClicked(_ sender: UIButton) {
-        Logger.debug("onNineSeatsARButtonClicked")
-        if checkChannelName() {
-            self.performSegue(withIdentifier: "Enter9SeatsARRoom", sender: self)
+            self.performSegue(withIdentifier: "EnterLocalMultiPlayerRoom", sender: self)
         }
     }
     
@@ -197,52 +168,38 @@ extension LocalKitViewController {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "EnterRoomAsHost" {
+        switch segue.identifier {
+        case SceneType.hostRoom.segueName:
             if let destinationVC = segue.destination as? HostViewController {
                 destinationVC.channelName = channelNameField.text
             }
-        }
-        else if segue.identifier == "EnterRoomAsAudience" {
-            if let destinationVC = segue.destination as? NineSeatRoomViewController {
-                destinationVC.channelName = channelNameField.text
-                destinationVC.isHost = false
-            }
-        }
-        else if segue.identifier == "EnterARRoom" {
-            if let destinationVC = segue.destination as? ARRoomViewController {
-                destinationVC.channelName = channelNameField.text
-                destinationVC.isHost = false
-            }
-        }
-        else if segue.identifier == "EnterRoomImage" {
-            if let destinationVC = segue.destination as? RoomImageViewController {
-                destinationVC.channelName = channelNameField.text
-                destinationVC.isHost = false
-            }
-        }
-        else if segue.identifier == "EnterRealityRoom" {
-            if let destinationVC = segue.destination as? RealityKitViewController {
-                destinationVC.channelName = channelNameField.text
-                destinationVC.isHost = false
-            }
-        }
-        else if segue.identifier == "EnterMultiPlayerRoom" {
-            if let destinationVC = segue.destination as? MultiPlayerViewController {
-                destinationVC.channelName = channelNameField.text
-                destinationVC.isHost = true
-            }
-        }
-        else if segue.identifier == "Enter9SeatsARRoom" {
-            if let destinationVC = segue.destination as? NineSeatsARViewController {
-                destinationVC.channelName = channelNameField.text
-                destinationVC.isHost = true
-            }
-        }
-        else if segue.identifier == "EnterMultiPlayerHostRoom" {
+            break
+        case SceneType.multiPlayerHostRoom.segueName:
             if let destinationVC = segue.destination as? MultiMediaHostViewController {
                 destinationVC.channelName = channelNameField.text
                 //destinationVC.isHost = true
             }
+            break
+        case SceneType.nineSeat.segueName:
+            if let destinationVC = segue.destination as? NineSeatRoomViewController {
+                destinationVC.channelName = channelNameField.text
+                destinationVC.isHost = false
+            }
+            break
+        case SceneType.arRoom.segueName:
+            if let destinationVC = segue.destination as? ARRoomViewController {
+                destinationVC.channelName = channelNameField.text
+                destinationVC.isHost = false
+            }
+            break
+        case SceneType.localMultiPlayerRoom.segueName:
+            if let destinationVC = segue.destination as? LocalMultiPlayerViewController {
+                destinationVC.channelName = channelNameField.text
+                destinationVC.isHost = true
+            }
+            break
+        default:
+            break
         }
     }
     

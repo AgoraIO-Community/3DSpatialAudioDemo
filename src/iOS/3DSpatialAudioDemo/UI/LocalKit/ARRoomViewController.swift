@@ -10,6 +10,18 @@ import UIKit
 import ARKit
 import DarkEggKit
 import Accelerate
+import AgoraRtcKit
+
+enum AgoraVideoRotation:Int {
+    /** 0: No rotation */
+    case rotationNone = 0
+    /** 1: 90 degrees */
+    case rotation90 = 1
+    /** 2: 180 degrees */
+    case rotation180 = 2
+    /** 3: 270 degrees */
+    case rotation270 = 3
+}
 
 class ARRoomViewController: UIViewController {
     
@@ -29,6 +41,9 @@ class ARRoomViewController: UIViewController {
     var userNodes: [UInt: SCNNode] = [:]
     var userPositions: [UInt: [NSNumber]] = [:]
     let agoraMgr = AgoraManager.shared
+    
+    fileprivate var textureCache: CVMetalTextureCache?
+    fileprivate var metalDevice = MTLCreateSystemDefaultDevice()
     
     var positionUpdateTimer: Int = 0
     
@@ -73,6 +88,8 @@ class ARRoomViewController: UIViewController {
         
         // start AR Session
         startARSession()
+        initializeTextureCache()
+        self.agoraMgr.setAgoraVideoFrameDelegate(self)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -147,9 +164,10 @@ extension ARRoomViewController {
     @IBAction private func onScreenButtonClicked(_ sender: UIButton) {
         let userSelectView = UIAlertController(title: "Select User", message: nil, preferredStyle: .actionSheet)
         for uid in self.undisplayedUsers {
-            let mediaName = MediaType.TypeOf(uid: Int(uid))?.rawValue ?? "\(uid)"
+            let mediaName = MediaType.TypeOf(uid: Int(uid))?.localizedName ?? "\(uid)"
             let action = UIAlertAction(title: "\(mediaName)", style: .default) { [weak self] action in
                 self?.addUserNodeToFront(forUser: uid)
+                self?.displayedUsers.append(uid)
                 if let idx = self?.undisplayedUsers.firstIndex(of: uid) {
                     self?.undisplayedUsers.remove(at: idx)
                 }
@@ -443,6 +461,134 @@ extension ARRoomViewController: ARSessionDelegate {
     }
 }
 
+extension ARRoomViewController: AgoraVideoFrameDelegate {
+    func onCapture(_ videoFrame: AgoraOutputVideoFrame) -> Bool {
+        return true
+    }
+    
+    func onRenderVideoFrame(_ videoFrame: AgoraOutputVideoFrame, uid: UInt, channelId: String) -> Bool {
+        Logger.debug("uid: \(uid)")
+        guard displayedUsers.contains(uid) else {
+            Logger.debug("Not remote user")
+            return false
+        }
+        
+        guard let basenode = userNodes[uid] else {
+            return false
+        }
+        
+#if os(iOS) && (!arch(i386) && !arch(x86_64))
+        guard let rotation = getAgoraRotation(rotation: videoFrame.rotation) else {
+            return false
+        }
+        
+        guard let pixelBuffer = videoFrame.pixelBuffer else {
+            return false
+        }
+        guard CVPixelBufferLockBaseAddress(pixelBuffer, .readOnly) == kCVReturnSuccess else {
+            return false
+        }
+        defer {
+            CVPixelBufferUnlockBaseAddress(pixelBuffer, .readOnly)
+        }
+        
+        let isPlanar = CVPixelBufferIsPlanar(pixelBuffer)
+        let width = isPlanar ? CVPixelBufferGetWidthOfPlane(pixelBuffer, 0) : CVPixelBufferGetWidth(pixelBuffer)
+        let height = isPlanar ? CVPixelBufferGetHeightOfPlane(pixelBuffer, 0) : CVPixelBufferGetHeight(pixelBuffer)
+        let size = CGSize(width: width, height: height)
+        
+        let mirror = false //mirrorDataSource?.renderViewShouldMirror(renderView: self) ?? false
+        if let renderedCoordinates = rotation.renderedCoordinates(mirror: mirror,
+                                                                  videoSize: size,
+                                                                  viewSize: size) {
+            let byteLength = 4 * MemoryLayout.size(ofValue: renderedCoordinates[0])
+            var device = MTLCreateSystemDefaultDevice()
+            var vertexBuffer: MTLBuffer?
+            vertexBuffer = device?.makeBuffer(bytes: renderedCoordinates, length: byteLength, options: [.storageModeShared])
+        }
+        
+        if let yTexture = texture(pixelBuffer: pixelBuffer, textureCache: textureCache, planeIndex: 0, pixelFormat: .r8Unorm),
+           let uvTexture = texture(pixelBuffer: pixelBuffer, textureCache: textureCache, planeIndex: 1, pixelFormat: .rg8Unorm) {
+            //self.textures = [yTexture, uvTexture]
+            let material = SCNMaterial()
+            let p = SCNMaterialProperty()
+            p.contents = uvTexture
+            material.diffuse.contents = p
+            let plane = SCNPlane(width: 1, height: 1)
+            plane.materials = [material]
+            let node = SCNNode(geometry: plane)
+            let displayer = basenode.childNode(withName: "displayer", recursively: false)!
+            let screen = displayer.childNode(withName: "screen", recursively: false)!
+            screen.addChildNode(node)
+        }
+        // let yTexture = texture(pixelBuffer: pixelBuffer, textureCache: textureCache, planeIndex: 0, pixelFormat: .r8Unorm)
+#endif
+        return true
+    }
+    
+    func getVideoFrameProcessMode() -> AgoraVideoFrameProcessMode {
+        return .readOnly
+    }
+    
+    
+    func onPreEncode(_ videoFrame: AgoraOutputVideoFrame) -> Bool {
+        return true
+    }
+    
+    func getVideoPixelFormatPreference() -> AgoraVideoFormat {
+        return .cvPixel
+    }
+    
+    func getAgoraRotation(rotation: Int32) -> AgoraVideoRotation? {
+        switch rotation {
+        case 0:
+            return .rotationNone
+        case 90:
+            return .rotation90
+        case 180:
+            return .rotation180
+        case 270:
+            return .rotation270
+        default:
+            return nil
+        }
+    }
+    
+    func initializeTextureCache() {
+    #if os(iOS) && (!arch(i386) && !arch(x86_64))
+        guard let metalDevice = metalDevice,
+            CVMetalTextureCacheCreate(kCFAllocatorDefault, nil, metalDevice, nil, &textureCache) == kCVReturnSuccess else {
+            return
+        }
+    #endif
+    }
+    
+    func texture(pixelBuffer: CVPixelBuffer, textureCache: CVMetalTextureCache?, planeIndex: Int = 0, pixelFormat: MTLPixelFormat = .bgra8Unorm) -> MTLTexture? {
+        guard let textureCache = textureCache, CVPixelBufferLockBaseAddress(pixelBuffer, .readOnly) == kCVReturnSuccess else {
+            return nil
+        }
+        defer {
+            CVPixelBufferUnlockBaseAddress(pixelBuffer, .readOnly)
+        }
+        
+        let isPlanar = CVPixelBufferIsPlanar(pixelBuffer)
+        let width = isPlanar ? CVPixelBufferGetWidthOfPlane(pixelBuffer, planeIndex) : CVPixelBufferGetWidth(pixelBuffer)
+        let height = isPlanar ? CVPixelBufferGetHeightOfPlane(pixelBuffer, planeIndex) : CVPixelBufferGetHeight(pixelBuffer)
+        
+        var imageTexture: CVMetalTexture?
+        let result = CVMetalTextureCacheCreateTextureFromImage(kCFAllocatorDefault, textureCache, pixelBuffer, nil, pixelFormat, width, height, planeIndex, &imageTexture)
+        
+        guard let unwrappedImageTexture = imageTexture,
+            let texture = CVMetalTextureGetTexture(unwrappedImageTexture),
+            result == kCVReturnSuccess
+            else {
+                return nil
+        }
+        
+        return texture
+    }
+}
+
 extension ARRoomViewController {
     /// On direction segment value changed handle
     /// for debug
@@ -545,4 +691,65 @@ extension ARRoomViewController {
         Logger.debug(debugMsg)
     }
     
+}
+
+
+extension AgoraVideoRotation {
+    func renderedCoordinates(mirror: Bool, videoSize: CGSize, viewSize: CGSize) -> [float4]? {
+        guard viewSize.width > 0, viewSize.height > 0, videoSize.width > 0, videoSize.height > 0 else {
+            return nil
+        }
+
+        let widthAspito: Float
+        let heightAspito: Float
+        if self == .rotation90 || self == .rotation270 {
+            widthAspito = Float(videoSize.height / viewSize.width)
+            heightAspito = Float(videoSize.width / viewSize.height)
+        } else {
+            widthAspito = Float(videoSize.width / viewSize.width)
+            heightAspito = Float(videoSize.height / viewSize.height)
+        }
+
+        let x: Float
+        let y: Float
+        if widthAspito < heightAspito {
+            x = 1
+            y = heightAspito / widthAspito
+        } else {
+            x = widthAspito / heightAspito
+            y = 1
+        }
+
+        let A = float4(  x, -y, 0.0, 1.0 )
+        let B = float4( -x, -y, 0.0, 1.0 )
+        let C = float4(  x,  y, 0.0, 1.0 )
+        let D = float4( -x,  y, 0.0, 1.0 )
+
+        switch self {
+        case .rotationNone:
+            if mirror {
+                return [A, B, C, D]
+            } else {
+                return [B, A, D, C]
+            }
+        case .rotation90:
+            if mirror {
+                return [C, A, D, B]
+            } else {
+                return [D, B, C, A]
+            }
+        case .rotation180:
+            if mirror {
+                return [D, C, B, A]
+            } else {
+                return [C, D, A, B]
+            }
+        case .rotation270:
+            if mirror {
+                return [B, D, A, C]
+            } else {
+                return [A, C, B, D]
+            }
+        }
+    }
 }

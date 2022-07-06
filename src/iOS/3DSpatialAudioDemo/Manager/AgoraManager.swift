@@ -407,6 +407,10 @@ extension AgoraManager {
     func addMediaPlayer(for name: String, toRemote: Bool) {
         
     }
+    
+    func setAgoraVideoFrameDelegate(_ delegate: AgoraVideoFrameDelegate?) {
+        self.agoraKit.setVideoFrameDelegate(delegate)
+    }
 }
 
 // MARK: - AgoraRtcEngineDelegate

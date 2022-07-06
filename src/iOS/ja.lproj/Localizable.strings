@@ -1,0 +1,23 @@
+/* 
+  Localizable.strings
+  3DSpatialAudioDemo
+
+  Created by Yuhua Hu on 2022/07/06.
+  
+*/
+
+//
+"Basses"    = "ベース";
+"Cello"     = "チェロ";
+"Choir"     = "クワイア";
+"Clarinets" = "クラリネット";
+"Flutes"    = "フルート";
+"Harp"      = "ハープ";
+"Horn"      = "ホーン";
+"Piano"     = "ピアノ";
+"Timpani"   = "ティンパニ";
+"Trombone"  = "トロンボーン";
+"Trumpet"   = "トランペット";
+"Viola"     = "ヴィオラ";
+"Violin_1"  = "ヴァイオリン1";
+"Violin_2"  = "ヴァイオリン2";

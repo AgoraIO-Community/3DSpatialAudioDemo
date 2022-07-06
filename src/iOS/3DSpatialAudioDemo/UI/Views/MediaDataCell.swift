@@ -15,7 +15,7 @@ class MediaDataCell: UICollectionViewCell {
     var onSwitchChangeHandler: ((Bool) -> Void)?
     var media: MediaType! {
         didSet {
-            self.nameLabel.text = "\(media.data.name)"
+            self.nameLabel.text = "\(media.localizedName)"
             self.uidLabel.text = "\(media.localUid)"
         }
     }

@@ -1,5 +1,5 @@
 //
-//  MultiPlayerViewController.swift
+//  LocalMultiPlayerViewController.swift
 //  3DSpatialAudioDemo
 //
 //  Created by Yuhua Hu on 2022/01/19.
@@ -9,7 +9,7 @@ import UIKit
 import CoreMotion
 import DarkEggKit
 
-class MultiPlayerViewController: UIViewController {
+class LocalMultiPlayerViewController: UIViewController {
     // MARK: - UI
     @IBOutlet weak var channelLabel: UILabel!
     @IBOutlet weak var userLabel: UILabel!
@@ -80,7 +80,7 @@ class MultiPlayerViewController: UIViewController {
     }
 }
 
-extension MultiPlayerViewController {
+extension LocalMultiPlayerViewController {
     @IBAction private func onSendToRemoteSwitchChanged(_ sender: UISwitch) {
         Logger.debug()
         if sender.isOn {
@@ -185,16 +185,19 @@ extension MultiPlayerViewController {
 }
 
 @available(iOS 14.0, *)
-extension MultiPlayerViewController: HeadMotionManagerDelegate {
+extension LocalMultiPlayerViewController: HeadMotionManagerDelegate {
     @IBAction private func onHeadMotionSwitchChanged(_ sender: UISwitch) {
         if sender.isOn {
             HeadMotionManager.shared.startHeadMotion { result in
                 Logger.debug("startHeadMotion: \(result)")
+                // disable segment
+                self.headMotionSegment.isEnabled = !result
             }
         }
         else {
             HeadMotionManager.shared.stopHeadMotion()
             PositionManager.shared.resetSelfPosition()
+            self.headMotionSegment.isEnabled = true
         }
     }
     
@@ -351,13 +354,13 @@ extension MultiPlayerViewController: HeadMotionManagerDelegate {
     }
 }
 
-extension MultiPlayerViewController {
+extension LocalMultiPlayerViewController {
     private func sendPlayer(plyerId: Int) {
         // 
     }
 }
 
-extension MultiPlayerViewController {
+extension LocalMultiPlayerViewController {
     func printDebugLog() {
         var str = "Debug\r\nMediaPlayer   | Sound"
         self.playerSounds.forEach { body in
@@ -367,7 +370,7 @@ extension MultiPlayerViewController {
     }
 }
 
-extension MultiPlayerViewController: AgoraManagerDelegate {
+extension LocalMultiPlayerViewController: AgoraManagerDelegate {
     func agoraMgr(_ mgr: AgoraManager, userJoined uid: UInt) {
         Logger.debug("user \(uid) joined, add to remote user list")
         PositionManager.shared.changeSeat(ofUser: uid, to: 4)

@@ -35,6 +35,11 @@ enum MediaType: String, CaseIterable {
         return MediaData(name: self.rawValue, type: "mp3")
     }
     
+    var localizedName: String {
+        let str =  "\(NSLocalizedString(self.rawValue, comment: self.rawValue))"
+        return str
+    }
+    
     var localUid: Int {
         switch self {
         case .Basses:

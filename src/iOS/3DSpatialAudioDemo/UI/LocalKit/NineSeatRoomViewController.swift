@@ -84,14 +84,14 @@ extension NineSeatRoomViewController {
         setRemoteHostSeat(sender)
     }
     
-    func setRemoteHostSeat(_ seat: Seat) {
+    private func setRemoteHostSeat(_ seat: Seat) {
         let userSelectView = UIAlertController(title: "Select User", message: nil, preferredStyle: .actionSheet)
         
         for uid in self.remoteUsers.keys {
             guard (self.remoteUsers[uid] ?? -1) < 0 else {
                 continue
             }
-            let mediaName = MediaType.TypeOf(uid: Int(uid))?.rawValue ?? "\(uid)"
+            let mediaName = MediaType.TypeOf(uid: Int(uid))?.localizedName ?? "\(uid)"
             let action = UIAlertAction(title: "\(mediaName)", style: .default) { [weak self] action in
                 PositionManager.shared.changeSeat(ofUser: uid, to: seat.tag)
                 for s in self?.seats ?? [] {

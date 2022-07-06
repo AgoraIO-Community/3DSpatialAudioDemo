@@ -1,0 +1,23 @@
+/* 
+  Localizable.strings
+  3DSpatialAudioDemo
+
+  Created by Yuhua Hu on 2022/07/06.
+  
+*/
+
+//
+"Basses"    = "贝斯";
+"Cello"     = "大提琴";
+"Choir"     = "唱诗班";
+"Clarinets" = "单簧管";
+"Flutes"    = "长笛";
+"Harp"      = "竖琴";
+"Horn"      = "喇叭";
+"Piano"     = "钢琴";
+"Timpani"   = "定音鼓";
+"Trombone"  = "长号";
+"Trumpet"   = "小号";
+"Viola"     = "中提琴";
+"Violin_1"  = "小提琴1";
+"Violin_2"  = "小提琴2";
