@@ -58,15 +58,15 @@ enum Sound : String, CaseIterable {
 
 /// Spatial audio mode, local or cloud
 enum SpatialAudioMode: String, CaseIterable {
-    case cloud
+    //case cloud
     case local
     
     var spatialKit: SpatialAudioProtocol {
         switch self {
         case .local:
             return LocalSpatialKit.shared
-        case .cloud:
-            return CloudSpatialKit.shared
+//        case .cloud:
+//            return CloudSpatialKit.shared
         }
     }
 }

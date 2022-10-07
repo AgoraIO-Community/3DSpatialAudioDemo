@@ -536,7 +536,7 @@ extension ARRoomViewController: AgoraVideoFrameDelegate {
     }
     
     func getVideoPixelFormatPreference() -> AgoraVideoFormat {
-        return .cvPixel
+        return .cvPixelBGRA
     }
     
     func getAgoraRotation(rotation: Int32) -> AgoraVideoRotation? {

@@ -130,6 +130,7 @@ extension NineSeatRoomViewController: AgoraManagerDelegate {
             // new user,
             self.remoteUsers[uid] = -1
             PositionManager.shared.changeSeat(ofUser: uid, to: -1)
+            (UIApplication.shared.delegate as! AppDelegate).currentHostUid = uid
             return
         }
     }
