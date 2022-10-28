@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ddd"
+    tools:context="io.agora.nathan.spatialsound.fragments.RemoteSpatialSound">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/spacial_sound_demo2"
+            android:minWidth="240dp"
+            android:textSize="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="20dp" />
+        <LinearLayout
+            android:layout_marginTop="60dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/et_channel"
+                    android:layout_marginLeft="10dp"
+                    android:layout_width="264dp"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/channel_name"
+                    android:textSize="20dp" />
+
+        <Button
+            android:id="@+id/btn_join"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:text="@string/join"
+             />
+
+        </LinearLayout>
+
+
+
+                <io.agora.nathan.spatialsound.widgets.VideoLayout
+                    android:id="@+id/seat0"
+                    android:background="#eee"
+                    android:layout_width="80dp"
+                    android:layout_height="120dp"
+                    android:layout_marginStart="40dp"
+                    android:layout_marginTop="180dp"
+                     />
+
+                <io.agora.nathan.spatialsound.widgets.VideoLayout
+                    android:id="@+id/seat1"
+                    android:background="#eee"
+                    android:layout_width="80dp"
+                    android:layout_height="120dp"
+                    android:layout_marginStart="166dp"
+                    android:layout_marginTop="180dp"
+                    />
+
+                <io.agora.nathan.spatialsound.widgets.VideoLayout
+                    android:id="@+id/seat2"
+                    android:background="#eee"
+                    android:layout_width="80dp"
+                    android:layout_height="120dp"
+                    android:layout_marginStart="288dp"
+                    android:layout_marginTop="180dp"
+                     />
+
+                <io.agora.nathan.spatialsound.widgets.VideoLayout
+                    android:id="@+id/seat3"
+                    android:background="#eee"
+                    android:layout_width="80dp"
+                    android:layout_height="120dp"
+                    android:layout_marginStart="40dp"
+                    android:layout_marginTop="340dp"
+                   />
+
+        <ImageView
+            android:id="@+id/iv_listener"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:translationY="40dp"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_local"/>
+
+                <io.agora.nathan.spatialsound.widgets.VideoLayout
+                    android:id="@+id/seat4"
+                    android:background="#eee"
+                    android:layout_width="80dp"
+                    android:layout_height="120dp"
+                    android:layout_marginStart="288dp"
+                    android:layout_marginTop="340dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <io.agora.nathan.spatialsound.widgets.VideoLayout
+                    android:id="@+id/seat5"
+                    android:background="#eee"
+                    android:layout_width="80dp"
+                    android:layout_height="120dp"
+                    android:layout_marginStart="40dp"
+                    android:layout_marginTop="504dp"
+                     />
+
+                <io.agora.nathan.spatialsound.widgets.VideoLayout
+                    android:id="@+id/seat6"
+                    android:background="#eee"
+                    android:layout_width="80dp"
+                    android:layout_height="120dp"
+                    android:layout_marginStart="166dp"
+                    android:layout_marginTop="504dp"
+                    />
+
+                <io.agora.nathan.spatialsound.widgets.VideoLayout
+                    android:id="@+id/seat7"
+                    android:background="#eee"
+                    android:layout_width="80dp"
+                    android:layout_height="120dp"
+                    android:layout_marginStart="288dp"
+                    android:layout_marginTop="504dp"
+                     />
+
+</FrameLayout>
