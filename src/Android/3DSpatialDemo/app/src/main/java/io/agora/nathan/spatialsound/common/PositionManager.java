@@ -32,7 +32,7 @@ public class PositionManager {
 
     private static int[] seatIds = new int[] {0,0,0,0,0,0,0,0};
     private static int[] _seatIds = new int[] {
-        R.id.seat0, R.id.seat1, R.id.seat2, R.id.seat3, R.id.seat4, R.id.seat5, R.id.seat6, R.id.seat7
+        R.id.st0, R.id.st1, R.id.st2, R.id.st3, R.id.st4, R.id.st5, R.id.st6, R.id.st7
     };
     private VideoLayout[] seats = new VideoLayout[8];
 

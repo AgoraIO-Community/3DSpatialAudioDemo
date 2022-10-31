@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    package="io.agora.nathan.spatialsound"
-    >
+    package="io.agora.nathan.spatialsound">
 
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -25,8 +23,7 @@
         android:roundIcon="@mipmap/ic_launcher"
         android:requestLegacyExternalStorage="true"
         android:supportsRtl="true"
-        android:theme="@style/Theme.3DSpatialDemo"
-        tools:targetApi="31">
+        android:theme="@style/Theme.3DSpatialDemo">
         <activity
             android:name="io.agora.nathan.spatialsound.MainActivity"
             android:exported="true"

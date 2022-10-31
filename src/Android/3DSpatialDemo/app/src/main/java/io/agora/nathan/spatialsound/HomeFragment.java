@@ -30,7 +30,7 @@ public class HomeFragment extends Fragment {
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        binding.buttonDemo1.setOnClickListener(new View.OnClickListener() {
+        binding.demo1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 NavHostFragment.findNavController(HomeFragment.this)
@@ -38,7 +38,23 @@ public class HomeFragment extends Fragment {
             }
         });
 
-        binding.buttonDemo2.setOnClickListener(new View.OnClickListener() {
+        binding.demo2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                NavHostFragment.findNavController(HomeFragment.this)
+                        .navigate(R.id.action_homeFragment_to_remoteSpatialSound);
+            }
+        });
+
+        binding.btnDemo1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                NavHostFragment.findNavController(HomeFragment.this)
+                        .navigate(R.id.action_homeFragment_to_demoSpatialSound);
+            }
+        });
+
+        binding.btnDemo2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 NavHostFragment.findNavController(HomeFragment.this)
