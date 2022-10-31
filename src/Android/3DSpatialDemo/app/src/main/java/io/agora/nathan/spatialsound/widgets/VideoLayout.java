@@ -21,6 +21,7 @@ public class VideoLayout extends FrameLayout {
     private final StatisticsInfo statisticsInfo = new StatisticsInfo();
     private TextView reportTextView;
     private int reportUid = -1;
+    private int seatId = -1;
 
     public VideoLayout(@NonNull Context context) {
         super(context);
@@ -28,6 +29,7 @@ public class VideoLayout extends FrameLayout {
 
     public VideoLayout(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
+
     }
 
     public VideoLayout(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
@@ -52,7 +54,7 @@ public class VideoLayout extends FrameLayout {
                     reportTextView = null;
                 }
             });
-            reportTextView.setTextColor(Color.parseColor("#eeeeee"));
+            reportTextView.setTextColor(Color.parseColor("#000000"));
             LayoutParams reportParams = new LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
             reportParams.topMargin = reportParams.leftMargin = 16;
             addView(reportTextView, reportParams);
@@ -66,6 +68,10 @@ public class VideoLayout extends FrameLayout {
     public int getVideoUid() {
         return reportUid;
     }
+
+    public void setSeatId(int seatId) { this.seatId = seatId; }
+
+    public int getSeatId() { return seatId; }
 
     public void setLocalAudioStats(IRtcEngineEventHandler.LocalAudioStats stats){
         statisticsInfo.setLocalAudioStats(stats);

@@ -9,8 +9,8 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 
-import io.agora.nathan.a3dspatialdemo.R;
-import io.agora.nathan.a3dspatialdemo.databinding.FragmentHomeBinding;
+import io.agora.nathan.spatialsound.R;
+import io.agora.nathan.spatialsound.databinding.FragmentHomeBinding;
 
 public class HomeFragment extends Fragment {
 

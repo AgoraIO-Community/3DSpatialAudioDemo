@@ -1,7 +1,17 @@
 package io.agora.nathan.spatialsound.common;
 
-import android.util.Log;
+import static io.agora.rtc2.Constants.RENDER_MODE_HIDDEN;
 
+import android.content.Context;
+import android.util.Log;
+import android.view.SurfaceView;
+import android.view.ViewGroup;
+import android.widget.FrameLayout;
+
+import io.agora.nathan.spatialsound.R;
+import io.agora.nathan.spatialsound.widgets.VideoLayout;
+import io.agora.rtc2.RtcEngine;
+import io.agora.rtc2.video.VideoCanvas;
 import io.agora.spatialaudio.ILocalSpatialAudioEngine;
 import io.agora.spatialaudio.RemoteVoicePositionInfo;
 
@@ -9,7 +19,8 @@ public class PositionManager {
 
     private static final String TAG = "PositionManager";
     private static volatile PositionManager sInstance = null;
-
+    private RtcEngine engine;
+    private Context context;
     // default distance
     // radius = 2.5m
     private static final float axial       = (float) 1.2;
@@ -19,7 +30,13 @@ public class PositionManager {
 
     private ILocalSpatialAudioEngine localSpatial;
 
-    private static int[] seats = new int[] {0,0,0,0,0,0,0,0};
+    private static int[] seatIds = new int[] {0,0,0,0,0,0,0,0};
+    private static int[] _seatIds = new int[] {
+        R.id.seat0, R.id.seat1, R.id.seat2, R.id.seat3, R.id.seat4, R.id.seat5, R.id.seat6, R.id.seat7
+    };
+    private VideoLayout[] seats = new VideoLayout[8];
+
+    private int selectedId = -1;
 
     public static PositionManager getInstance() {
         if (sInstance == null) {
@@ -36,33 +53,50 @@ public class PositionManager {
 
     }
 
+    public void setContext(Context context)
+    {
+        this.context = context;
+    }
+
+    public void setRtcEngine(RtcEngine engine) {
+        this.engine = engine;
+    }
+
     public void setLocalSpatialAudioEngine(ILocalSpatialAudioEngine engine) {
         localSpatial = engine;
     }
 
-    public boolean takeSeat(int uid, int seatIndex) {
-        if(seats[seatIndex] > 0) {
-            return false;
+    public int takeSeat(int uid, int seatIndex) {
+
+        if(seatIndex == -1) {
+            seatIndex = nextEmptySeat();
+        };
+        if(seatIds[seatIndex] > 0) {
+            return -1;
         }
-        seats[seatIndex] = uid;
-        changeSeat(uid, seatIndex);
-        return true;
+        seatIds[seatIndex] = uid;
+        changeSoundPosition(uid, seatIndex);
+        return seatIndex;
     }
 
     public void leaveSeat(int uid) {
-        for(int i=0;i<seats.length;i++)
+        for(int i=0;i<seatIds.length;i++)
         {
-            if(seats[i] == uid)
+            if(seatIds[i] == uid)
             {
-                seats[i] = 0;
+                seatIds[i] = 0;
+                engine.setupRemoteVideo(new VideoCanvas(null, RENDER_MODE_HIDDEN, uid));
+                seats[i].removeAllViews();
+                //seatViews.get(uid).removeAllViews();
+                //seatViews.remove(uid);
             }
         }
     }
 
     public int nextEmptySeat() {
-        for(int i=0;i<seats.length;i++)
+        for(int i=0;i<seatIds.length;i++)
         {
-            if(seats[i] == 0)
+            if(seatIds[i] == 0)
             {
                 return i;
             }
@@ -70,7 +104,7 @@ public class PositionManager {
         return -1;
     }
 
-    public void changeSeat(int uid, int seatIndex) {
+    public void changeSoundPosition(int uid, int seatIndex) {
         Log.i(TAG,"select seat "+seatIndex+" for user "+uid);
         float[] pos = new float[3];
         switch(seatIndex) {
@@ -106,17 +140,119 @@ public class PositionManager {
         updatePosition(uid, pos);
     }
 
+    public void setUid2SeatView(int uid, int seatId)
+    {
+        /**Display remote video stream*/
+        SurfaceView surfaceView = null;
+        // Create render view by RtcEngine
+        surfaceView = new SurfaceView(context);
+        surfaceView.setZOrderMediaOverlay(true);
+
+        VideoLayout view = seats[seatId];
+        view.setVideoUid(uid);
+
+        //seatViews.put(uid, view);
+        // Add to the remote container
+        view.addView(surfaceView, new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        // Setup remote video to render
+        engine.setupRemoteVideo(new VideoCanvas(surfaceView, RENDER_MODE_HIDDEN, uid));
+
+    }
+
+    public void changeSeatView(int seatA, int seatB)
+    {
+        int uidA = seatIds[seatA];
+        int uidB = seatIds[seatB];
+        if(uidA == 0 && uidB == 0) return;
+        if(uidB == 0) {
+            // empty seat
+            SurfaceView viewA = (SurfaceView)seats[seatA].getChildAt(0);
+            seats[seatA].removeAllViews();
+            seats[seatB].addView(viewA, new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+
+            changeSoundPosition(uidA, seatB);
+
+        }
+        else if(uidA == 0) {
+            // empty seat
+            SurfaceView viewB = (SurfaceView)seats[seatB].getChildAt(0);
+            seats[seatB].removeAllViews();
+            seats[seatA].addView(viewB, new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+
+            changeSoundPosition(uidB, seatA);
+
+        }
+        else {
+            SurfaceView viewA = (SurfaceView)seats[seatA].getChildAt(0);
+            seats[seatA].removeAllViews();
+            SurfaceView viewB = (SurfaceView)seats[seatB].getChildAt(0);
+            seats[seatB].removeAllViews();
+
+            seats[seatB].addView(viewA, new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+            seats[seatA].addView(viewB, new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+
+            changeSoundPosition(uidA, seatB);
+            changeSoundPosition(uidB, seatA);
+        }
+
+
+        switchSeatIds(seatA, seatB);
+
+    }
+
+    private void switchSeatIds(int seatA, int seatB)
+    {
+        int tmp = seatIds[seatB];
+        seatIds[seatB] = seatIds[seatA];
+        seatIds[seatA] = tmp;
+    }
+
     private void updatePosition(int uid, float[] pos)
     {
-        RemoteVoicePositionInfo postion = new RemoteVoicePositionInfo();
-        postion.position = pos;
-        localSpatial.updateRemotePosition(uid, postion);
+        RemoteVoicePositionInfo position = new RemoteVoicePositionInfo();
+        position.position = pos;
+        localSpatial.updateRemotePosition(uid, position);
     }
 
     public void reset()
     {
         localSpatial = null;
-        seats = new int[] {0,0,0,0,0,0,0,0};
+        seatIds = new int[] {0,0,0,0,0,0,0,0};
     }
 
+    public int[] getSeatIds()
+    {
+        return _seatIds;
+    }
+
+    public void setSeats(VideoLayout[] seats)
+    {
+        this.seats = seats;
+    }
+
+    public void setSelectedSeat(int seatId)
+    {
+        if(selectedId == -1) {
+            selectedId = seatId;
+            // hilite view
+
+            Log.i(TAG, "selected seat: "+selectedId);
+            return;
+        }
+
+        if(selectedId == seatId) {
+
+            // same selection
+            selectedId = -1;
+        }
+        else {
+
+            Log.i(TAG, "change seatA: "+selectedId+" seatB: "+seatId);
+            changeSeatView(selectedId, seatId);
+
+            selectedId = -1;
+        }
+
+        // reset view
+    }
 }

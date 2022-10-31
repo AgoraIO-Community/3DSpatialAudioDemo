@@ -21,7 +21,7 @@ import io.agora.mediaplayer.IMediaPlayerObserver;
 import io.agora.mediaplayer.data.PlayerUpdatedInfo;
 import io.agora.mediaplayer.data.SrcInfo;
 import io.agora.nathan.spatialsound.MainActivity;
-import io.agora.nathan.a3dspatialdemo.R;
+import io.agora.nathan.spatialsound.R;
 import io.agora.nathan.spatialsound.common.BaseFragment;
 import io.agora.nathan.spatialsound.common.Constant;
 import io.agora.rtc2.IRtcEngineEventHandler;

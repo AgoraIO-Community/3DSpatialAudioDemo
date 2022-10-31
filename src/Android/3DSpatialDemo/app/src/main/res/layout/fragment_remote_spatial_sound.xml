@@ -123,4 +123,70 @@
                     android:layout_marginTop="504dp"
                      />
 
+        <TextView
+            android:id="@+id/seatName0"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Pos1"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="160dp"
+            />
+
+        <TextView
+            android:id="@+id/seatName1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Pos2"
+            android:layout_marginStart="166dp"
+            android:layout_marginTop="160dp"
+            />
+        <TextView
+            android:id="@+id/seatName2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Pos3"
+            android:layout_marginStart="288dp"
+            android:layout_marginTop="160dp"
+            />
+        <TextView
+            android:id="@+id/seatName3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Pos4"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="320dp"
+            />
+        <TextView
+            android:id="@+id/seatName4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Pos5"
+            android:layout_marginStart="288dp"
+            android:layout_marginTop="320dp"
+            />
+        <TextView
+            android:id="@+id/seatName5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Pos5"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="484dp"
+            />
+        <TextView
+            android:id="@+id/seatName6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Pos6"
+            android:layout_marginStart="166dp"
+            android:layout_marginTop="484dp"
+            />
+        <TextView
+            android:id="@+id/seatName7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Pos7"
+            android:layout_marginStart="288dp"
+            android:layout_marginTop="484dp"
+            />
+
 </FrameLayout>

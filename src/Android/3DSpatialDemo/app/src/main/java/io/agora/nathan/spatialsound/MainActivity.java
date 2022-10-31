@@ -9,9 +9,9 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
-import io.agora.nathan.a3dspatialdemo.R;
+import io.agora.nathan.spatialsound.R;
 import io.agora.nathan.spatialsound.common.GlobalSettings;
-import io.agora.nathan.a3dspatialdemo.databinding.ActivityMainBinding;
+import io.agora.nathan.spatialsound.databinding.ActivityMainBinding;
 
 import android.view.Menu;
 import android.view.MenuItem;

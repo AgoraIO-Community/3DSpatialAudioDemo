@@ -22,7 +22,7 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 import io.agora.nathan.spatialsound.MainActivity;
-import io.agora.nathan.a3dspatialdemo.R;
+import io.agora.nathan.spatialsound.R;
 import io.agora.nathan.spatialsound.common.BaseFragment;
 import io.agora.nathan.spatialsound.common.PositionManager;
 import io.agora.nathan.spatialsound.widgets.VideoLayout;
@@ -37,6 +37,7 @@ import io.agora.spatialaudio.LocalSpatialAudioConfig;
 public class RemoteSpatialSound extends BaseFragment {
     private static final String TAG = RemoteSpatialSound.class.getSimpleName();
     private RtcEngine engine;
+
     private ImageView listenerIv;
     private ILocalSpatialAudioEngine localSpatial;
     private final RemoteSpatialSound.ListenerOnTouchListener listenerOnTouchListener = new RemoteSpatialSound.ListenerOnTouchListener();
@@ -46,6 +47,9 @@ public class RemoteSpatialSound extends BaseFragment {
     private boolean joined = false;
     private EditText channel;
     private Button join;
+    private static PositionManager posManager;
+
+
 
     private void joinChannel(String channelId)
     {
@@ -65,6 +69,7 @@ public class RemoteSpatialSound extends BaseFragment {
 
         engine.joinChannel("", channelId, 0, option);
 
+        PositionManager.getInstance().setRtcEngine(engine);
         startLocalSpatialSound();
     }
 
@@ -101,10 +106,12 @@ public class RemoteSpatialSound extends BaseFragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        PositionManager.getInstance().setContext(getContext());
+
         channel = view.findViewById(R.id.et_channel);
         join = (Button)view.findViewById(R.id.btn_join);
         listenerIv = view.findViewById(R.id.iv_listener);
-        listenerIv.setOnTouchListener(listenerOnTouchListener);
+        //listenerIv.setOnTouchListener(listenerOnTouchListener);
         join.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -128,28 +135,23 @@ public class RemoteSpatialSound extends BaseFragment {
             }
         });
 
-        seats[0] = (VideoLayout) view.findViewById(R.id.seat0);
-        seats[1] = (VideoLayout) view.findViewById(R.id.seat1);
-        seats[2] = (VideoLayout) view.findViewById(R.id.seat2);
-        seats[3] = (VideoLayout) view.findViewById(R.id.seat3);
-        seats[4] = (VideoLayout) view.findViewById(R.id.seat4);
-        seats[5] = (VideoLayout) view.findViewById(R.id.seat5);
-        seats[6] = (VideoLayout) view.findViewById(R.id.seat6);
-        seats[7] = (VideoLayout) view.findViewById(R.id.seat7);
-        for(int i=0;i<seats.length;i++)
-        {
+        int[] seatIds = PositionManager.getInstance().getSeatIds();
 
+        for(int i=0;i<seatIds.length;i++)
+        {
+            seats[i] = (VideoLayout) view.findViewById(seatIds[i]);
+            seats[i].setSeatId(i);
             Log.i(TAG, "init seat:"+seats[i].getId());
-            seats[i].setOnTouchListener(new View.OnTouchListener() {
+            seats[i].setOnClickListener(new View.OnClickListener() {
                 @Override
-                public boolean onTouch(View view, MotionEvent motionEvent) {
-                    int seatid = view.getId();
-                    String name = view.getTransitionName();
-                    Log.i(TAG, "onTouch seat:"+seatid+" name:"+name);
-                    return true;
+                public void onClick(View view) {
+                    int id = ((VideoLayout)view).getSeatId();
+                    PositionManager.getInstance().setSelectedSeat(id);
                 }
             });
         }
+
+        PositionManager.getInstance().setSeats(seats);
     }
 
     private void resetSpeaker(){
@@ -163,7 +165,6 @@ public class RemoteSpatialSound extends BaseFragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        //mediaPlayer.stop();
         handler.removeCallbacksAndMessages(null);
         handler.post(RtcEngine::destroy);
         engine = null;
@@ -192,8 +193,7 @@ public class RemoteSpatialSound extends BaseFragment {
             config.mAreaCode = ((MainActivity)getActivity()).getGlobalSettings().getAreaCode();
             engine = RtcEngine.create(config);
             engine.setDefaultAudioRoutetoSpeakerphone(true);
-            //mediaPlayer = engine.createMediaPlayer();
-            //mediaPlayer.registerPlayerObserver(iMediaPlayerObserver);
+
         } catch (Exception e) {
             e.printStackTrace();
             getActivity().onBackPressed();
@@ -288,28 +288,15 @@ public class RemoteSpatialSound extends BaseFragment {
             if (context == null) {
                 return;
             }
-            if(remoteViews.containsKey(uid)){
+            int seatId = PositionManager.getInstance().takeSeat(uid, -1);
+            if(seatId < 0){
                 return;
             }
             else{
                 handler.post(() ->
                 {
-                    /**Display remote video stream*/
-                    SurfaceView surfaceView = null;
-                    // Create render view by RtcEngine
-                    surfaceView = new SurfaceView(context);
-                    surfaceView.setZOrderMediaOverlay(true);
-                    int seatId = PositionManager.getInstance().nextEmptySeat();
-                    if(seatId == -1) return;
-                    VideoLayout view = seats[seatId];
-                    view.setVideoUid(uid);
-                    remoteViews.put(uid, view);
-                    // Add to the remote container
-                    view.addView(surfaceView, new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-                    // Setup remote video to render
-                    engine.setupRemoteVideo(new VideoCanvas(surfaceView, RENDER_MODE_HIDDEN, uid));
 
-                    PositionManager.getInstance().takeSeat(uid, seatId);
+                    PositionManager.getInstance().setUid2SeatView(uid, seatId);
                 });
             }
         }
@@ -337,9 +324,6 @@ public class RemoteSpatialSound extends BaseFragment {
                     /**Clear render view
                      Note: The video will stay at its last frame, to completely remove it you will need to
                      remove the SurfaceView from its parent*/
-                    engine.setupRemoteVideo(new VideoCanvas(null, RENDER_MODE_HIDDEN, uid));
-                    remoteViews.get(uid).removeAllViews();
-                    remoteViews.remove(uid);
                     PositionManager.getInstance().leaveSeat(uid);
                 }
             });
