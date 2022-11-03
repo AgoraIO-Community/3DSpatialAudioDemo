@@ -55,10 +55,16 @@ public class HomeFragment extends BaseFragment {
         join.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                String channelId = channel.getText().toString();
+                if(channelId.isEmpty()) {
+                    showLongToast("Channel Name is empty!");
+                    return;
+                }
+
                 if(!AgoraManager.getInstance().isJoined()) {
                     int areaCode = ((MainActivity)getActivity()).getGlobalSettings().getAreaCode();
 
-                    String channelId = channel.getText().toString();
                     AgoraManager.getInstance().createEngine(getContext(), binding.etAppid.getText().toString(), areaCode);
                     AgoraManager.getInstance().joinChannel(channelId);
                     Log.i(TAG, "joidChannel:"+ channelId);

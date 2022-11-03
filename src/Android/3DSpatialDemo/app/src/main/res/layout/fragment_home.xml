@@ -87,12 +87,12 @@
 
         <EditText
             android:id="@+id/et_channel"
-            android:layout_marginLeft="10dp"
             android:layout_width="0dp"
-            android:layout_weight="1.0"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="1.0"
             android:hint="@string/channel_name"
-             />
+            android:singleLine="true" />
 
         <Button
             android:id="@+id/btn_join"
