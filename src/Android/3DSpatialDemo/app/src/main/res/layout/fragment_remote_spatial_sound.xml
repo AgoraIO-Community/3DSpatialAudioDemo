@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ddd"
+    tools:context="io.agora.nathan.spatialsound.fragments.RemoteSpatialSound">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/spacial_sound_demo2"
+            android:minWidth="240dp"
+            android:textSize="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="20dp" />
+
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="60dp"
+            android:scrollbars="vertical"
+            >
+
+                <ImageView
+                    android:id="@+id/iv_listener"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_local"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    />
+                <io.agora.nathan.spatialsound.widgets.VideoLayout
+                    android:id="@+id/st0"
+                    android:layout_width="80dp"
+                    android:layout_height="120dp"
+                    android:layout_marginLeft="40dp"
+                    android:background="#eee"
+                    app:layout_constraintBottom_toTopOf="@+id/st3"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    />
+
+                <io.agora.nathan.spatialsound.widgets.VideoLayout
+                    android:id="@+id/st1"
+                    android:layout_width="80dp"
+                    android:layout_height="120dp"
+                    android:background="#eee"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintBottom_toBottomOf="@+id/st0"
+                     />
+
+                <io.agora.nathan.spatialsound.widgets.VideoLayout
+                    android:id="@+id/st2"
+                    android:layout_width="80dp"
+                    android:layout_height="120dp"
+                    android:background="#eee"
+                    app:layout_constraintLeft_toLeftOf="@+id/st4"
+                    app:layout_constraintBottom_toBottomOf="@+id/st0"/>
+
+                <io.agora.nathan.spatialsound.widgets.VideoLayout
+                    android:id="@+id/st3"
+                    android:layout_width="80dp"
+                    android:layout_height="120dp"
+                    android:background="#eee"
+                    android:layout_marginLeft="40dp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"/>
+
+                <io.agora.nathan.spatialsound.widgets.VideoLayout
+                    android:id="@+id/st4"
+                    android:layout_width="80dp"
+                    android:layout_height="120dp"
+                    android:background="#eee"
+                    android:layout_marginRight="40dp"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    />
+
+                <io.agora.nathan.spatialsound.widgets.VideoLayout
+                    android:id="@+id/st5"
+                    android:layout_width="80dp"
+                    android:layout_height="120dp"
+                    android:layout_marginTop="60dp"
+                    android:layout_marginLeft="40dp"
+                    android:background="#eee"
+                    app:layout_constraintTop_toBottomOf="@+id/st3"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    />
+
+                <io.agora.nathan.spatialsound.widgets.VideoLayout
+                    android:id="@+id/st6"
+                    android:layout_width="80dp"
+                    android:layout_height="120dp"
+                    android:background="#eee"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintBottom_toBottomOf="@+id/st5"
+
+                    />
+
+                <io.agora.nathan.spatialsound.widgets.VideoLayout
+                    android:id="@+id/st7"
+                    android:layout_width="80dp"
+                    android:layout_height="120dp"
+                    android:background="#eee"
+
+                    app:layout_constraintLeft_toLeftOf="@+id/st4"
+                    app:layout_constraintBottom_toBottomOf="@+id/st5"/>
+
+
+
+
+        <TextView
+            android:id="@+id/seatName0"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Pos1"
+            app:layout_constraintBottom_toTopOf="@+id/st0"
+            app:layout_constraintLeft_toLeftOf="@+id/st0"
+            />
+
+        <TextView
+            android:id="@+id/seatName1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Pos2"
+            app:layout_constraintBottom_toTopOf="@+id/st1"
+            app:layout_constraintLeft_toLeftOf="@+id/st1"
+            />
+        <TextView
+            android:id="@+id/seatName2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Pos3"
+            app:layout_constraintBottom_toTopOf="@+id/st2"
+            app:layout_constraintLeft_toLeftOf="@+id/st2"
+            />
+        <TextView
+            android:id="@+id/seatName3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Pos4"
+            app:layout_constraintBottom_toTopOf="@+id/st3"
+            app:layout_constraintLeft_toLeftOf="@+id/st3"
+            />
+        <TextView
+            android:id="@+id/seatName4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Pos5"
+            app:layout_constraintBottom_toTopOf="@+id/st4"
+            app:layout_constraintLeft_toLeftOf="@+id/st4"
+            />
+        <TextView
+            android:id="@+id/seatName5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Pos5"
+            app:layout_constraintBottom_toTopOf="@+id/st5"
+            app:layout_constraintLeft_toLeftOf="@+id/st5"
+            />
+        <TextView
+            android:id="@+id/seatName6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Pos6"
+            app:layout_constraintBottom_toTopOf="@+id/st6"
+            app:layout_constraintLeft_toLeftOf="@+id/st6"
+            />
+        <TextView
+            android:id="@+id/seatName7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Pos7"
+            app:layout_constraintBottom_toTopOf="@+id/st7"
+            app:layout_constraintLeft_toLeftOf="@+id/st7"
+            />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+</FrameLayout>
