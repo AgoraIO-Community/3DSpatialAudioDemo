@@ -1,101 +1,33 @@
 package io.agora.nathan.spatialsound.fragments;
 
-import static io.agora.rtc2.Constants.RENDER_MODE_HIDDEN;
-
 import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
-import android.view.SurfaceView;
+
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-
-import io.agora.nathan.spatialsound.MainActivity;
 import io.agora.nathan.spatialsound.R;
+import io.agora.nathan.spatialsound.common.AgoraManager;
 import io.agora.nathan.spatialsound.common.BaseFragment;
 import io.agora.nathan.spatialsound.common.PositionManager;
 import io.agora.nathan.spatialsound.widgets.VideoLayout;
-import io.agora.rtc2.ChannelMediaOptions;
+
 import io.agora.rtc2.IRtcEngineEventHandler;
 import io.agora.rtc2.RtcEngine;
-import io.agora.rtc2.RtcEngineConfig;
-import io.agora.rtc2.video.VideoCanvas;
-import io.agora.spatialaudio.ILocalSpatialAudioEngine;
-import io.agora.spatialaudio.LocalSpatialAudioConfig;
 
 public class RemoteSpatialSound extends BaseFragment {
     private static final String TAG = RemoteSpatialSound.class.getSimpleName();
-    private RtcEngine engine;
 
-    private ImageView listenerIv;
-    private ILocalSpatialAudioEngine localSpatial;
     private final RemoteSpatialSound.ListenerOnTouchListener listenerOnTouchListener = new RemoteSpatialSound.ListenerOnTouchListener();
     private final RemoteSpatialSound.InnerRtcEngineEventHandler iRtcEngineEventHandler = new RemoteSpatialSound.InnerRtcEngineEventHandler();
     private VideoLayout[] seats = new VideoLayout[8];
-    private Map<Integer, ViewGroup> remoteViews = new ConcurrentHashMap<Integer, ViewGroup>();
-    private boolean joined = false;
-    private EditText channel;
-    private Button join;
-    private static PositionManager posManager;
-
-
-
-    private void joinChannel(String channelId)
-    {
-        // Check if the context is valid
-        Context context = getContext();
-        if (context == null)
-        {
-            return;
-        }
-
-
-        ChannelMediaOptions option = new ChannelMediaOptions();
-        option.autoSubscribeAudio = true;
-        option.autoSubscribeVideo = true;
-        option.publishMicrophoneTrack = true;
-        option.publishCameraTrack = true;
-
-        engine.joinChannel("", channelId, 0, option);
-
-        PositionManager.getInstance().setRtcEngine(engine);
-        startLocalSpatialSound();
-    }
-
-    private void leaveChannel()
-    {
-        engine.leaveChannel();
-        PositionManager.getInstance().reset();
-    }
-
-    private void startLocalSpatialSound()
-    {
-        LocalSpatialAudioConfig localSpatialAudioConfig = new LocalSpatialAudioConfig();
-        localSpatialAudioConfig.mRtcEngine = engine;
-        localSpatial = ILocalSpatialAudioEngine.create();
-        localSpatial.initialize(localSpatialAudioConfig);
-        localSpatial.muteLocalAudioStream(true);
-        localSpatial.muteAllRemoteAudioStreams(true);
-        localSpatial.setAudioRecvRange(50);
-        localSpatial.setDistanceUnit(1);
-        float[] pos = new float[]{0.0F, 0.0F, 0.0F};
-        float[] forward = new float[]{1.0F, 0.0F, 0.0F};
-        float[] right = new float[]{0.0F, 1.0F, 0.0F};
-        float[] up = new float[]{0.0F, 0.0F, 1.0F};
-        localSpatial.updateSelfPosition(pos, forward, right, up);
-        PositionManager.getInstance().setLocalSpatialAudioEngine(localSpatial);
-    }
 
     @Nullable
     @Override
@@ -108,32 +40,9 @@ public class RemoteSpatialSound extends BaseFragment {
         super.onViewCreated(view, savedInstanceState);
         PositionManager.getInstance().setContext(getContext());
 
-        channel = view.findViewById(R.id.et_channel);
-        join = (Button)view.findViewById(R.id.btn_join);
-        listenerIv = view.findViewById(R.id.iv_listener);
+        //ImageView listenerIv = view.findViewById(R.id.iv_listener);
         //listenerIv.setOnTouchListener(listenerOnTouchListener);
-        join.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(!joined) {
-
-                    String channelId = channel.getText().toString();
-
-                    joinChannel(channelId);
-                    Log.i(TAG, "joidChannel:"+ channelId);
-
-                    join.setText(R.string.leave);
-                    channel.setEnabled(false);
-                    joined = true;
-                }
-                else {
-                    leaveChannel();
-                    join.setText(R.string.join);
-                    channel.setEnabled(true);
-                    joined = false;
-                }
-            }
-        });
+        AgoraManager.getInstance().startLocalSpatialSound();
 
         int[] seatIds = PositionManager.getInstance().getSeatIds();
 
@@ -154,20 +63,11 @@ public class RemoteSpatialSound extends BaseFragment {
         PositionManager.getInstance().setSeats(seats);
     }
 
-    private void resetSpeaker(){
-        listenerIv.setTranslationY(50);
-        listenerIv.setTranslationX(0);
-    }
-
-    private void updateSpatialSoundParam() {
-    }
-
     @Override
     public void onDestroy() {
         super.onDestroy();
         handler.removeCallbacksAndMessages(null);
-        handler.post(RtcEngine::destroy);
-        engine = null;
+        AgoraManager.getInstance().removeRtcEngineEventHandler(iRtcEngineEventHandler);
     }
 
     @Override
@@ -178,26 +78,8 @@ public class RemoteSpatialSound extends BaseFragment {
         if (context == null) {
             return;
         }
-        try {
-            /**Creates an RtcEngine instance.
-             * @param context The context of Android Activity
-             * @param appId The App ID issued to you by Agora. See <a href="https://docs.agora.io/en/Agora%20Platform/token#get-an-app-id">
-             *              How to get the App ID</a>
-             * @param handler IRtcEngineEventHandler is an abstract class providing default implementation.
-             *                The SDK uses this class to report to the app on SDK runtime events.*/
-            String appId = getString(R.string.agora_app_id);
-            RtcEngineConfig config = new RtcEngineConfig();
-            config.mContext = getContext().getApplicationContext();
-            config.mAppId = appId;
-            config.mEventHandler = iRtcEngineEventHandler;
-            config.mAreaCode = ((MainActivity)getActivity()).getGlobalSettings().getAreaCode();
-            engine = RtcEngine.create(config);
-            engine.setDefaultAudioRoutetoSpeakerphone(true);
 
-        } catch (Exception e) {
-            e.printStackTrace();
-            getActivity().onBackPressed();
-        }
+        AgoraManager.getInstance().addRtcEngineEventHandler(iRtcEngineEventHandler);
     }
 
     private class ListenerOnTouchListener implements View.OnTouchListener {
@@ -237,7 +119,7 @@ public class RemoteSpatialSound extends BaseFragment {
                         newTranY = maxY;
                     }
                     v.setTranslationY(newTranY);
-                    updateSpatialSoundParam();
+                    //updateSpatialSoundParam();
                     break;
                 case MotionEvent.ACTION_UP:
                     break;
@@ -257,7 +139,7 @@ public class RemoteSpatialSound extends BaseFragment {
          */
         @Override
         public void onWarning(int warn) {
-            Log.w(TAG, String.format("onWarning code %d message %s", warn, RtcEngine.getErrorDescription(warn)));
+            //Log.w(TAG, String.format("onWarning code %d message %s", warn, RtcEngine.getErrorDescription(warn)));
         }
 
         /**
@@ -266,7 +148,7 @@ public class RemoteSpatialSound extends BaseFragment {
          */
         @Override
         public void onError(int err) {
-            Log.e(TAG, String.format("onError code %d message %s", err, RtcEngine.getErrorDescription(err)));
+            //Log.e(TAG, String.format("onError code %d message %s", err, RtcEngine.getErrorDescription(err)));
             showAlert(String.format("onError code %d message %s", err, RtcEngine.getErrorDescription(err)));
         }
 
@@ -280,7 +162,7 @@ public class RemoteSpatialSound extends BaseFragment {
         @Override
         public void onUserJoined(int uid, int elapsed) {
             super.onUserJoined(uid, elapsed);
-            Log.i(TAG, "onUserJoined->" + uid);
+            //Log.i(TAG, "onUserJoined->" + uid);
             showLongToast(String.format("user %d joined!", uid));
 
             /**Check if the context is correct*/
@@ -295,7 +177,6 @@ public class RemoteSpatialSound extends BaseFragment {
             else{
                 handler.post(() ->
                 {
-
                     PositionManager.getInstance().setUid2SeatView(uid, seatId);
                 });
             }
@@ -316,7 +197,7 @@ public class RemoteSpatialSound extends BaseFragment {
          */
         @Override
         public void onUserOffline(int uid, int reason) {
-            Log.i(TAG, String.format("user %d offline! reason:%d", uid, reason));
+            //Log.i(TAG, String.format("user %d offline! reason:%d", uid, reason));
             showLongToast(String.format("user %d offline! reason:%d", uid, reason));
             handler.post(new Runnable() {
                 @Override

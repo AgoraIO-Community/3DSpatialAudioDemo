@@ -19,7 +19,7 @@ public class PositionManager {
 
     private static final String TAG = "PositionManager";
     private static volatile PositionManager sInstance = null;
-    private RtcEngine engine;
+
     private Context context;
     // default distance
     // radius = 2.5m
@@ -28,9 +28,8 @@ public class PositionManager {
     private static final float slant       = (float) 0.722;
     private static final float slantMinus  = (float) -0.722;
 
-    private ILocalSpatialAudioEngine localSpatial;
 
-    private static int[] seatIds = new int[] {0,0,0,0,0,0,0,0};
+    private static int[] seatUIds = new int[] {0,0,0,0,0,0,0,0};
     private static int[] _seatIds = new int[] {
         R.id.st0, R.id.st1, R.id.st2, R.id.st3, R.id.st4, R.id.st5, R.id.st6, R.id.st7
     };
@@ -58,34 +57,26 @@ public class PositionManager {
         this.context = context;
     }
 
-    public void setRtcEngine(RtcEngine engine) {
-        this.engine = engine;
-    }
-
-    public void setLocalSpatialAudioEngine(ILocalSpatialAudioEngine engine) {
-        localSpatial = engine;
-    }
-
     public int takeSeat(int uid, int seatIndex) {
 
         if(seatIndex == -1) {
             seatIndex = nextEmptySeat();
         };
-        if(seatIds[seatIndex] > 0) {
+        if(seatUIds[seatIndex] > 0) {
             return -1;
         }
-        seatIds[seatIndex] = uid;
+        seatUIds[seatIndex] = uid;
         changeSoundPosition(uid, seatIndex);
         return seatIndex;
     }
 
     public void leaveSeat(int uid) {
-        for(int i=0;i<seatIds.length;i++)
+        for(int i = 0; i< seatUIds.length; i++)
         {
-            if(seatIds[i] == uid)
+            if(seatUIds[i] == uid)
             {
-                seatIds[i] = 0;
-                engine.setupRemoteVideo(new VideoCanvas(null, RENDER_MODE_HIDDEN, uid));
+                seatUIds[i] = 0;
+                AgoraManager.getInstance().setupRemoteVideo(new VideoCanvas(null, RENDER_MODE_HIDDEN, uid));
                 seats[i].removeAllViews();
                 //seatViews.get(uid).removeAllViews();
                 //seatViews.remove(uid);
@@ -94,9 +85,9 @@ public class PositionManager {
     }
 
     public int nextEmptySeat() {
-        for(int i=0;i<seatIds.length;i++)
+        for(int i = 0; i< seatUIds.length; i++)
         {
-            if(seatIds[i] == 0)
+            if(seatUIds[i] == 0)
             {
                 return i;
             }
@@ -155,14 +146,14 @@ public class PositionManager {
         // Add to the remote container
         view.addView(surfaceView, new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         // Setup remote video to render
-        engine.setupRemoteVideo(new VideoCanvas(surfaceView, RENDER_MODE_HIDDEN, uid));
-
+        //engine.setupRemoteVideo(new VideoCanvas(surfaceView, RENDER_MODE_HIDDEN, uid));
+        AgoraManager.getInstance().setupRemoteVideo(new VideoCanvas(surfaceView, RENDER_MODE_HIDDEN, uid));
     }
 
     public void changeSeatView(int seatA, int seatB)
     {
-        int uidA = seatIds[seatA];
-        int uidB = seatIds[seatB];
+        int uidA = seatUIds[seatA];
+        int uidB = seatUIds[seatB];
         if(uidA == 0 && uidB == 0) return;
         if(uidB == 0) {
             // empty seat
@@ -202,22 +193,24 @@ public class PositionManager {
 
     private void switchSeatIds(int seatA, int seatB)
     {
-        int tmp = seatIds[seatB];
-        seatIds[seatB] = seatIds[seatA];
-        seatIds[seatA] = tmp;
+        int tmp = seatUIds[seatB];
+        seatUIds[seatB] = seatUIds[seatA];
+        seatUIds[seatA] = tmp;
     }
 
     private void updatePosition(int uid, float[] pos)
     {
         RemoteVoicePositionInfo position = new RemoteVoicePositionInfo();
         position.position = pos;
-        localSpatial.updateRemotePosition(uid, position);
+        AgoraManager.getInstance().updateRemotePosition(uid, position);
+        //localSpatial.updateRemotePosition(uid, position);
     }
 
     public void reset()
     {
-        localSpatial = null;
-        seatIds = new int[] {0,0,0,0,0,0,0,0};
+        //localSpatial = null;
+        AgoraManager.getInstance().resetLocaSpatial();
+        seatUIds = new int[] {0,0,0,0,0,0,0,0};
     }
 
     public int[] getSeatIds()

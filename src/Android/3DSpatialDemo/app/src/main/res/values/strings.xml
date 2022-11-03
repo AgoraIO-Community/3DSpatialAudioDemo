@@ -1,6 +1,9 @@
 <resources>
     <string name="app_name">Spatial Sound Demo</string>
+    <string name="app_id">App ID:</string>
+    <string name="app_token">Token:</string>
     <string name="action_settings">Settings</string>
+    <string name="optional">Optional</string>
 
     <string name="next">Go</string>
     <string name="previous">Back</string>
