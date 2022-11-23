@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.navigation.fragment.NavHostFragment;
@@ -37,11 +38,13 @@ public class HomeFragment extends BaseFragment {
 
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
+        TextView v = view.findViewById(R.id.version);
+        v.setText("version: "+BuildConfig.VERSION_NAME);
         channel = view.findViewById(R.id.et_channel);
         join = (Button)view.findViewById(R.id.btn_join);
 
         if(AgoraManager.getInstance().isJoined()) {
+            binding.btnDemo1.setEnabled(true);
             binding.btnDemo2.setEnabled(true);
             join.setText(R.string.leave);
             channel.setEnabled(false);
@@ -50,7 +53,7 @@ public class HomeFragment extends BaseFragment {
             join.setText(R.string.join);
             channel.setEnabled(true);
             binding.btnDemo2.setEnabled(false);
-
+            binding.btnDemo1.setEnabled(false);
         }
         join.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -71,12 +74,14 @@ public class HomeFragment extends BaseFragment {
 
                     join.setText(R.string.leave);
                     channel.setEnabled(false);
+                    binding.btnDemo1.setEnabled(true);
                     binding.btnDemo2.setEnabled(true);
                 }
                 else {
                     AgoraManager.getInstance().leaveChannel();
                     join.setText(R.string.join);
                     channel.setEnabled(true);
+                    binding.btnDemo1.setEnabled(false);
                     binding.btnDemo2.setEnabled(false);
                 }
             }

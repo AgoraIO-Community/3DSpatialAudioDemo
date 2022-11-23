@@ -2,6 +2,7 @@ package io.agora.nathan.spatialsound.common;
 
 import static io.agora.rtc2.Constants.RENDER_MODE_HIDDEN;
 
+import android.app.Fragment;
 import android.content.Context;
 import android.util.Log;
 import android.view.SurfaceView;
@@ -30,12 +31,13 @@ public class PositionManager {
 
 
     private static int[] seatUIds = new int[] {0,0,0,0,0,0,0,0};
-    private static int[] _seatIds = new int[] {
+    private static final int[] _seatIds = new int[] {
         R.id.st0, R.id.st1, R.id.st2, R.id.st3, R.id.st4, R.id.st5, R.id.st6, R.id.st7
     };
     private VideoLayout[] seats = new VideoLayout[8];
 
     private int selectedId = -1;
+    public BaseFragment view;
 
     public static PositionManager getInstance() {
         if (sInstance == null) {
@@ -70,7 +72,7 @@ public class PositionManager {
         return seatIndex;
     }
 
-    public void leaveSeat(int uid) {
+    public int leaveSeat(int uid) {
         for(int i = 0; i< seatUIds.length; i++)
         {
             if(seatUIds[i] == uid)
@@ -80,8 +82,10 @@ public class PositionManager {
                 seats[i].removeAllViews();
                 //seatViews.get(uid).removeAllViews();
                 //seatViews.remove(uid);
+                return i;
             }
         }
+        return -1;
     }
 
     public int nextEmptySeat() {
@@ -204,6 +208,7 @@ public class PositionManager {
         position.position = pos;
         AgoraManager.getInstance().updateRemotePosition(uid, position);
         //localSpatial.updateRemotePosition(uid, position);
+
     }
 
     public void reset()
@@ -230,6 +235,7 @@ public class PositionManager {
             // hilite view
 
             Log.i(TAG, "selected seat: "+selectedId);
+            view.showLog("selected seatA: "+selectedId, false);
             return;
         }
 
@@ -242,7 +248,7 @@ public class PositionManager {
 
             Log.i(TAG, "change seatA: "+selectedId+" seatB: "+seatId);
             changeSeatView(selectedId, seatId);
-
+            view.showLog("change seatA: "+selectedId+" to seatB: "+seatId, false);
             selectedId = -1;
         }
 

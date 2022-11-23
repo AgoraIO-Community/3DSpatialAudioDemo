@@ -4,6 +4,10 @@ import android.content.Context;
 import android.util.Log;
 import android.view.SurfaceView;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import io.agora.mediaplayer.IMediaPlayer;
 import io.agora.nathan.spatialsound.R;
 import io.agora.rtc2.ChannelMediaOptions;
 import io.agora.rtc2.IRtcEngineEventHandler;
@@ -23,6 +27,9 @@ public class AgoraManager {
     private AgoraManager.InnerRtcEngineEventHandler iRtcEngineEventHandler = new AgoraManager.InnerRtcEngineEventHandler();
     private ILocalSpatialAudioEngine localSpatial;
     private boolean joined = false;
+
+
+    private ArrayList<Integer> users = new ArrayList<Integer>();
 
     public static AgoraManager getInstance() {
         if (sInstance == null) {
@@ -72,6 +79,16 @@ public class AgoraManager {
         }
     }
 
+    public IMediaPlayer createMediaPlayer()
+    {
+        return engine.createMediaPlayer();
+    }
+
+    public ArrayList<Integer> getAllUsers()
+    {
+        return users;
+    }
+
     public void addRtcEngineEventHandler(IRtcEngineEventHandler handler)
     {
         if (engine == null) {
@@ -88,6 +105,28 @@ public class AgoraManager {
         } else {
             engine.removeHandler(handler);
         }
+    }
+
+    public void startRecord()
+    {
+        engine.setDefaultAudioRoutetoSpeakerphone(true);
+        //mediaPlayer.open(Constant.URL_PLAY_AUDIO_FILES, 0);
+
+        LocalSpatialAudioConfig localSpatialAudioConfig = new LocalSpatialAudioConfig();
+        localSpatialAudioConfig.mRtcEngine = engine;
+        localSpatial = ILocalSpatialAudioEngine.create();
+        localSpatial.initialize(localSpatialAudioConfig);
+        localSpatial.muteLocalAudioStream(true);
+        localSpatial.muteAllRemoteAudioStreams(true);
+        localSpatial.setAudioRecvRange(50);
+        localSpatial.setDistanceUnit(1);
+        float[] pos = new float[]{0.0F, 0.0F, 0.0F};
+        float[] forward = new float[]{1.0F, 0.0F, 0.0F};
+        float[] right = new float[]{0.0F, 1.0F, 0.0F};
+        float[] up = new float[]{0.0F, 0.0F, 1.0F};
+        localSpatial.updateSelfPosition(pos, forward, right, up);
+
+        //startPlayWithSpatialSound();
     }
 
     public boolean startLocalSpatialSound()
@@ -155,6 +194,15 @@ public class AgoraManager {
         engine.setupRemoteVideo(view);
     }
 
+    public void updatePlayerPositionInfo(IMediaPlayer mediaPlayer, RemoteVoicePositionInfo position)
+    {
+        if (localSpatial == null) {
+            Log.e(TAG, "RTC engine has not been initialized");
+            return;
+        }
+        localSpatial.updatePlayerPositionInfo(mediaPlayer.getMediaPlayerId(), position);
+    }
+
     public void updateRemotePosition(int uid, RemoteVoicePositionInfo position)
     {
         if (localSpatial == null) {
@@ -173,6 +221,19 @@ public class AgoraManager {
     {
 
         engine = null;
+    }
+
+    public void addUser(Integer uid) {
+
+        if(!users.contains(uid)) {
+            users.add(uid);
+        }
+    }
+
+    public void removeUser(Integer uid)
+    {
+        if(users.contains(uid))
+            users.remove(uid);
     }
 
     public void setAppId(String appId)
@@ -222,7 +283,7 @@ public class AgoraManager {
             super.onUserJoined(uid, elapsed);
             Log.i(TAG, "onUserJoined->" + uid);
             //showLongToast(String.format("user %d joined!", uid));
-
+            addUser(uid);
 
         }
 
@@ -242,7 +303,7 @@ public class AgoraManager {
         @Override
         public void onUserOffline(int uid, int reason) {
             Log.i(TAG, String.format("user %d offline! reason:%d", uid, reason));
-
+            removeUser(uid);
         }
 
     }

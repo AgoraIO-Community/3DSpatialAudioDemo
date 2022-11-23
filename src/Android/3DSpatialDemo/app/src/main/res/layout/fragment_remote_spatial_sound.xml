@@ -184,5 +184,15 @@
             app:layout_constraintBottom_toTopOf="@+id/st7"
             app:layout_constraintLeft_toLeftOf="@+id/st7"
             />
+                <TextView
+                    android:id="@+id/tv_log"
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:hint="Show log area..."
+                    android:scrollbars="vertical"
+                    android:padding="10dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    />
         </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>
