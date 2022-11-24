@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="agora_app_id" translatable="false">bcdbfe94ee934eeaaae2fb56e96cfdc0</string>
+    <string name="agora_app_id" translatable="false"></string>
     <!-- assign token and certificate to null if you have not enabled app certificate -->
     <string name="agora_app_certificate" translatable="false"></string>
     <!-- assign token and certificate to null if you have not enabled app certificate or you have set the certificate above. -->
