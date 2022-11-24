@@ -107,40 +107,20 @@ public class AgoraManager {
         }
     }
 
-    public void startRecord()
-    {
-        engine.setDefaultAudioRoutetoSpeakerphone(true);
-        //mediaPlayer.open(Constant.URL_PLAY_AUDIO_FILES, 0);
 
-        LocalSpatialAudioConfig localSpatialAudioConfig = new LocalSpatialAudioConfig();
-        localSpatialAudioConfig.mRtcEngine = engine;
-        localSpatial = ILocalSpatialAudioEngine.create();
-        localSpatial.initialize(localSpatialAudioConfig);
-        localSpatial.muteLocalAudioStream(true);
-        localSpatial.muteAllRemoteAudioStreams(true);
-        localSpatial.setAudioRecvRange(50);
-        localSpatial.setDistanceUnit(1);
-        float[] pos = new float[]{0.0F, 0.0F, 0.0F};
-        float[] forward = new float[]{1.0F, 0.0F, 0.0F};
-        float[] right = new float[]{0.0F, 1.0F, 0.0F};
-        float[] up = new float[]{0.0F, 0.0F, 1.0F};
-        localSpatial.updateSelfPosition(pos, forward, right, up);
-
-        //startPlayWithSpatialSound();
-    }
-
-    public boolean startLocalSpatialSound()
+    public boolean startLocalSpatialSound(boolean muteRemoteAudio)
     {
         if (engine == null) {
             Log.e(TAG, "RTC engine has not been initialized");
             return false;
         }
+        engine.setDefaultAudioRoutetoSpeakerphone(true);
         LocalSpatialAudioConfig localSpatialAudioConfig = new LocalSpatialAudioConfig();
         localSpatialAudioConfig.mRtcEngine = engine;
         localSpatial = ILocalSpatialAudioEngine.create();
         localSpatial.initialize(localSpatialAudioConfig);
         localSpatial.muteLocalAudioStream(true);
-        localSpatial.muteAllRemoteAudioStreams(true);
+        localSpatial.muteAllRemoteAudioStreams(muteRemoteAudio);
         localSpatial.setAudioRecvRange(50);
         localSpatial.setDistanceUnit(1);
         float[] pos = new float[]{0.0F, 0.0F, 0.0F};
@@ -212,7 +192,7 @@ public class AgoraManager {
         localSpatial.updateRemotePosition(uid, position);
     }
 
-    public void resetLocaSpatial()
+    public void resetLocalSpatial()
     {
         localSpatial = null;
     }

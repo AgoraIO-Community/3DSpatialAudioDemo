@@ -68,7 +68,7 @@ public class DemoSpatialSound extends BaseFragment {
 
     private void startRecord() {
 
-        AgoraManager.getInstance().startLocalSpatialSound();
+        AgoraManager.getInstance().startLocalSpatialSound(true);
         mediaPlayer.open(Constant.URL_PLAY_AUDIO_FILES, 0);
         mediaPlayer.play();
         startPlayWithSpatialSound();
