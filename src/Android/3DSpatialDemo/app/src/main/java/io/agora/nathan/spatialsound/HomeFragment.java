@@ -76,6 +76,7 @@ public class HomeFragment extends BaseFragment {
                     channel.setEnabled(false);
                     binding.btnDemo1.setEnabled(true);
                     binding.btnDemo2.setEnabled(true);
+
                 }
                 else {
                     AgoraManager.getInstance().leaveChannel();

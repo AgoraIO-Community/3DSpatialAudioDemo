@@ -49,7 +49,7 @@ public class RemoteSpatialSound extends BaseFragment {
         PositionManager.getInstance().setContext(getContext());
         PositionManager.getInstance().view = this;
 
-        AgoraManager.getInstance().startLocalSpatialSound();
+        AgoraManager.getInstance().startLocalSpatialSound(false);
         tv_log = view.findViewById(R.id.tv_log);
         int[] seatIds = PositionManager.getInstance().getSeatIds();
 

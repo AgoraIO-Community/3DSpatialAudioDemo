@@ -11,9 +11,9 @@ import android.widget.FrameLayout;
 
 import io.agora.nathan.spatialsound.R;
 import io.agora.nathan.spatialsound.widgets.VideoLayout;
-import io.agora.rtc2.RtcEngine;
+//import io.agora.rtc2.RtcEngine;
 import io.agora.rtc2.video.VideoCanvas;
-import io.agora.spatialaudio.ILocalSpatialAudioEngine;
+//import io.agora.spatialaudio.ILocalSpatialAudioEngine;
 import io.agora.spatialaudio.RemoteVoicePositionInfo;
 
 public class PositionManager {
@@ -106,10 +106,10 @@ public class PositionManager {
             case 0:
                 pos = new float[]{slantMinus, slant, slant};
                 break;
-            case 1:
+            case 2:
                 pos = new float[]{0, 0, axial};
                 break;
-            case 2:
+            case 1:
                 pos = new float[]{slant, slant, slant};
                 break;
             case 3:
@@ -121,10 +121,10 @@ public class PositionManager {
             case 5:
                 pos = new float[]{slantMinus, slant, slantMinus};
                 break;
-            case 6:
+            case 7:
                 pos = new float[]{0, 0, axialMinus};
                 break;
-            case 7:
+            case 6:
                 pos = new float[]{slant, slant, slantMinus};
                 break;
             default: // default, not on stage, from back
@@ -214,7 +214,7 @@ public class PositionManager {
     public void reset()
     {
         //localSpatial = null;
-        AgoraManager.getInstance().resetLocaSpatial();
+        AgoraManager.getInstance().resetLocalSpatial();
         seatUIds = new int[] {0,0,0,0,0,0,0,0};
     }
 
