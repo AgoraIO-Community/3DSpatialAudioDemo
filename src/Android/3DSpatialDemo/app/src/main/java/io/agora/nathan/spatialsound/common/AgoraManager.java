@@ -132,7 +132,7 @@ public class AgoraManager {
     {
         float[] pos = new float[]{0.0F, 0.0F, 0.0F};
         float[] forward = new float[]{0.0F, 1.0F, 0.0F};
-        float[] right = new float[]{0.0F, 1.0F, 0.0F};
+        float[] right = new float[]{1.0F, 0.0F, 0.0F};
         float[] up = new float[]{0.0F, 0.0F, 1.0F};
         localSpatial.updateSelfPosition(pos, forward, right, up);
     }
