@@ -2,6 +2,7 @@ package io.agora.nathan.spatialsound.common;
 
 import static io.agora.rtc2.Constants.RENDER_MODE_HIDDEN;
 
+import android.app.Fragment;
 import android.content.Context;
 import android.util.Log;
 import android.view.SurfaceView;
@@ -10,9 +11,9 @@ import android.widget.FrameLayout;
 
 import io.agora.nathan.spatialsound.R;
 import io.agora.nathan.spatialsound.widgets.VideoLayout;
-import io.agora.rtc2.RtcEngine;
+//import io.agora.rtc2.RtcEngine;
 import io.agora.rtc2.video.VideoCanvas;
-import io.agora.spatialaudio.ILocalSpatialAudioEngine;
+//import io.agora.spatialaudio.ILocalSpatialAudioEngine;
 import io.agora.spatialaudio.RemoteVoicePositionInfo;
 
 public class PositionManager {
@@ -30,12 +31,13 @@ public class PositionManager {
 
 
     private static int[] seatUIds = new int[] {0,0,0,0,0,0,0,0};
-    private static int[] _seatIds = new int[] {
+    private static final int[] _seatIds = new int[] {
         R.id.st0, R.id.st1, R.id.st2, R.id.st3, R.id.st4, R.id.st5, R.id.st6, R.id.st7
     };
     private VideoLayout[] seats = new VideoLayout[8];
 
     private int selectedId = -1;
+    public BaseFragment view;
 
     public static PositionManager getInstance() {
         if (sInstance == null) {
@@ -70,7 +72,7 @@ public class PositionManager {
         return seatIndex;
     }
 
-    public void leaveSeat(int uid) {
+    public int leaveSeat(int uid) {
         for(int i = 0; i< seatUIds.length; i++)
         {
             if(seatUIds[i] == uid)
@@ -80,8 +82,10 @@ public class PositionManager {
                 seats[i].removeAllViews();
                 //seatViews.get(uid).removeAllViews();
                 //seatViews.remove(uid);
+                return i;
             }
         }
+        return -1;
     }
 
     public int nextEmptySeat() {
@@ -99,28 +103,28 @@ public class PositionManager {
         Log.i(TAG,"select seat "+seatIndex+" for user "+uid);
         float[] pos = new float[3];
         switch(seatIndex) {
-            case 0:
+            case 2:
                 pos = new float[]{slantMinus, slant, slant};
                 break;
             case 1:
                 pos = new float[]{0, 0, axial};
                 break;
-            case 2:
+            case 0:
                 pos = new float[]{slant, slant, slant};
                 break;
-            case 3:
+            case 4:
                 pos = new float[]{axialMinus, 0, 0};
                 break;
-            case 4:
+            case 3:
                 pos = new float[]{axial, 0, 0};
                 break;
             case 5:
-                pos = new float[]{slantMinus, slant, slantMinus};
-                break;
-            case 6:
-                pos = new float[]{0, 0, axialMinus};
+                pos = new float[]{slantMinus, slantMinus, slantMinus};
                 break;
             case 7:
+                pos = new float[]{0, 0, axialMinus};
+                break;
+            case 6:
                 pos = new float[]{slant, slant, slantMinus};
                 break;
             default: // default, not on stage, from back
@@ -204,12 +208,13 @@ public class PositionManager {
         position.position = pos;
         AgoraManager.getInstance().updateRemotePosition(uid, position);
         //localSpatial.updateRemotePosition(uid, position);
+
     }
 
     public void reset()
     {
         //localSpatial = null;
-        AgoraManager.getInstance().resetLocaSpatial();
+        AgoraManager.getInstance().resetLocalSpatial();
         seatUIds = new int[] {0,0,0,0,0,0,0,0};
     }
 
@@ -230,6 +235,7 @@ public class PositionManager {
             // hilite view
 
             Log.i(TAG, "selected seat: "+selectedId);
+            view.showLog("selected seatA: "+selectedId, false);
             return;
         }
 
@@ -242,7 +248,7 @@ public class PositionManager {
 
             Log.i(TAG, "change seatA: "+selectedId+" seatB: "+seatId);
             changeSeatView(selectedId, seatId);
-
+            view.showLog("change seatA: "+selectedId+" to seatB: "+seatId, false);
             selectedId = -1;
         }
 

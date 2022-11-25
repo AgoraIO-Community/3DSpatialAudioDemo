@@ -22,6 +22,7 @@ import io.agora.mediaplayer.data.PlayerUpdatedInfo;
 import io.agora.mediaplayer.data.SrcInfo;
 import io.agora.nathan.spatialsound.MainActivity;
 import io.agora.nathan.spatialsound.R;
+import io.agora.nathan.spatialsound.common.AgoraManager;
 import io.agora.nathan.spatialsound.common.BaseFragment;
 import io.agora.nathan.spatialsound.common.Constant;
 import io.agora.rtc2.IRtcEngineEventHandler;
@@ -40,9 +41,9 @@ public class DemoSpatialSound extends BaseFragment {
     private TextView tipTv;
     private View rootView;
 
-    private RtcEngine engine;
+    //private RtcEngine engine;
     private IMediaPlayer mediaPlayer;
-    private ILocalSpatialAudioEngine localSpatial;
+    //private ILocalSpatialAudioEngine localSpatial;
 
     private final ListenerOnTouchListener listenerOnTouchListener = new ListenerOnTouchListener();
     private final InnerRtcEngineEventHandler iRtcEngineEventHandler = new InnerRtcEngineEventHandler();
@@ -67,24 +68,9 @@ public class DemoSpatialSound extends BaseFragment {
 
     private void startRecord() {
 
-
-        engine.setDefaultAudioRoutetoSpeakerphone(true);
+        AgoraManager.getInstance().startLocalSpatialSound(true);
         mediaPlayer.open(Constant.URL_PLAY_AUDIO_FILES, 0);
-
-        LocalSpatialAudioConfig localSpatialAudioConfig = new LocalSpatialAudioConfig();
-        localSpatialAudioConfig.mRtcEngine = engine;
-        localSpatial = ILocalSpatialAudioEngine.create();
-        localSpatial.initialize(localSpatialAudioConfig);
-        localSpatial.muteLocalAudioStream(true);
-        localSpatial.muteAllRemoteAudioStreams(true);
-        localSpatial.setAudioRecvRange(50);
-        localSpatial.setDistanceUnit(1);
-        float[] pos = new float[]{0.0F, 0.0F, 0.0F};
-        float[] forward = new float[]{1.0F, 0.0F, 0.0F};
-        float[] right = new float[]{0.0F, 1.0F, 0.0F};
-        float[] up = new float[]{0.0F, 0.0F, 1.0F};
-        localSpatial.updateSelfPosition(pos, forward, right, up);
-
+        mediaPlayer.play();
         startPlayWithSpatialSound();
     }
 
@@ -127,7 +113,8 @@ public class DemoSpatialSound extends BaseFragment {
         RemoteVoicePositionInfo positionInfo = new RemoteVoicePositionInfo();
         positionInfo.forward = new float[]{1.0F, 0.0F, 0.0F};
         positionInfo.position = new float[]{(float) posForward, (float) posRight, 0.0F};
-        localSpatial.updatePlayerPositionInfo(mediaPlayer.getMediaPlayerId(), positionInfo);
+
+        AgoraManager.getInstance().updatePlayerPositionInfo(mediaPlayer, positionInfo);
     }
 
     private int getDegree(int point1X, int point1Y) {
@@ -146,9 +133,13 @@ public class DemoSpatialSound extends BaseFragment {
     public void onDestroy() {
         super.onDestroy();
         mediaPlayer.stop();
+        mediaPlayer.unRegisterPlayerObserver(iMediaPlayerObserver);
         handler.removeCallbacksAndMessages(null);
-        handler.post(RtcEngine::destroy);
-        engine = null;
+        mediaPlayer.destroy();
+        mediaPlayer = null;
+        AgoraManager.getInstance().removeRtcEngineEventHandler(iRtcEngineEventHandler);
+        //handler.post(RtcEngine::destroy);
+        //engine = null;
     }
 
     @Override
@@ -160,21 +151,23 @@ public class DemoSpatialSound extends BaseFragment {
             return;
         }
         try {
-            /**Creates an RtcEngine instance.
-             * @param context The context of Android Activity
-             * @param appId The App ID issued to you by Agora. See <a href="https://docs.agora.io/en/Agora%20Platform/token#get-an-app-id">
-             *              How to get the App ID</a>
-             * @param handler IRtcEngineEventHandler is an abstract class providing default implementation.
-             *                The SDK uses this class to report to the app on SDK runtime events.*/
-            String appId = getString(R.string.agora_app_id);
-            RtcEngineConfig config = new RtcEngineConfig();
-            config.mContext = getContext().getApplicationContext();
-            config.mAppId = appId;
-            config.mEventHandler = iRtcEngineEventHandler;
-            config.mAreaCode = ((MainActivity)getActivity()).getGlobalSettings().getAreaCode();
-            engine = RtcEngine.create(config);
+//            /**Creates an RtcEngine instance.
+//             * @param context The context of Android Activity
+//             * @param appId The App ID issued to you by Agora. See <a href="https://docs.agora.io/en/Agora%20Platform/token#get-an-app-id">
+//             *              How to get the App ID</a>
+//             * @param handler IRtcEngineEventHandler is an abstract class providing default implementation.
+//             *                The SDK uses this class to report to the app on SDK runtime events.*/
+//            String appId = getString(R.string.agora_app_id);
+//            RtcEngineConfig config = new RtcEngineConfig();
+//            config.mContext = getContext().getApplicationContext();
+//            config.mAppId = appId;
+//            config.mEventHandler = iRtcEngineEventHandler;
+//            config.mAreaCode = ((MainActivity)getActivity()).getGlobalSettings().getAreaCode();
+//            engine = RtcEngine.create(config);
 
-            mediaPlayer = engine.createMediaPlayer();
+            AgoraManager.getInstance().addRtcEngineEventHandler(iRtcEngineEventHandler);
+
+            mediaPlayer = AgoraManager.getInstance().createMediaPlayer();
             mediaPlayer.registerPlayerObserver(iMediaPlayerObserver);
 
             startRecord();

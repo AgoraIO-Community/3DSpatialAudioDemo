@@ -2,6 +2,7 @@ package io.agora.nathan.spatialsound.fragments;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -9,9 +10,16 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.Locale;
 
 import io.agora.nathan.spatialsound.R;
 import io.agora.nathan.spatialsound.common.AgoraManager;
@@ -39,11 +47,10 @@ public class RemoteSpatialSound extends BaseFragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         PositionManager.getInstance().setContext(getContext());
+        PositionManager.getInstance().view = this;
 
-        //ImageView listenerIv = view.findViewById(R.id.iv_listener);
-        //listenerIv.setOnTouchListener(listenerOnTouchListener);
-        AgoraManager.getInstance().startLocalSpatialSound();
-
+        AgoraManager.getInstance().startLocalSpatialSound(false);
+        tv_log = view.findViewById(R.id.tv_log);
         int[] seatIds = PositionManager.getInstance().getSeatIds();
 
         for(int i=0;i<seatIds.length;i++)
@@ -61,6 +68,8 @@ public class RemoteSpatialSound extends BaseFragment {
         }
 
         PositionManager.getInstance().setSeats(seats);
+
+        initUser();
     }
 
     @Override
@@ -68,6 +77,7 @@ public class RemoteSpatialSound extends BaseFragment {
         super.onDestroy();
         handler.removeCallbacksAndMessages(null);
         AgoraManager.getInstance().removeRtcEngineEventHandler(iRtcEngineEventHandler);
+        PositionManager.getInstance().reset();
     }
 
     @Override
@@ -80,6 +90,29 @@ public class RemoteSpatialSound extends BaseFragment {
         }
 
         AgoraManager.getInstance().addRtcEngineEventHandler(iRtcEngineEventHandler);
+    }
+
+    private void initUser()
+    {
+        ArrayList<Integer> users = AgoraManager.getInstance().getAllUsers();
+        for(int i=0;i<users.size();i++)
+        {
+            int uid = users.get(i);
+            int seatId = PositionManager.getInstance().takeSeat(uid, -1);
+            if(seatId < 0){
+                return;
+            }
+            else{
+                handler.post(() ->
+                {
+                    PositionManager.getInstance().setUid2SeatView(uid, seatId);
+                    showLog("Set User:"+uid+" to seatId:"+seatId, false);
+                });
+
+                showLog("User:"+uid+" joined", false);
+
+            }
+        }
     }
 
     private class ListenerOnTouchListener implements View.OnTouchListener {
@@ -178,7 +211,11 @@ public class RemoteSpatialSound extends BaseFragment {
                 handler.post(() ->
                 {
                     PositionManager.getInstance().setUid2SeatView(uid, seatId);
+                    showLog("Set User:"+uid+" to seatId:"+seatId, false);
                 });
+
+                showLog("User:"+uid+" joined", false);
+
             }
         }
 
@@ -199,13 +236,15 @@ public class RemoteSpatialSound extends BaseFragment {
         public void onUserOffline(int uid, int reason) {
             //Log.i(TAG, String.format("user %d offline! reason:%d", uid, reason));
             showLongToast(String.format("user %d offline! reason:%d", uid, reason));
+            showLog(String.format("user %d offline! reason:%d", uid, reason), false);
             handler.post(new Runnable() {
                 @Override
                 public void run() {
                     /**Clear render view
                      Note: The video will stay at its last frame, to completely remove it you will need to
                      remove the SurfaceView from its parent*/
-                    PositionManager.getInstance().leaveSeat(uid);
+                    int seatId = PositionManager.getInstance().leaveSeat(uid);
+                    showLog("User:"+uid+" leave seat:"+seatId, false);
                 }
             });
         }

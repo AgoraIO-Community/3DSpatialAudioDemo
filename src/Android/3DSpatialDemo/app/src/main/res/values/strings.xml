@@ -10,8 +10,8 @@
     <string name="join">Join</string>
     <string name="leave">Leave</string>
     <string name="channel_name">Channel Name:</string>
-    <string name="spacial_sound_demo">Local Spatial Sound</string>
-    <string name="spacial_sound_demo2">Remote Spatial Sound</string>
+    <string name="spacial_sound_demo">Player Spatial Sound</string>
+    <string name="spacial_sound_demo2">Users Spatial Sound</string>
 
     <string name="start">Start</string>
     <string name="click_start">Start</string>

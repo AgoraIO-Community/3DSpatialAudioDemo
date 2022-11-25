@@ -4,16 +4,27 @@ import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.text.TextUtils;
+import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
+
 import androidx.fragment.app.Fragment;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
+import io.agora.nathan.spatialsound.R;
 
 public class BaseFragment extends Fragment {
     protected Handler handler;
     private AlertDialog mAlertDialog;
     private String mAlertDialogMsg;
+    public TextView tv_log;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState)
@@ -50,6 +61,27 @@ public class BaseFragment extends Fragment {
                 return;
             }
             Toast.makeText(context, msg, Toast.LENGTH_LONG).show();
+        });
+    }
+
+    protected final void showLog(String content, boolean showToast) {
+        if(TextUtils.isEmpty(content)) {
+            return;
+        }
+        runOnUIThread(()-> {
+            if(showToast) {
+                Context context = getContext();
+                if(context == null){
+                    return;
+                }
+                Toast.makeText(context, content, Toast.LENGTH_SHORT).show();
+            }
+
+            String preContent = tv_log.getText().toString().trim();
+            StringBuilder builder = new StringBuilder();
+            builder.append(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).format(new Date()))
+                    .append(" ").append(content).append("\n").append(preContent);
+            tv_log.setText(builder);
         });
     }
 
