@@ -40,10 +40,11 @@
                     android:layout_width="80dp"
                     android:layout_height="120dp"
                     android:layout_marginLeft="40dp"
+                    android:layout_marginBottom="40dp"
                     android:background="#eee"
                     app:layout_constraintBottom_toTopOf="@+id/st3"
                     app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
+
                     />
 
                 <io.agora.nathan.spatialsound.widgets.VideoLayout
@@ -89,7 +90,7 @@
                     android:id="@+id/st5"
                     android:layout_width="80dp"
                     android:layout_height="120dp"
-                    android:layout_marginTop="60dp"
+                    android:layout_marginTop="40dp"
                     android:layout_marginLeft="40dp"
                     android:background="#eee"
                     app:layout_constraintTop_toBottomOf="@+id/st3"
@@ -123,7 +124,7 @@
             android:id="@+id/seatName0"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Pos1"
+            android:text="TopLeft"
             app:layout_constraintBottom_toTopOf="@+id/st0"
             app:layout_constraintLeft_toLeftOf="@+id/st0"
             />
@@ -132,7 +133,7 @@
             android:id="@+id/seatName1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Pos2"
+            android:text="Top"
             app:layout_constraintBottom_toTopOf="@+id/st1"
             app:layout_constraintLeft_toLeftOf="@+id/st1"
             />
@@ -140,7 +141,7 @@
             android:id="@+id/seatName2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Pos3"
+            android:text="TopRight"
             app:layout_constraintBottom_toTopOf="@+id/st2"
             app:layout_constraintLeft_toLeftOf="@+id/st2"
             />
@@ -148,7 +149,7 @@
             android:id="@+id/seatName3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Pos4"
+            android:text="Left"
             app:layout_constraintBottom_toTopOf="@+id/st3"
             app:layout_constraintLeft_toLeftOf="@+id/st3"
             />
@@ -156,7 +157,7 @@
             android:id="@+id/seatName4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Pos5"
+            android:text="Right"
             app:layout_constraintBottom_toTopOf="@+id/st4"
             app:layout_constraintLeft_toLeftOf="@+id/st4"
             />
@@ -164,7 +165,7 @@
             android:id="@+id/seatName5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Pos5"
+            android:text="BottomLeft"
             app:layout_constraintBottom_toTopOf="@+id/st5"
             app:layout_constraintLeft_toLeftOf="@+id/st5"
             />
@@ -172,7 +173,7 @@
             android:id="@+id/seatName6"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Pos6"
+            android:text="Bottom"
             app:layout_constraintBottom_toTopOf="@+id/st6"
             app:layout_constraintLeft_toLeftOf="@+id/st6"
             />
@@ -180,7 +181,7 @@
             android:id="@+id/seatName7"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Pos7"
+            android:text="BottomRight"
             app:layout_constraintBottom_toTopOf="@+id/st7"
             app:layout_constraintLeft_toLeftOf="@+id/st7"
             />

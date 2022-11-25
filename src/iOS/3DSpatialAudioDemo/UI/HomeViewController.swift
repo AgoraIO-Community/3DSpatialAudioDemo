@@ -11,6 +11,9 @@ class HomeViewController: UIViewController {
     @IBOutlet private weak var localKitButton: UIButton!
     @IBOutlet private weak var cloudKitButton: UIButton!
     
+    @IBOutlet private weak var agoraAppIdField: UITextField!
+    @IBOutlet private weak var agoraTokenFielc: UITextField!
+    
     enum SegueId: String {
         case localKitScene
         case cloudKitScene
@@ -32,6 +35,7 @@ class HomeViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        self.agoraAppIdField.text = AppConfig.shared.agora.appId
     }
 }
 
@@ -40,6 +44,10 @@ extension HomeViewController {
     /// LocalKitButton click event handle
     /// - Parameter sender: localKitButton
     @IBAction private func onLocalKitButtonClicked(_ sender: UIButton) {
+        // save appId
+        if let newAppId = self.agoraAppIdField.text, newAppId.count > 0 {
+            AppConfig.shared.agora.appId = newAppId
+        }
         self.performSegue(withIdentifier: SegueId.localKitScene.stringId, sender: sender)
     }
     
@@ -49,12 +57,19 @@ extension HomeViewController {
     @IBAction private func onCloudKitButtonClicked(_ sender: UIButton) {
         self.performSegue(withIdentifier: SegueId.cloudKitScene.stringId, sender: sender)
     }
+    
+    /// View Tapped
+    /// - Parameter sender: UITapGestureRecognizer
+    @IBAction private func onViewTapped(_ sender: UITapGestureRecognizer) {
+        self.view.endEditing(true)
+    }
 }
 
 
 // MARK: - Button setting
 extension HomeViewController {
     private func setupButtons() {
+        self.cloudKitButton.isEnabled = false // The cloud function is not supported `  in NGSDK(4.0)
         // button hancle (>= iOS 15)
         let buttonHandler: (UIButton) -> Void = { (button) in
             // do something

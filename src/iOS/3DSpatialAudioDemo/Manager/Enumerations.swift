@@ -39,15 +39,15 @@ enum Sound : String, CaseIterable {
         case .music:
             return "With-You-in-My-Arms-SSJ011001"
         case .sound1:
-            return "sound01" // "DogsBarkingCUandDistInfuriated"
+            return "sound01"                // "DogsBarkingCUandDistInfuriated"
         case .sound2:
-            return "sound02" // "ManWhistlingLikeAS"
+            return "sound02"                // "ManWhistlingLikeAS"
         case .sound3:
-            return "sound03" // "CrixCicadasLoopNig"
+            return "sound03"                // "CrixCicadasLoopNig"
         case .song01Vocal:
-            return "song01_vocal" //
+            return "song01_vocal"           // song01 vocal
         case .song01Instrumental:
-            return "song01_instrumental"
+            return "song01_instrumental"    // song01 instrumental
         }
     }
     
@@ -58,15 +58,15 @@ enum Sound : String, CaseIterable {
 
 /// Spatial audio mode, local or cloud
 enum SpatialAudioMode: String, CaseIterable {
-    case cloud
+    //case cloud
     case local
     
     var spatialKit: SpatialAudioProtocol {
         switch self {
         case .local:
             return LocalSpatialKit.shared
-        case .cloud:
-            return CloudSpatialKit.shared
+//        case .cloud:
+//            return CloudSpatialKit.shared
         }
     }
 }

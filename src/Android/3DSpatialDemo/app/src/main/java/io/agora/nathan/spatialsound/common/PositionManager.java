@@ -103,23 +103,23 @@ public class PositionManager {
         Log.i(TAG,"select seat "+seatIndex+" for user "+uid);
         float[] pos = new float[3];
         switch(seatIndex) {
-            case 0:
+            case 2:
                 pos = new float[]{slantMinus, slant, slant};
                 break;
-            case 2:
+            case 1:
                 pos = new float[]{0, 0, axial};
                 break;
-            case 1:
+            case 0:
                 pos = new float[]{slant, slant, slant};
                 break;
-            case 3:
+            case 4:
                 pos = new float[]{axialMinus, 0, 0};
                 break;
-            case 4:
+            case 3:
                 pos = new float[]{axial, 0, 0};
                 break;
             case 5:
-                pos = new float[]{slantMinus, slant, slantMinus};
+                pos = new float[]{slantMinus, slantMinus, slantMinus};
                 break;
             case 7:
                 pos = new float[]{0, 0, axialMinus};
