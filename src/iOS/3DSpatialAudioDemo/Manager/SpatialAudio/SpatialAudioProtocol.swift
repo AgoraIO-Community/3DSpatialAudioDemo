@@ -79,9 +79,9 @@ extension SpatialAudioProtocol {
 /// Cloud kit specific
 extension SpatialAudioProtocol {
     func enterRoom(_ roomName: String, uid: UInt, byToken token: String?) {
-        guard let cloudKit = self.spatialAudioKit as? AgoraCloudSpatialAudioKit else {
-            return
-        }
-        cloudKit.enterRoom(byToken: token, roomName: roomName, uid: uid)
+//        guard let cloudKit = self.spatialAudioKit as? AgoraCloudSpatialAudioKit else {
+//            return
+//        }
+//        cloudKit.enterRoom(byToken: token, roomName: roomName, uid: uid)
     }
 }

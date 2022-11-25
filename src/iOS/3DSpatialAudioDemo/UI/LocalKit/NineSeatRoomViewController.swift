@@ -29,6 +29,8 @@ class NineSeatRoomViewController: UIViewController {
     var remoteUsers: [UInt: Int] = [:]
     var seats: [Seat] = []
     
+    var uidSeats: [UInt: Seat] = [:]
+    
     let agoraMgr = AgoraManager.shared
     
     override func viewDidLoad() {
@@ -77,25 +79,20 @@ class NineSeatRoomViewController: UIViewController {
 }
 
 extension NineSeatRoomViewController {
-//    @IBAction func onCloseButtonClicked(_ sender: UIButton) {
-//        self.dismiss(animated: true) {
-//            self.agoraMgr.leave()
-//        }
-//    }
-    
     @IBAction func onSeatClicked(_ sender: Seat) {
         Logger.debug("\(sender.tag)")
         setRemoteHostSeat(sender)
     }
     
-    func setRemoteHostSeat(_ seat: Seat) {
+    private func setRemoteHostSeat(_ seat: Seat) {
         let userSelectView = UIAlertController(title: "Select User", message: nil, preferredStyle: .actionSheet)
         
         for uid in self.remoteUsers.keys {
             guard (self.remoteUsers[uid] ?? -1) < 0 else {
                 continue
             }
-            let action = UIAlertAction(title: "\(uid)", style: .default) { [weak self] action in
+            let mediaName = MediaType.TypeOf(uid: Int(uid))?.localizedName ?? "\(uid)"
+            let action = UIAlertAction(title: "\(mediaName)", style: .default) { [weak self] action in
                 PositionManager.shared.changeSeat(ofUser: uid, to: seat.tag)
                 for s in self?.seats ?? [] {
                     guard (s.uid ?? 0) == uid else {
@@ -104,6 +101,12 @@ extension NineSeatRoomViewController {
                     s.uid = nil
                 }
                 seat.uid = uid
+                seat.name = mediaName
+                if let oldSeat = self?.uidSeats[uid] {
+                    oldSeat.uid = nil
+                    oldSeat.name = nil
+                }
+                self?.uidSeats[uid] = seat
                 self?.agoraMgr.setRemoteVideoView(seat.avatarView, forUser: uid)
             }
             userSelectView.addAction(action)
@@ -127,6 +130,7 @@ extension NineSeatRoomViewController: AgoraManagerDelegate {
             // new user,
             self.remoteUsers[uid] = -1
             PositionManager.shared.changeSeat(ofUser: uid, to: -1)
+            (UIApplication.shared.delegate as! AppDelegate).currentHostUid = uid
             return
         }
     }

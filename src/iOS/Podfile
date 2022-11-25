@@ -4,7 +4,8 @@ use_frameworks!
 
 target '3DSpatialAudioDemo' do
   # Agora sdk 4.0.0 preview
-  pod 'AgoraRtcEngine_iOS_Preview', '4.0.0.preview.6'
+  #pod 'AgoraRtcEngine_iOS_Preview', '4.0.0.preview.6'
+  pod 'AgoraRtcEngine_iOS', '~> 4.0.0'
   
   # Progress
   pod 'MBProgressHUD'

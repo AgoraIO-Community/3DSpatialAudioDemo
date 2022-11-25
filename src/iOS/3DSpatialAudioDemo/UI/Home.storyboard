@@ -29,7 +29,7 @@
         <!--3D Spatial Audio Demo-->
         <scene sceneID="Cer-N9-DTG">
             <objects>
-                <viewController title="3D Spatial Audio Demo" id="DNo-g1-14i" customClass="HomeViewController" customModule="Radio3DAudioSample" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="3D Spatial Audio Demo" id="DNo-g1-14i" customClass="HomeViewController" customModule="_DSpatialAudioDemo" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="dK2-oW-OZn">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -85,17 +85,57 @@
                                     <constraint firstItem="dgM-Ys-zQl" firstAttribute="height" secondItem="3Sm-Ci-0nR" secondAttribute="height" id="v19-hF-NXn"/>
                                 </constraints>
                             </stackView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Token" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hQP-mC-XhY">
+                                <rect key="frame" x="20" y="392" width="44" height="18"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="t1J-DZ-Rfm">
+                                <rect key="frame" x="20" y="418" width="374" height="34"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Kaw-6s-8Wj">
+                                <rect key="frame" x="20" y="350" width="374" height="34"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="App Id" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ifm-AS-SCp">
+                                <rect key="frame" x="20" y="324" width="47.5" height="18"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="NeP-Fa-ToQ"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <gestureRecognizers/>
                         <constraints>
+                            <constraint firstItem="t1J-DZ-Rfm" firstAttribute="leading" secondItem="NeP-Fa-ToQ" secondAttribute="leading" constant="20" id="5ss-CS-Oel"/>
                             <constraint firstItem="OCo-Ix-Per" firstAttribute="centerX" secondItem="dK2-oW-OZn" secondAttribute="centerX" id="6dh-2R-NeJ"/>
+                            <constraint firstItem="t1J-DZ-Rfm" firstAttribute="centerX" secondItem="dK2-oW-OZn" secondAttribute="centerX" id="7QZ-zm-pc7"/>
+                            <constraint firstItem="NeP-Fa-ToQ" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="Ifm-AS-SCp" secondAttribute="trailing" constant="20" id="CwF-6s-EKZ"/>
+                            <constraint firstItem="t1J-DZ-Rfm" firstAttribute="top" secondItem="hQP-mC-XhY" secondAttribute="bottom" constant="8" symbolic="YES" id="DFx-uV-k2o"/>
                             <constraint firstItem="OCo-Ix-Per" firstAttribute="leading" secondItem="NeP-Fa-ToQ" secondAttribute="leading" constant="20" id="I7I-jk-3ji"/>
+                            <constraint firstItem="Kaw-6s-8Wj" firstAttribute="centerX" secondItem="dK2-oW-OZn" secondAttribute="centerX" id="Lq5-23-W7V"/>
+                            <constraint firstItem="Kaw-6s-8Wj" firstAttribute="leading" secondItem="NeP-Fa-ToQ" secondAttribute="leading" constant="20" id="NNh-9c-VDd"/>
+                            <constraint firstItem="Ifm-AS-SCp" firstAttribute="top" secondItem="OCo-Ix-Per" secondAttribute="bottom" constant="32" id="UUc-od-5pm"/>
+                            <constraint firstItem="NeP-Fa-ToQ" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="hQP-mC-XhY" secondAttribute="trailing" constant="20" id="bmA-uK-NH7"/>
+                            <constraint firstItem="hQP-mC-XhY" firstAttribute="top" secondItem="Kaw-6s-8Wj" secondAttribute="bottom" constant="8" symbolic="YES" id="dNe-ko-u9u"/>
                             <constraint firstItem="OCo-Ix-Per" firstAttribute="top" secondItem="NeP-Fa-ToQ" secondAttribute="top" constant="16" id="eNJ-gD-jy7"/>
+                            <constraint firstItem="Ifm-AS-SCp" firstAttribute="leading" secondItem="NeP-Fa-ToQ" secondAttribute="leading" constant="20" id="ptU-Ql-2Jx"/>
+                            <constraint firstItem="hQP-mC-XhY" firstAttribute="leading" secondItem="NeP-Fa-ToQ" secondAttribute="leading" constant="20" id="y3G-i0-etd"/>
+                            <constraint firstItem="Kaw-6s-8Wj" firstAttribute="top" secondItem="Ifm-AS-SCp" secondAttribute="bottom" constant="8" symbolic="YES" id="yka-Cn-eI2"/>
                         </constraints>
+                        <connections>
+                            <outletCollection property="gestureRecognizers" destination="g6w-vC-atn" appends="YES" id="NMC-S3-JHf"/>
+                        </connections>
                     </view>
                     <navigationItem key="navigationItem" title="3D Spatial Audio" largeTitleDisplayMode="always" id="iDO-hX-v3M"/>
                     <connections>
+                        <outlet property="agoraAppIdField" destination="Kaw-6s-8Wj" id="56d-A5-k0G"/>
+                        <outlet property="agoraTokenFielc" destination="t1J-DZ-Rfm" id="mU3-U2-1DL"/>
                         <outlet property="cloudKitButton" destination="dgM-Ys-zQl" id="1Vp-J0-QGm"/>
                         <outlet property="localKitButton" destination="3Sm-Ci-0nR" id="PcZ-an-IPr"/>
                         <segue destination="aP0-2H-wYE" kind="show" identifier="ShowLocalKitScene" id="cY9-nu-StN"/>
@@ -103,6 +143,11 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="70M-eG-2h1" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="g6w-vC-atn">
+                    <connections>
+                        <action selector="onViewTapped:" destination="DNo-g1-14i" id="Yzn-4o-RdO"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="722" y="92"/>
         </scene>

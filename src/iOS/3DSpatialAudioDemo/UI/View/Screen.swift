@@ -96,6 +96,19 @@ extension Screen {
         // refresh label
         self.labelNode.text = "\(self.index)"
     }
+    
+    func setVideoFrame(texture: SKTexture) {
+        let material = SCNMaterial()
+        let p = SCNMaterialProperty()
+        p.contents = texture
+        material.diffuse.contents = p
+        let plane = SCNPlane(width: 1, height: 1)
+        plane.materials = [material]
+        let node = SCNNode(geometry: plane)
+        let displayer = rootNode.childNode(withName: "displayer", recursively: false)!
+        let screen = displayer.childNode(withName: "screen", recursively: false)!
+        screen.addChildNode(node)
+    }
 }
 
 // MARK: - Add tag to SCNNode

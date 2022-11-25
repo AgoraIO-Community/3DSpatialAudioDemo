@@ -1,0 +1,240 @@
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "0KC-sq-diT"; */
+"0KC-sq-diT.text" = "Label";
+
+/* Class = "UINavigationItem"; title = "AR(RealityKit) - Local Kit"; ObjectID = "0kJ-tG-Nde"; */
+"0kJ-tG-Nde.title" = "AR(RealityKit) - Local Kit";
+
+/* Class = "UILabel"; text = "▲\nUser"; ObjectID = "3GD-ui-rFc"; */
+"3GD-ui-rFc.text" = "▲\nUser";
+
+/* Class = "UIButton"; configuration.title = "9 Seats"; ObjectID = "9KN-51-CC7"; */
+"9KN-51-CC7.configuration.title" = "9 Seats";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "9KN-51-CC7"; */
+"9KN-51-CC7.normalTitle" = "Button";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "9eE-PZ-8jk"; */
+"9eE-PZ-8jk.text" = "Label";
+
+/* Class = "UILabel"; text = "Head Motion"; ObjectID = "BZi-i3-1vq"; */
+"BZi-i3-1vq.text" = "Head Motion";
+
+/* Class = "UISegmentedControl"; DRp-yz-LMU.segmentTitles[0] = "music"; ObjectID = "DRp-yz-LMU"; */
+"DRp-yz-LMU.segmentTitles[0]" = "music";
+
+/* Class = "UISegmentedControl"; DRp-yz-LMU.segmentTitles[1] = "sound1"; ObjectID = "DRp-yz-LMU"; */
+"DRp-yz-LMU.segmentTitles[1]" = "sound1";
+
+/* Class = "UISegmentedControl"; DRp-yz-LMU.segmentTitles[2] = "sound2"; ObjectID = "DRp-yz-LMU"; */
+"DRp-yz-LMU.segmentTitles[2]" = "sound2";
+
+/* Class = "UISegmentedControl"; DRp-yz-LMU.segmentTitles[3] = "sound3"; ObjectID = "DRp-yz-LMU"; */
+"DRp-yz-LMU.segmentTitles[3]" = "sound3";
+
+/* Class = "UIButton"; configuration.title = "AR (ARKit)"; ObjectID = "Ddc-of-Dr5"; */
+"Ddc-of-Dr5.configuration.title" = "AR (ARKit)";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "Ddc-of-Dr5"; */
+"Ddc-of-Dr5.normalTitle" = "Button";
+
+/* Class = "UISwitch"; title = "PCM"; ObjectID = "Dqv-bR-iUf"; */
+"Dqv-bR-iUf.title" = "PCM";
+
+/* Class = "UILabel"; text = "Channel Name"; ObjectID = "Dth-OD-4pM"; */
+"Dth-OD-4pM.text" = "Channel Name";
+
+/* Class = "UILabel"; text = "Channel Name"; ObjectID = "EBc-F9-MeV"; */
+"EBc-F9-MeV.text" = "Channel Name";
+
+/* Class = "UISwitch"; title = "PCM"; ObjectID = "ED3-94-dGf"; */
+"ED3-94-dGf.title" = "PCM";
+
+/* Class = "UISegmentedControl"; EDc-w4-mjO.segmentTitles[0] = "Froward"; ObjectID = "EDc-w4-mjO"; */
+"EDc-w4-mjO.segmentTitles[0]" = "Froward";
+
+/* Class = "UISegmentedControl"; EDc-w4-mjO.segmentTitles[1] = "Left"; ObjectID = "EDc-w4-mjO"; */
+"EDc-w4-mjO.segmentTitles[1]" = "Left";
+
+/* Class = "UISegmentedControl"; EDc-w4-mjO.segmentTitles[2] = "Back"; ObjectID = "EDc-w4-mjO"; */
+"EDc-w4-mjO.segmentTitles[2]" = "Back";
+
+/* Class = "UISegmentedControl"; EDc-w4-mjO.segmentTitles[3] = "Right"; ObjectID = "EDc-w4-mjO"; */
+"EDc-w4-mjO.segmentTitles[3]" = "Right";
+
+/* Class = "UILabel"; text = "Video"; ObjectID = "FOZ-cA-82D"; */
+"FOZ-cA-82D.text" = "Video";
+
+/* Class = "UINavigationItem"; title = "Host - Local Kit"; ObjectID = "GVW-t6-4mc"; */
+"GVW-t6-4mc.title" = "Host - Local Kit";
+
+/* Class = "UILabel"; text = "Audience"; ObjectID = "H1O-ij-pxR"; */
+"H1O-ij-pxR.text" = "Audience";
+
+/* Class = "UIButton"; configuration.title = "3"; ObjectID = "IPa-J0-TAz"; */
+"IPa-J0-TAz.configuration.title" = "3";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "IPa-J0-TAz"; */
+"IPa-J0-TAz.normalTitle" = "Button";
+
+/* Class = "UINavigationItem"; title = "Multi Player Host"; ObjectID = "IRM-xD-84y"; */
+"IRM-xD-84y.title" = "Multi Player Host";
+
+/* Class = "UIButton"; configuration.title = "2"; ObjectID = "IUh-si-m89"; */
+"IUh-si-m89.configuration.title" = "2";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "IUh-si-m89"; */
+"IUh-si-m89.normalTitle" = "Button";
+
+/* Class = "UISegmentedControl"; J0o-Ad-sYp.segmentTitles[0] = "↑"; ObjectID = "J0o-Ad-sYp"; */
+"J0o-Ad-sYp.segmentTitles[0]" = "↑";
+
+/* Class = "UISegmentedControl"; J0o-Ad-sYp.segmentTitles[1] = "←"; ObjectID = "J0o-Ad-sYp"; */
+"J0o-Ad-sYp.segmentTitles[1]" = "←";
+
+/* Class = "UISegmentedControl"; J0o-Ad-sYp.segmentTitles[2] = "↓"; ObjectID = "J0o-Ad-sYp"; */
+"J0o-Ad-sYp.segmentTitles[2]" = "↓";
+
+/* Class = "UISegmentedControl"; J0o-Ad-sYp.segmentTitles[3] = "→"; ObjectID = "J0o-Ad-sYp"; */
+"J0o-Ad-sYp.segmentTitles[3]" = "→";
+
+/* Class = "UILabel"; text = "Send to remote"; ObjectID = "K6T-PQ-k6R"; */
+"K6T-PQ-k6R.text" = "Send to remote";
+
+/* Class = "UILabel"; text = "Version"; ObjectID = "KpS-ka-Wvr"; */
+"KpS-ka-Wvr.text" = "Version";
+
+/* Class = "UILabel"; text = "Debug"; ObjectID = "MnU-Yt-fZr"; */
+"MnU-Yt-fZr.text" = "Debug";
+
+/* Class = "UIButton"; configuration.title = "Media Player"; ObjectID = "Pfc-GJ-aw7"; */
+"Pfc-GJ-aw7.configuration.title" = "Media Player";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "Pfc-GJ-aw7"; */
+"Pfc-GJ-aw7.normalTitle" = "Button";
+
+/* Class = "UINavigationItem"; title = "Nine Seats - Local Kit"; ObjectID = "QfL-MK-Uhl"; */
+"QfL-MK-Uhl.title" = "Nine Seats - Local Kit";
+
+/* Class = "UILabel"; text = "Self position"; ObjectID = "Qtx-9i-VXw"; */
+"Qtx-9i-VXw.text" = "Self position";
+
+/* Class = "UILabel"; text = " Channel Name"; ObjectID = "Rb1-r5-DnA"; */
+"Rb1-r5-DnA.text" = " Channel Name";
+
+/* Class = "UIButton"; configuration.subtitle = "Join room as a host"; ObjectID = "SFb-EG-jlH"; */
+"SFb-EG-jlH.configuration.subtitle" = "Join room as a host";
+
+/* Class = "UIButton"; configuration.title = "Join as Host"; ObjectID = "SFb-EG-jlH"; */
+"SFb-EG-jlH.configuration.title" = "Join as Host";
+
+/* Class = "UIButton"; normalTitle = "Normal Room - Host"; ObjectID = "SFb-EG-jlH"; */
+"SFb-EG-jlH.normalTitle" = "Normal Room - Host";
+
+/* Class = "UILabel"; text = "Head direction"; ObjectID = "Snu-js-Th6"; */
+"Snu-js-Th6.text" = "Head direction";
+
+/* Class = "UIButton"; configuration.title = "M"; ObjectID = "TIG-IR-LtY"; */
+"TIG-IR-LtY.configuration.title" = "M";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "TIG-IR-LtY"; */
+"TIG-IR-LtY.normalTitle" = "Button";
+
+/* Class = "UINavigationItem"; title = "Local Spatial Kit"; ObjectID = "U24-fJ-uRh"; */
+"U24-fJ-uRh.title" = "Local Spatial Kit";
+
+/* Class = "UIButton"; configuration.subtitle = "Join room as multi player host"; ObjectID = "WaO-Bm-mbb"; */
+"WaO-Bm-mbb.configuration.subtitle" = "Join room as multi player host";
+
+/* Class = "UIButton"; configuration.title = "Multi Player Host"; ObjectID = "WaO-Bm-mbb"; */
+"WaO-Bm-mbb.configuration.title" = "Multi Player Host";
+
+/* Class = "UIButton"; normalTitle = "Normal Room - Host"; ObjectID = "WaO-Bm-mbb"; */
+"WaO-Bm-mbb.normalTitle" = "Normal Room - Host";
+
+/* Class = "UIViewController"; title = "Multi Player Host"; ObjectID = "Ya3-W8-AK3"; */
+"Ya3-W8-AK3.title" = "Multi Player Host";
+
+/* Class = "UIButton"; configuration.title = "0"; ObjectID = "Yq0-NZ-gUg"; */
+"Yq0-NZ-gUg.configuration.title" = "0";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "Yq0-NZ-gUg"; */
+"Yq0-NZ-gUg.normalTitle" = "Button";
+
+/* Class = "UILabel"; text = "Audio Mixing"; ObjectID = "a1u-bb-YRD"; */
+"a1u-bb-YRD.text" = "Audio Mixing";
+
+/* Class = "UISwitch"; title = "PCM"; ObjectID = "dzc-2P-cPX"; */
+"dzc-2P-cPX.title" = "PCM";
+
+/* Class = "UILabel"; text = "Video On"; ObjectID = "ejf-jt-XN6"; */
+"ejf-jt-XN6.text" = "Video On";
+
+/* Class = "UILabel"; text = " Channel Name"; ObjectID = "gUq-uL-CzU"; */
+"gUq-uL-CzU.text" = " Channel Name";
+
+/* Class = "UILabel"; text = "uid"; ObjectID = "iTV-7c-SEv"; */
+"iTV-7c-SEv.text" = "uid";
+
+/* Class = "UIButton"; configuration.subtitle = "In progress"; ObjectID = "j0t-r0-nhd"; */
+"j0t-r0-nhd.configuration.subtitle" = "In progress";
+
+/* Class = "UIButton"; configuration.title = "AR (RealityKit)"; ObjectID = "j0t-r0-nhd"; */
+"j0t-r0-nhd.configuration.title" = "AR (RealityKit)";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "j0t-r0-nhd"; */
+"j0t-r0-nhd.normalTitle" = "Button";
+
+/* Class = "UINavigationItem"; title = "Room Image - Loacl Kit"; ObjectID = "jsM-XO-DYr"; */
+"jsM-XO-DYr.title" = "Room Image - Loacl Kit";
+
+/* Class = "UILabel"; text = "Send microphone sound"; ObjectID = "m1O-RI-13l"; */
+"m1O-RI-13l.text" = "Send microphone sound";
+
+/* Class = "UILabel"; text = "Channel Name"; ObjectID = "mFc-uY-S6k"; */
+"mFc-uY-S6k.text" = "Channel Name";
+
+/* Class = "UILabel"; text = "Users"; ObjectID = "o9J-VY-iaf"; */
+"o9J-VY-iaf.text" = "Users";
+
+/* Class = "UILabel"; text = "uid"; ObjectID = "oyW-cw-TyL"; */
+"oyW-cw-TyL.text" = "uid";
+
+/* Class = "UILabel"; text = "Audio Mixing"; ObjectID = "qhQ-sV-jX8"; */
+"qhQ-sV-jX8.text" = "Audio Mixing";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "r3x-Xc-uH3"; */
+"r3x-Xc-uH3.text" = "Label";
+
+/* Class = "UINavigationItem"; title = "AR(ARKit) - Local Kit"; ObjectID = "svE-0G-5mp"; */
+"svE-0G-5mp.title" = "AR(ARKit) - Local Kit";
+
+/* Class = "UIButton"; configuration.title = "1"; ObjectID = "swV-LO-O0h"; */
+"swV-LO-O0h.configuration.title" = "1";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "swV-LO-O0h"; */
+"swV-LO-O0h.normalTitle" = "Button";
+
+/* Class = "UISegmentedControl"; tQn-tz-hru.segmentTitles[0] = "Froward"; ObjectID = "tQn-tz-hru"; */
+"tQn-tz-hru.segmentTitles[0]" = "Froward";
+
+/* Class = "UISegmentedControl"; tQn-tz-hru.segmentTitles[1] = "Left"; ObjectID = "tQn-tz-hru"; */
+"tQn-tz-hru.segmentTitles[1]" = "Left";
+
+/* Class = "UISegmentedControl"; tQn-tz-hru.segmentTitles[2] = "Back"; ObjectID = "tQn-tz-hru"; */
+"tQn-tz-hru.segmentTitles[2]" = "Back";
+
+/* Class = "UISegmentedControl"; tQn-tz-hru.segmentTitles[3] = "Right"; ObjectID = "tQn-tz-hru"; */
+"tQn-tz-hru.segmentTitles[3]" = "Right";
+
+/* Class = "UINavigationItem"; title = "Media Player - Loacl Kit"; ObjectID = "uAD-WE-jdA"; */
+"uAD-WE-jdA.title" = "Media Player - Loacl Kit";
+
+/* Class = "UILabel"; text = "uid"; ObjectID = "uN6-fV-Jmb"; */
+"uN6-fV-Jmb.text" = "uid";
+
+/* Class = "UILabel"; text = "Host"; ObjectID = "xTE-oD-hP9"; */
+"xTE-oD-hP9.text" = "Host";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "y5W-Xk-qtm"; */
+"y5W-Xk-qtm.text" = "Label";

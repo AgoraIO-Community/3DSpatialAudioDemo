@@ -10,37 +10,37 @@ import AgoraRtcKit
 import DarkEggKit
 import PromiseKit
 
-///
-extension AgoraSaeConnectionState : CustomStringConvertible {
-    public var description: String {
-        switch self {
-        case .connecting:
-            return ".Connecting"
-        case .disconnected:
-            return ".Disconnected"
-        default:
-            return ".Connected"
-        }
-    }
-}
-
-///
-extension AgoraSaeConnectionChangedReason : CustomStringConvertible {
-    public var description: String {
-        switch self {
-        case .aborted:
-            return ".Aborted"
-        case .connecting:
-            return ".Connecting"
-        case .createRoomFail:
-            return ".CreateRoomFail"
-        case .rtmDisconnect:
-            return ".RtmDisconnect"
-        default:
-            return ".Default"
-        }
-    }
-}
+/////
+//extension AgoraSaeConnectionState : CustomStringConvertible {
+//    public var description: String {
+//        switch self {
+//        case .connecting:
+//            return ".Connecting"
+//        case .disconnected:
+//            return ".Disconnected"
+//        default:
+//            return ".Connected"
+//        }
+//    }
+//}
+//
+/////
+//extension AgoraSaeConnectionChangedReason : CustomStringConvertible {
+//    public var description: String {
+//        switch self {
+//        case .aborted:
+//            return ".Aborted"
+//        case .connecting:
+//            return ".Connecting"
+//        case .createRoomFail:
+//            return ".CreateRoomFail"
+//        case .rtmDisconnect:
+//            return ".RtmDisconnect"
+//        default:
+//            return ".Default"
+//        }
+//    }
+//}
 
 @objc protocol AgoraManagerDelegate: AnyObject {
     func agoraMgr(_ mgr: AgoraManager, userJoined uid: UInt)
@@ -53,7 +53,7 @@ class AgoraManager: NSObject {
     
     //private var appId = "c7ac671989ee4309b0dbc3d0a473ed57"
     var recvRange: Float = 100.0
-    var audioModel: AgoraAudioRangeMode = .world
+//    var audioModel: AgoraAudioRangeMode = .world
     var soundEffect: SoundEffect = .enable
     
     weak var delegate: AgoraManagerDelegate?
@@ -63,7 +63,7 @@ class AgoraManager: NSObject {
     let RecvRangeRadius: UInt = 100
     
     var agoraKit: AgoraRtcEngineKit!
-    var cloudSpatialKit: CloudSpatialKit!   // = CloudSpatialKit.shared
+    //var cloudSpatialKit: CloudSpatialKit!   // = CloudSpatialKit.shared
     var localSpatialKit: LocalSpatialKit!   // = LocalSpatialKit.shared
     
     var selfUid: UInt = 0
@@ -90,9 +90,12 @@ class AgoraManager: NSObject {
         let appId = AppConfig.shared.agora.appId
         self.agoraKit = AgoraRtcEngineKit.sharedEngine(withAppId: appId, delegate: self)
         //agoraKit.delegate = self
-        agoraKit.setChannelProfile(.liveBroadcasting)
+        //agoraKit.setChannelProfile(.liveBroadcasting)
+        agoraKit.setChannelProfile(.communication)
         //agoraKit.setClientRole(.audience)
-        agoraKit.setAudioProfile(.musicHighQualityStereo, scenario: .gameStreaming)
+        agoraKit.setAudioProfile(.musicStandard)
+        agoraKit.setAudioScenario(.gameStreaming)
+        agoraKit.setParameters("{\"che.audio.bitrate.level\": 0}")
         agoraKit.enableAudio()
         agoraKit.enableVideo()
         agoraKit.enableLocalVideo(false)
@@ -108,12 +111,13 @@ class AgoraManager: NSObject {
     //
     func enableSpatialAudio() {
         self.localSpatialKit = LocalSpatialKit.shared
-        self.cloudSpatialKit = CloudSpatialKit.shared
+        //self.cloudSpatialKit = CloudSpatialKit.shared
         // enable spatial audio
         agoraKit.enableSpatialAudio(true)
     }
     
     func join(channel: String, asHost: Bool, completion: ((Bool, UInt) -> Void)?) {
+        agoraKit.enableLocalVideo(false)
         self.agoraKit.setClientRole(asHost ? .broadcaster : .audience)
         
         //agoraKit.setParameters("{\"rtc.audio.force_bluetooth_a2dp\": false}")
@@ -145,7 +149,7 @@ class AgoraManager: NSObject {
                 videoCanvas.renderMode = .hidden
                 self?.agoraKit.setupLocalVideo(videoCanvas)
                 Logger.debug("enter cloud spatial audio room")
-                self?.cloudSpatialKit.enterRoom(channel+"sa", uid: uid, byToken: nil)
+                //self?.cloudSpatialKit.enterRoom(channel+"sa", uid: uid, byToken: nil)
                 seal.fulfill(uid)
             }
             
@@ -162,7 +166,7 @@ class AgoraManager: NSObject {
     func leave() {
         // clear position
         SpatialAudioMode.local.spatialKit.clearRemotePositions()
-        SpatialAudioMode.cloud.spatialKit.clearRemotePositions()
+        //SpatialAudioMode.cloud.spatialKit.clearRemotePositions()
         self.mediaPlayers.values.forEach { p in
             p.stop()
             self.agoraKit.destroyMediaPlayer(p)
@@ -178,10 +182,14 @@ class AgoraManager: NSObject {
 
 // MARK: -
 extension AgoraManager {
+    /// Switch video
+    /// - Parameter videoOn: Video On/Off
     func switchVideo(_ videoOn: Bool) {
         self.agoraKit.enableLocalVideo(videoOn)
     }
     
+    /// Set local video preview
+    /// - Parameter view: parent view
     func setLocalVideoPreview(in view: UIView) {
         guard !view.subviews.contains(self.containerView) else {
             return
@@ -191,12 +199,16 @@ extension AgoraManager {
         self.agoraKit.startPreview()
     }
     
+    /// Remove local video preview
     func removeLocalVideoPreview() {
         self.containerView.removeFromSuperview()
         self.agoraKit.stopPreview()
     }
     
-    // remote
+    /// Set remote video view
+    /// - Parameters:
+    ///   - view: video view
+    ///   - uid: remote uid
     func setRemoteVideoView(_ view: UIView, forUser uid: UInt) {
         let videoCanvas = AgoraRtcVideoCanvas()
         videoCanvas.uid = uid
@@ -214,7 +226,8 @@ extension AgoraManager: AgoraRtcMediaPlayerDelegate {
             player?.open(filePath, startPos: startPosition)
             let pos = AgoraRemoteVoicePositionInfo()
             let param = AgoraSpatialAudioParams()
-            param.enable_blur = AgoraRtcBoolOptional.of(true)
+            param.enable_blur = true
+            param.enable_air_absorb = true
             pos.position = position
             mode.spatialKit.updatePlayerPositionInfo(Int(playerId), positionInfo: pos)
             
@@ -251,14 +264,16 @@ extension AgoraManager: AgoraRtcMediaPlayerDelegate {
     
     func publishMediaPlayer(_ on: Bool, playerId: Int) {
         let mediaOption = AgoraRtcChannelMediaOptions()
-        if on, let _ = self.mediaPlayers[playerId] {
-            mediaOption.publishMediaPlayerId = AgoraRtcIntOptional.of(Int32(playerId))
-            mediaOption.publishMediaPlayerAudioTrack = AgoraRtcBoolOptional.of(true)
-            let a = self.agoraKit.updateChannel(with: mediaOption)
-            Logger.debug("update media option: \(a)")
+        if on {
+            if let _ = self.mediaPlayers[playerId] {
+                mediaOption.publishMediaPlayerId = playerId
+                mediaOption.publishMediaPlayerAudioTrack = true
+                let a = self.agoraKit.updateChannel(with: mediaOption)
+                Logger.debug("update media player \(playerId) option: \(a)")
+            }
         }
         else {
-            mediaOption.publishMediaPlayerAudioTrack = AgoraRtcBoolOptional.of(false)
+            mediaOption.publishMediaPlayerAudioTrack = false
             self.agoraKit.updateChannel(with: mediaOption)
         }
     }
@@ -273,6 +288,70 @@ extension AgoraManager: AgoraRtcMediaPlayerDelegate {
             playerKit.play()
         }
     }
+    
+    func agoraRtcMediaPlayer(_ playerKit: AgoraRtcMediaPlayerProtocol, didReceiveData data: String?, length: Int) {
+        Logger.debug()
+    }
+}
+
+extension AgoraManager {
+    /// Start sending media player
+    /// - Parameters:
+    ///   - playerId: player id
+    ///   - localUid: local uid
+    ///   - name: player name
+    ///   - channel: channel name
+    func startSendingMediaPlayer(_ playerId: Int, localUid: Int? = nil, name: String?, toChannel channel: String) {
+        
+    }
+    
+    /// Start sending media player
+    /// - Parameters:
+    ///   - playerId: player id
+    ///   - localUid: local uid
+    ///   - name: player name
+    ///   - channel: channel name
+    func startSendMediaPlayer(_ playerId: Int, localUid: Int? = nil, name: String?, ToChannel channel: String) {
+        let mediaOption = AgoraRtcChannelMediaOptions()
+        mediaOption.clientRoleType = AgoraClientRole.broadcaster
+        mediaOption.publishMediaPlayerId = playerId
+        mediaOption.publishMediaPlayerAudioTrack = true
+        mediaOption.publishCameraTrack = false
+        mediaOption.publishCustomAudioTrack = false
+        mediaOption.enableAudioRecordingOrPlayout = false
+        mediaOption.autoSubscribeAudio = false
+        mediaOption.publishCustomAudioTrack = false
+        
+        let connection = AgoraRtcConnection()
+        connection.channelId = channel
+        connection.localUid = UInt(localUid ?? playerId)
+//        self.agoraKit.joinChannel(byToken: nil, channelId: channel, info: "", uid: UInt(playerId)) { channel, uid, elapsed in
+//            Logger.debug("Join \(channel) with uid \(uid) elapsed \(elapsed)ms")
+//        }
+        Logger.debug("joinChannelEx: Join \(channel) with playerId: \(playerId), as uid: \(localUid ?? playerId)")
+        let code = self.agoraKit.joinChannelEx(byToken: nil, connection: connection, delegate: self, mediaOptions: mediaOption) { channel, uid, elapsed in
+            //
+            Logger.debug("joinChannelEx: Join \(channel) with uid \(uid) elapsed \(elapsed)ms")
+            let data = Data("Player\(playerId)".utf8)
+            self.agoraKit.sendStreamMessageEx(Int(uid), data: data, connection: connection)
+        }
+        
+        if code != 0 {
+            Logger.error("joinChannelEx error, return code is \(code)")
+        }
+    }
+    
+    /// Stop sending media player
+    /// - Parameters:
+    ///   - localUid: localUid
+    ///   - channel: channel name
+    func stopSendMediaPlayer(_ localUid: Int, fromChannel channel: String) {
+        Logger.debug("Stop connection uid: \(localUid)")
+        let connection = AgoraRtcConnection()
+        connection.channelId = channel
+        connection.localUid = UInt(localUid)
+        self.agoraKit.leaveChannelEx(connection)
+    }
 }
 
 // MARK: - 3D
@@ -280,9 +359,9 @@ extension AgoraManager {
     /// Update audio mode
     /// Paramater:
     ///     type: AgoraRangeAudioMode
-    private func updateAudioMode(_ type: AgoraAudioRangeMode) {
-//        self.localSpatialKit.setRangeAudioMode(type)
-    }
+//    private func updateAudioMode(_ type: AgoraAudioRangeMode) {
+////        self.localSpatialKit.setRangeAudioMode(type)
+//    }
     
     /// Update spatializer
     /// Paramters:
@@ -306,7 +385,7 @@ extension AgoraManager {
         agoraKit.adjustAudioMixingPublishVolume(100)
         agoraKit.stopAudioMixing()
         if let sound = Sound(rawValue: soundType), let filePath = sound.filePath {
-            let ret = self.agoraKit.startAudioMixing(filePath, loopback: false, replace: false, cycle: -1)
+            let ret = self.agoraKit.startAudioMixing(filePath, loopback: false, cycle: -1) //startAudioMixing(filePath, loopback: false, replace: false, cycle: -1)
 //             let ret = self.agoraKit.startAudioMixing(filePath, loopback: false, replace: false, cycle: -1, startPos: 0)
             completion?((ret == 0))
         }
@@ -317,7 +396,18 @@ extension AgoraManager {
         Logger.debug("Stop audio mixing")
         agoraKit.adjustRecordingSignalVolume(100)
         agoraKit.adjustAudioMixingPublishVolume(0)
-        agoraKit.stopAudioMixing()
+        agoraKit.muteLocalAudioStream(true)
+//        agoraKit.stopAudioMixing()
+    }
+    
+    func pauseAudioMixing() {
+        Logger.debug("Pause audio mixing")
+        agoraKit.pauseAudioMixing()
+    }
+    
+    func muteRemote(_ uid: UInt) {
+        Logger.debug("Mute host: \(uid)")
+        agoraKit.muteRemoteAudioStream(uid, mute: true)
     }
 }
 
@@ -355,6 +445,16 @@ extension AgoraManager {
 //    }
 }
 
+extension AgoraManager {
+    func addMediaPlayer(for name: String, toRemote: Bool) {
+        
+    }
+    
+    func setAgoraVideoFrameDelegate(_ delegate: AgoraVideoFrameDelegate?) {
+        self.agoraKit.setVideoFrameDelegate(delegate)
+    }
+}
+
 // MARK: - AgoraRtcEngineDelegate
 extension AgoraManager: AgoraRtcEngineDelegate {
     func setHostPosition(_ uid: UInt, position: [NSNumber]) {
@@ -383,10 +483,20 @@ extension AgoraManager: AgoraRtcEngineDelegate {
     }
     
     func rtcEngine(_ engine: AgoraRtcEngineKit, didOccurError errorCode: AgoraErrorCode) {
-        Logger.debug("errorCode \(errorCode.rawValue)")
+        Logger.debug("ErrorCode \(errorCode.rawValue)")
     }
     
     func rtcEngine(_ engine: AgoraRtcEngineKit, didOccurWarning warningCode: AgoraWarningCode) {
-        Logger.debug("warningCode \(warningCode.rawValue)")
+        Logger.debug("WarningCode \(warningCode.rawValue)")
+    }
+    
+    func rtcEngine(_ engine: AgoraRtcEngineKit, didUserInfoUpdatedWithUserId uid: UInt, userInfo: AgoraUserInfo) {
+        Logger.debug("UserId:\(uid), userInfo: \(userInfo)")
+    }
+    
+    func rtcEngine(_ engine: AgoraRtcEngineKit, receiveStreamMessageFromUid uid: UInt, streamId: Int, data: Data) {
+        Logger.debug(String(decoding: data, as: UTF8.self))
     }
 }
+
+//extension

@@ -1,5 +1,25 @@
 PODS:
-  - AgoraRtcEngine_iOS_Preview (4.0.0.preview.6)
+  - AgoraRtcEngine_iOS (4.0.0.4):
+    - AgoraRtcEngine_iOS/AINS (= 4.0.0.4)
+    - AgoraRtcEngine_iOS/AudioBeauty (= 4.0.0.4)
+    - AgoraRtcEngine_iOS/ClearVision (= 4.0.0.4)
+    - AgoraRtcEngine_iOS/ContentInspect (= 4.0.0.4)
+    - AgoraRtcEngine_iOS/PVC (= 4.0.0.4)
+    - AgoraRtcEngine_iOS/ReplayKit (= 4.0.0.4)
+    - AgoraRtcEngine_iOS/RtcBasic (= 4.0.0.4)
+    - AgoraRtcEngine_iOS/SpatialAudio (= 4.0.0.4)
+    - AgoraRtcEngine_iOS/SuperResolution (= 4.0.0.4)
+    - AgoraRtcEngine_iOS/VirtualBackground (= 4.0.0.4)
+  - AgoraRtcEngine_iOS/AINS (4.0.0.4)
+  - AgoraRtcEngine_iOS/AudioBeauty (4.0.0.4)
+  - AgoraRtcEngine_iOS/ClearVision (4.0.0.4)
+  - AgoraRtcEngine_iOS/ContentInspect (4.0.0.4)
+  - AgoraRtcEngine_iOS/PVC (4.0.0.4)
+  - AgoraRtcEngine_iOS/ReplayKit (4.0.0.4)
+  - AgoraRtcEngine_iOS/RtcBasic (4.0.0.4)
+  - AgoraRtcEngine_iOS/SpatialAudio (4.0.0.4)
+  - AgoraRtcEngine_iOS/SuperResolution (4.0.0.4)
+  - AgoraRtcEngine_iOS/VirtualBackground (4.0.0.4)
   - Alamofire (4.9.1)
   - DarkEggKit (1.0.0):
     - DarkEggKit/Common (= 1.0.0)
@@ -19,7 +39,7 @@ PODS:
     - PromiseKit/CorePromise
 
 DEPENDENCIES:
-  - AgoraRtcEngine_iOS_Preview (= 4.0.0.preview.6)
+  - AgoraRtcEngine_iOS (~> 4.0.0)
   - DarkEggKit
   - MBProgressHUD
   - PromiseKit
@@ -27,19 +47,19 @@ DEPENDENCIES:
 
 SPEC REPOS:
   trunk:
-    - AgoraRtcEngine_iOS_Preview
+    - AgoraRtcEngine_iOS
     - Alamofire
     - DarkEggKit
     - MBProgressHUD
     - PromiseKit
 
 SPEC CHECKSUMS:
-  AgoraRtcEngine_iOS_Preview: a790a04ded9aac522480658abdf21bc2e599b93c
+  AgoraRtcEngine_iOS: f528d1553b2a82d60e95b713f7c61004f738c7f4
   Alamofire: 85e8a02c69d6020a0d734f6054870d7ecb75cf18
   DarkEggKit: c69b40b9f13c8e15b3ffe9d12c6b911d6794be85
   MBProgressHUD: 3ee5efcc380f6a79a7cc9b363dd669c5e1ae7406
   PromiseKit: 996202d4cae72b7801b312abef4cd2f995b2978a
 
-PODFILE CHECKSUM: 9585b9e7e46d6d97c98b0427330be3abbedd4d69
+PODFILE CHECKSUM: ed86379bc2120d9238b39247fe732d37347b8025
 
 COCOAPODS: 1.11.3
